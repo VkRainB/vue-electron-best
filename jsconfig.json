@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["frontend/src/*"]
+    },
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true, // 允许从没有默认导出的模块导入
+    "esModuleInterop": true, // ES 模块与 CommonJS 互操作
+    "skipLibCheck": true, // 跳过类型检查
+    "resolveJsonModule": true, // 允许导入 JSON 文件
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve", // 保留 JSX 语法，由 Vue 编译器处理
+    "lib": ["ESNext", "DOM", "DOM.Iterable"] // 支持的 API 库
+  },
+  "include": [
+    "frontend/src/**/*.js",
+    "frontend/src/**/*.jsx",
+    "frontend/src/**/*.vue",
+    "frontend/src/**/*.ts",
+    "frontend/src/**/*.tsx",
+    "frontend/types/**/*.d.ts",
+    "*.js",
+    "*.ts"
+  ],
+  "exclude": ["node_modules", "out", "resources", "dist", "electron/main", "electron/preload"]
+}
