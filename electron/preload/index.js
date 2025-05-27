@@ -9,9 +9,7 @@ const CHANNELS = {
 
 // 服务代理API
 const serviceAPI = {
-  // 请求服务方法
   callMethod: (serviceName, methodName, ...args) => {
-    // 使用 invoke 模式，这是更简单且安全的方式
     return ipcRenderer.invoke(CHANNELS.INVOKE_SERVICE_METHOD, {
       serviceName,
       method: methodName,
@@ -20,15 +18,9 @@ const serviceAPI = {
   }
 }
 
-// Custom APIs for renderer
 const api = {
-  // 服务API
   service: serviceAPI
 }
-
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
 if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI)
