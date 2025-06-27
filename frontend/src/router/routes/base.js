@@ -1,11 +1,48 @@
+// 导入布局组件
+const MainLayout = () => import('@/layout/MainLayout.vue')
+const SimpleLayout = () => import('@/layout/SimpleLayout.vue')
+
 const basicRoutes = [
+  // 使用主布局的路由
   {
     path: '/',
-    component: () => import('@/views/Home/Index.vue'),
-    name: 'Home',
+    component: MainLayout,
+    redirect: '/home',
+    name: 'MainApp',
     meta: {
-      title: '空白页'
-    }
+      title: '主应用'
+    },
+    children: [
+      {
+        path: 'home',
+        component: () => import('@/views/Home/Index.vue'),
+        name: 'Home',
+        meta: {
+          title: '首页'
+        }
+      }
+      // 在这里可以添加更多需要主布局的页面
+    ]
+  },
+
+  // 使用简单布局的路由（用于登录页面等）
+  {
+    path: '/auth',
+    component: SimpleLayout,
+    name: 'Auth',
+    meta: {
+      title: '认证'
+    },
+    children: [
+      {
+        path: 'login',
+        component: () => import('@/views/Auth/Login.vue'),
+        name: 'Login',
+        meta: {
+          title: '登录'
+        }
+      }
+    ]
   }
 ]
 
