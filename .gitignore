@@ -1,8 +1,35 @@
-node_modules
-dist
-out
+# 忽略IDE生成的文件
+.idea/
+.cursor/
+*.suo
+*.user
+*.sln
+*.swp
 .DS_Store
-.eslintcache
-*.log*
+*.iml
 
-temp*/
+# 忽略编译输出
+/build/
+/dist/
+/out/
+/temp/
+
+
+
+
+# 忽略日志文件
+*.log
+
+# 忽略node_modules目录
+node_modules/
+
+# 忽略自动导入生成的文件
+frontend/types/components.d.ts
+frontend/types/auto-imports.d.ts
+
+
+
+# 其他
+
+
+# git rm --cached [file]  针对已经提交过的文件
