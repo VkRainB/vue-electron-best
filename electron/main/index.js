@@ -1,13 +1,8 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
-import { serviceRegistry, loadAllServices } from './services'
-
-// 通道定义
-const CHANNELS = {
-  INVOKE_SERVICE_METHOD: 'invoke-service-method'
-}
+import { loadAllServices, setupServiceRequests } from './services'
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
@@ -40,35 +35,6 @@ function createWindow() {
 
   // 设置服务请求处理
   setupServiceRequests()
-}
-
-// 设置服务请求处理
-function setupServiceRequests() {
-  // 使用 handle 处理服务调用
-  ipcMain.handle(CHANNELS.INVOKE_SERVICE_METHOD, async (event, { serviceName, method, args }) => {
-    try {
-      const service = serviceRegistry.get(serviceName)
-
-      if (!service) {
-        throw new Error(`Service not found: ${serviceName}`)
-      }
-
-      if (typeof service[method] !== 'function') {
-        throw new Error(`Method ${method} not found in service ${serviceName}`)
-      }
-
-      // 调用服务方法并返回结果
-      return await service[method](...args)
-    } catch (error) {
-      // 将错误转换为可序列化的对象
-      console.error('Service error:', error)
-      throw {
-        message: error.message,
-        name: error.name,
-        stack: error.stack
-      }
-    }
-  })
 }
 
 app.whenReady().then(async () => {
