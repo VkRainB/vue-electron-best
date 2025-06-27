@@ -1,0 +1,15 @@
+{
+  "updater": {
+    "win": {
+      "asarFile": "build/win-unpacked/resources/app.asar",
+      "output": {
+        "zip": "update.zip",
+        "file": "latest.json",
+        "directory": "build/win-asar/"
+      },
+      "extraResources": [],
+      "asarUnpacked": ["resources"],
+      "cleanCache": true
+    }
+  }
+}
