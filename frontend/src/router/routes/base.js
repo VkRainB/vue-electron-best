@@ -16,10 +16,7 @@ const basicRoutes = [
       {
         path: 'home',
         component: () => import('@/views/Home/Index.vue'),
-        name: 'Home',
-        meta: {
-          title: '首页'
-        }
+        name: 'Home'
       }
       // 在这里可以添加更多需要主布局的页面
     ]
@@ -30,17 +27,11 @@ const basicRoutes = [
     path: '/auth',
     component: SimpleLayout,
     name: 'Auth',
-    meta: {
-      title: '认证'
-    },
     children: [
       {
         path: 'login',
         component: () => import('@/views/Auth/Login.vue'),
-        name: 'Login',
-        meta: {
-          title: '登录'
-        }
+        name: 'Login'
       }
     ]
   }
