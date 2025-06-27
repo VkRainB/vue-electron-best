@@ -1,23 +1,26 @@
 <template>
-  <div class="login-page">
-    <div class="login-container">
-      <div class="login-card">
-        <div class="login-header">
-          <h1 class="login-title">欢迎登录</h1>
-          <p class="login-subtitle">Vue Electron 应用</p>
+  <div
+    class="w-screen h-screen bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center p-5 sm:p-4 box-border"
+  >
+    <div class="w-full max-w-md flex flex-col items-center">
+      <div class="w-full bg-white/95 rounded-4 p-10 sm:p-8 shadow-2xl backdrop-blur-md">
+        <div class="text-center mb-8">
+          <h1 class="text-7 sm:text-6 font-semibold text-gray-800 mb-2">欢迎登录</h1>
+          <p class="text-4 sm:text-3.5 text-gray-600">Vue Electron 应用</p>
         </div>
-        
-        <el-form class="login-form" :model="loginForm" :rules="rules" ref="loginFormRef">
-          <el-form-item prop="username">
+
+        <el-form class="w-full" :model="loginForm" :rules="rules" ref="loginFormRef">
+          <el-form-item prop="username" class="mb-6">
             <el-input
               v-model="loginForm.username"
               placeholder="请输入用户名"
               size="large"
               prefix-icon="User"
+              class="h-12"
             />
           </el-form-item>
-          
-          <el-form-item prop="password">
+
+          <el-form-item prop="password" class="mb-6">
             <el-input
               v-model="loginForm.password"
               type="password"
@@ -25,14 +28,15 @@
               size="large"
               prefix-icon="Lock"
               show-password
+              class="h-12"
             />
           </el-form-item>
-          
+
           <el-form-item>
             <el-button
               type="primary"
               size="large"
-              class="login-button"
+              class="w-full h-12 text-4 font-medium rounded-2"
               @click="handleLogin"
               :loading="loading"
             >
@@ -40,9 +44,13 @@
             </el-button>
           </el-form-item>
         </el-form>
-        
-        <div class="login-footer">
-          <el-button type="text" @click="goToMain">
+
+        <div class="text-center mt-6">
+          <el-button
+            type="text"
+            @click="goToMain"
+            class="text-indigo-600 text-sm hover:text-indigo-800"
+          >
             跳过登录，直接进入主页
           </el-button>
         </div>
@@ -68,9 +76,7 @@ const loginForm = reactive({
 
 // 表单验证规则
 const rules = {
-  username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' }
-  ],
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
@@ -82,12 +88,12 @@ const handleLogin = async () => {
   try {
     const valid = await loginFormRef.value.validate()
     if (!valid) return
-    
+
     loading.value = true
-    
+
     // 模拟登录请求
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     ElMessage.success('登录成功！')
     router.push('/home')
   } catch (error) {
@@ -102,100 +108,3 @@ const goToMain = () => {
   router.push('/home')
 }
 </script>
-
-<style scoped>
-.login-page {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-.login-container {
-  width: 100%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.login-card {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  padding: 40px 32px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-}
-
-.login-header {
-  text-align: center;
-  margin-bottom: 32px;
-}
-
-.login-title {
-  font-size: 28px;
-  font-weight: 600;
-  color: #2c3e50;
-  margin: 0 0 8px 0;
-}
-
-.login-subtitle {
-  font-size: 16px;
-  color: #7f8c8d;
-  margin: 0;
-}
-
-.login-form {
-  width: 100%;
-}
-
-.login-form .el-form-item {
-  margin-bottom: 24px;
-}
-
-.login-button {
-  width: 100%;
-  height: 48px;
-  font-size: 16px;
-  font-weight: 500;
-  border-radius: 8px;
-}
-
-.login-footer {
-  text-align: center;
-  margin-top: 24px;
-}
-
-.login-footer .el-button {
-  color: #667eea;
-  font-size: 14px;
-}
-
-.login-footer .el-button:hover {
-  color: #5a6fd8;
-}
-
-/* 响应式设计 */
-@media (max-width: 480px) {
-  .login-page {
-    padding: 16px;
-  }
-  
-  .login-card {
-    padding: 32px 24px;
-  }
-  
-  .login-title {
-    font-size: 24px;
-  }
-  
-  .login-subtitle {
-    font-size: 14px;
-  }
-}
-</style>

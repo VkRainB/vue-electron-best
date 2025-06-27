@@ -1,0 +1,107 @@
+// ===================================
+// Sass变量定义
+// ===================================
+
+// 滚动条颜色
+$colors: (
+  scrollbar-track: #f1f1f1,
+  scrollbar-thumb: #c1c1c1,
+  scrollbar-thumb-hover: #a8a8a8
+);
+
+// 字体变量
+$font-family-base:
+  Inter,
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  Oxygen,
+  Ubuntu,
+  Cantarell,
+  'Fira Sans',
+  'Droid Sans',
+  'Helvetica Neue',
+  sans-serif;
+
+// 尺寸变量
+$border-radius-sm: 3px;
+$scrollbar-width: 6px;
+$transition-duration: 0.2s;
+
+// ===================================
+// Sass函数和混入
+// ===================================
+
+@use 'sass:map';
+
+// 获取颜色函数（仅用于滚动条）
+@function color($name) {
+  @return map.get($colors, $name);
+}
+
+// 滚动条样式混入
+@mixin custom-scrollbar($width: $scrollbar-width) {
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: color(scrollbar-track);
+    border-radius: $border-radius-sm;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: color(scrollbar-thumb);
+    border-radius: $border-radius-sm;
+    transition: background-color $transition-duration ease;
+
+    &:hover {
+      background: color(scrollbar-thumb-hover);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    background: color(scrollbar-track);
+  }
+}
+
+// ===================================
+// 重置样式（保留基础重置）
+// ===================================
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+// ===================================
+// 全局样式（简化版）
+// ===================================
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  font-family: $font-family-base;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ===================================
+// 滚动条样式（仅保留实际使用的）
+// ===================================
+
+// 主内容区域滚动条
+.main-content {
+  @include custom-scrollbar();
+}
+
+// 通用滚动条样式类
+.custom-scrollbar {
+  @include custom-scrollbar();
+}
