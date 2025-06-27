@@ -4,6 +4,7 @@ export const serviceRegistry = new Map()
 // 注册服务
 export function registerService(serviceName, serviceImplementation) {
   serviceRegistry.set(serviceName, serviceImplementation)
+  console.log(`Service registered: ${serviceName}`)
 }
 
 // 获取服务
@@ -11,19 +12,17 @@ export function getService(serviceName) {
   return serviceRegistry.get(serviceName)
 }
 
-// 自动导入所有服务
-export function loadAllServices() {
-  const servicesContext = import.meta.glob('./*/index.js', { eager: true })
-
-  Object.values(servicesContext).forEach((module) => {
-    if (module.default && typeof module.default === 'object') {
-      // 如果模块有默认导出且是对象，假定它是一个服务
-      const serviceName = module.serviceName || module.default.name
-      if (serviceName) {
-        registerService(serviceName, module.default)
-      }
+// 手动导入所有服务
+export async function loadAllServices() {
+  try {
+    // 导入图片服务
+    const imageModule = await import('./image/index.js')
+    if (imageModule.serviceName && imageModule.default) {
+      registerService(imageModule.serviceName, imageModule.default)
     }
-  })
 
-  console.log('server:', Array.from(serviceRegistry.keys()))
+    console.log('Loaded services:', Array.from(serviceRegistry.keys()))
+  } catch (error) {
+    console.error('Failed to load services:', error)
+  }
 }

@@ -3,20 +3,13 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 import { serviceRegistry, loadAllServices } from './services'
-import { loadAllControllers } from './controllers'
-
-// 加载所有服务和控制器
-loadAllServices()
-loadAllControllers()
 
 // 通道定义
 const CHANNELS = {
-  REQUEST_SERVICE: 'request-service',
   INVOKE_SERVICE_METHOD: 'invoke-service-method'
 }
 
 function createWindow() {
-  // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
     height: 670,
@@ -38,8 +31,7 @@ function createWindow() {
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
+  // 区分开发环境
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
     mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
   } else {
@@ -52,7 +44,7 @@ function createWindow() {
 
 // 设置服务请求处理
 function setupServiceRequests() {
-  // 使用 handle 而不是 on，这样可以返回结果
+  // 使用 handle 处理服务调用
   ipcMain.handle(CHANNELS.INVOKE_SERVICE_METHOD, async (event, { serviceName, method, args }) => {
     try {
       const service = serviceRegistry.get(serviceName)
@@ -79,39 +71,27 @@ function setupServiceRequests() {
   })
 }
 
-app.whenReady().then(() => {
-  // Set app user model id for windows
+app.whenReady().then(async () => {
   electronApp.setAppUserModelId('com.electron')
 
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
+  // 加载所有服务
+  await loadAllServices()
+
   app.on('browser-window-created', (_, window) => {
+    // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
     optimizer.watchWindowShortcuts(window)
   })
-
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
 
   app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
+// 关闭所有窗口自动退出
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-
-// console.log(import.meta.env)
