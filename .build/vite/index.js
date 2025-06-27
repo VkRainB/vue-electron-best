@@ -1,0 +1,4 @@
+// 模块统一导出
+
+export * from './plugin'
+export * from './config'
