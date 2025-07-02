@@ -25,7 +25,6 @@
               v-model="loginForm.password"
               type="password"
               placeholder="请输入密码"
-              size="large"
               prefix-icon="Lock"
               show-password
               class="h-12"
@@ -35,7 +34,6 @@
           <el-form-item>
             <el-button
               type="primary"
-              size="large"
               class="w-full h-12 text-4 font-medium rounded-2"
               @click="handleLogin"
               :loading="loading"
@@ -46,11 +44,7 @@
         </el-form>
 
         <div class="text-center mt-6">
-          <el-button
-            type="text"
-            @click="goToMain"
-            class="text-indigo-600 text-sm hover:text-indigo-800"
-          >
+          <el-button @click="goToMain" class="text-indigo-600 text-sm hover:text-indigo-800">
             跳过登录，直接进入主页
           </el-button>
         </div>

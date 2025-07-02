@@ -34,28 +34,9 @@
         <el-card class="shadow-lg rounded-3 border-0">
           <template #header>
             <div class="font-semibold text-4 text-gray-800">
-              <span>布局特性</span>
+              <span @click="goToIcons">图标</span>
             </div>
           </template>
-
-          <div class="flex flex-col gap-4">
-            <div class="flex items-center gap-3 text-gray-600">
-              <el-icon class="text-green-500 text-lg"><Check /></el-icon>
-              <span>MainLayout: 包含导航栏的主应用布局</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-600">
-              <el-icon class="text-green-500 text-lg"><Check /></el-icon>
-              <span>SimpleLayout: 全屏简洁布局，适用于登录页面</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-600">
-              <el-icon class="text-green-500 text-lg"><Check /></el-icon>
-              <span>响应式设计，支持移动端适配</span>
-            </div>
-            <div class="flex items-center gap-3 text-gray-600">
-              <el-icon class="text-green-500 text-lg"><Check /></el-icon>
-              <span>Element Plus 组件库集成</span>
-            </div>
-          </div>
         </el-card>
       </div>
     </div>
@@ -64,7 +45,7 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { Check } from '@element-plus/icons-vue'
+import { Check, Grid } from '@element-plus/icons-vue'
 
 const router = useRouter()
 
@@ -74,5 +55,9 @@ const goToLogin = () => {
 
 const refreshPage = () => {
   window.location.reload()
+}
+
+const goToIcons = () => {
+  router.push('/icons')
 }
 </script>

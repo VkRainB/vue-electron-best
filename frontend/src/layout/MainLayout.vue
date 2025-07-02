@@ -15,12 +15,20 @@
           </div>
         </div>
 
-        <!-- 右侧：导航菜单预留空间 -->
+        <!-- 右侧：导航菜单 -->
         <div class="flex items-center">
           <div class="flex items-center gap-2 md:gap-1">
-            <!-- 预留导航菜单空间 -->
+            <!-- 图标页面链接 -->
             <el-button
-              type="text"
+              class="text-white! text-sm px-4 py-2 md:px-3 md:py-1.5 md:text-xs rounded-md transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
+              @click="$router.push('/icons')"
+            >
+              <el-icon class="mr-1.5 text-4 sm:mr-0">
+                <Grid />
+              </el-icon>
+              <span class="sm:hidden">图标</span>
+            </el-button>
+            <el-button
               class="text-white! text-sm px-4 py-2 md:px-3 md:py-1.5 md:text-xs rounded-md transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
             >
               <el-icon class="mr-1.5 text-4 sm:mr-0">
@@ -29,7 +37,6 @@
               <span class="sm:hidden">设置</span>
             </el-button>
             <el-button
-              type="text"
               class="text-white! text-sm px-4 py-2 md:px-3 md:py-1.5 md:text-xs rounded-md transition-all duration-300 hover:bg-white/10 hover:-translate-y-0.5"
             >
               <el-icon class="mr-1.5 text-4 sm:mr-0">
@@ -52,7 +59,7 @@
 </template>
 
 <script setup>
-import { House, Setting, User } from '@element-plus/icons-vue'
+import { House, Setting, User, Grid } from '@element-plus/icons-vue'
 </script>
 
 <style scoped>

@@ -1,15 +1,29 @@
 import { defineConfig, presetIcons, presetWind3 } from 'unocss'
 
+import icons from '@iconify-json/weui/icons.json'
+
+const generateSafeList = () => {
+  return Object.keys(icons.icons).flatMap((item) => {
+    return `i-weui-${item}`
+  })
+}
+
+const safeList = generateSafeList()
+
 export default defineConfig({
   presets: [
     presetWind3(),
     presetIcons({
       collections: {
-        // 可以添加更多图标集合
         weui: () => import('@iconify-json/weui/icons.json').then((i) => i.default)
+      },
+      extraProperties: {
+        display: 'inline-block',
+        'vertical-align': 'middle'
       }
     })
   ],
+  safelist: safeList,
   shortcuts: [
     // 自定义快捷方式
     ['card', 'bg-white rounded-lg shadow-md p-6'],

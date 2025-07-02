@@ -17,6 +17,14 @@ const basicRoutes = [
         path: 'home',
         component: () => import('@/views/Home/Index.vue'),
         name: 'Home'
+      },
+      {
+        path: 'icons',
+        component: () => import('@/views/Icons/Index.vue'),
+        name: 'WeUIIcons',
+        meta: {
+          title: 'WeUI 图标集'
+        }
       }
       // 在这里可以添加更多需要主布局的页面
     ]
