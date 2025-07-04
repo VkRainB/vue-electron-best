@@ -1,0 +1,352 @@
+// SidebarLayout 样式文件 - 优化版本
+// 简化代码结构，提升性能，保持功能完整性
+
+// ===== 变量定义 =====
+$sidebar-width: 240px;
+$sidebar-collapsed-width: 64px;
+$header-height: 64px;
+
+// 颜色变量
+$primary-color: #3b82f6;
+$primary-dark: #1d4ed8;
+$border-color: #e5e7eb;
+$bg-light: #f9fafb;
+$bg-white: #ffffff;
+$text-gray: #6b7280;
+$shadow-light: rgba(0, 0, 0, 0.05);
+$shadow-medium: rgba(0, 0, 0, 0.1);
+
+// 过渡效果
+$transition-fast: 0.2s ease;
+$transition-normal: 0.3s ease;
+
+// ===== 主布局容器 =====
+.sidebar-layout {
+  background-color: $bg-light;
+
+  // ===== 侧边栏样式 =====
+  .sidebar {
+    position: relative;
+    z-index: 100;
+
+    .sidebar-content {
+      background: $bg-white;
+    }
+
+    // 侧边栏头部
+    .sidebar-header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(255, 255, 255, 0.2) 50%,
+          transparent 100%
+        );
+      }
+    }
+
+    // 侧边栏菜单
+    .sidebar-menu {
+      padding: 12px 8px;
+
+      .sidebar-menu-item {
+        font-weight: 500;
+        border-radius: 8px;
+        margin-bottom: 4px;
+        transition: all $transition-fast;
+        will-change: transform, background-color;
+
+        &:hover {
+          background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+          transform: translateX(2px);
+          box-shadow: 0 2px 4px $shadow-light;
+
+          .el-icon {
+            transform: scale(1.1);
+          }
+        }
+
+        &.router-link-active {
+          background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+          color: $primary-color;
+          border-right: 3px solid $primary-color;
+
+          &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: linear-gradient(180deg, $primary-color 0%, $primary-dark 100%);
+            border-radius: 0 2px 2px 0;
+          }
+        }
+
+        .el-icon {
+          transition: transform $transition-fast;
+        }
+      }
+    }
+
+    // 侧边栏底部
+    .sidebar-footer {
+      background: linear-gradient(180deg, $bg-light 0%, #f3f4f6 100%);
+      border-top: 1px solid $border-color;
+
+      button {
+        width: 100%;
+        font-weight: 500;
+        transition: all $transition-fast;
+
+        &:hover {
+          background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+          transform: translateY(-1px);
+          box-shadow: 0 2px 4px $shadow-medium;
+        }
+      }
+    }
+  }
+
+  // ===== 顶部工具栏 =====
+  .header-toolbar {
+    background: linear-gradient(135deg, $bg-white 0%, #f8fafc 100%);
+    border-bottom: 1px solid $border-color;
+    box-shadow: 0 1px 3px $shadow-light;
+
+    // 面包屑导航
+    .el-breadcrumb .el-breadcrumb__item .el-breadcrumb__inner {
+      font-weight: 500;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $primary-color;
+      }
+    }
+
+    // 工具栏按钮
+    .toolbar-button {
+      font-weight: 500;
+      transition: all $transition-fast;
+      will-change: transform;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px $shadow-medium;
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  // ===== 主内容区域 =====
+  .el-main {
+    background: linear-gradient(135deg, $bg-light 0%, #f3f4f6 100%);
+
+    .router-view-content > div {
+      background: $bg-white;
+      border-radius: 12px;
+      box-shadow:
+        0 1px 3px $shadow-light,
+        0 1px 2px $shadow-medium;
+      transition: box-shadow $transition-fast;
+
+      &:hover {
+        box-shadow:
+          0 4px 6px $shadow-light,
+          0 2px 4px $shadow-medium;
+      }
+    }
+  }
+}
+
+// ===== 响应式设计 =====
+// 平板端适配
+@media (max-width: 1024px) {
+  .sidebar-layout {
+    .sidebar .sidebar-menu {
+      padding: 8px 6px;
+
+      .sidebar-menu-item {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+    }
+
+    .header-toolbar {
+      padding: 0 16px;
+
+      .el-breadcrumb {
+        font-size: 13px;
+      }
+    }
+
+    .el-main .router-view-content > div {
+      padding: 16px;
+    }
+  }
+}
+
+// 移动端适配
+@media (max-width: 768px) {
+  .sidebar-layout {
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+
+      &.collapsed {
+        transform: translateX(-100%);
+      }
+    }
+
+    .header-toolbar {
+      padding: 0 12px;
+
+      .toolbar-button {
+        padding: 6px 8px;
+        font-size: 12px;
+
+        span {
+          display: none;
+        }
+      }
+    }
+
+    .el-main .router-view-content > div {
+      padding: 12px;
+      border-radius: 8px;
+    }
+  }
+}
+
+// 小屏幕适配
+@media (max-width: 640px) {
+  .sidebar-layout {
+    .header-toolbar {
+      padding: 0 8px;
+
+      .el-breadcrumb {
+        font-size: 12px;
+
+        .el-breadcrumb__item:not(:last-child) .el-breadcrumb__inner {
+          max-width: 60px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+      }
+    }
+
+    .el-main .router-view-content > div {
+      padding: 8px;
+    }
+  }
+}
+
+// ===== 暗色主题支持 =====
+.dark .sidebar-layout {
+  background-color: #111827;
+
+  .sidebar {
+    .sidebar-content {
+      background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+    }
+
+    .sidebar-header {
+      background: linear-gradient(135deg, #374151 0%, #1f2937 100%);
+    }
+
+    .sidebar-menu .sidebar-menu-item {
+      color: #d1d5db;
+
+      &:hover {
+        background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+        color: #f3f4f6;
+      }
+
+      &.router-link-active {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 100%);
+        color: #dbeafe;
+      }
+    }
+
+    .sidebar-footer {
+      background: linear-gradient(180deg, #1f2937 0%, #111827 100%);
+      border-top-color: #374151;
+
+      button {
+        color: #d1d5db;
+
+        &:hover {
+          background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+          color: #f3f4f6;
+        }
+      }
+    }
+  }
+
+  .header-toolbar {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    border-bottom-color: #374151;
+    color: #d1d5db;
+  }
+
+  .el-main {
+    background: linear-gradient(135deg, #111827 0%, #0f172a 100%);
+
+    .router-view-content > div {
+      background: #1f2937;
+      color: #d1d5db;
+    }
+  }
+}
+
+// ===== 动画效果 =====
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.sidebar-menu-item {
+  animation: slideIn 0.3s ease-out;
+}
+
+// ===== 滚动条样式 =====
+.sidebar-menu::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+  background: rgba(156, 163, 175, 0.3);
+  border-radius: 2px;
+
+  &:hover {
+    background: rgba(156, 163, 175, 0.5);
+  }
+}

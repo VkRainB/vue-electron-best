@@ -25,13 +25,39 @@
               @click="goToIcons"
               class="action-button primary-button"
             >
-              <el-icon class="mr-2"><Grid /></el-icon>
+              <Icon
+                name="gallery"
+                category="system"
+                size="20px"
+                color="white"
+                class="mr-2"
+                :tooltip="'图标库'"
+              />
               浏览图标库
             </el-button>
 
             <el-button size="large" @click="goToLogin" class="action-button secondary-button">
-              <el-icon class="mr-2"><User /></el-icon>
+              <Icon
+                name="login"
+                category="user"
+                size="20px"
+                color="currentColor"
+                class="mr-2"
+                :tooltip="'登录页面'"
+              />
               查看登录页
+            </el-button>
+
+            <el-button size="large" @click="goToSidebar" class="action-button secondary-button">
+              <Icon
+                name="dashboard"
+                category="system"
+                size="20px"
+                color="currentColor"
+                class="mr-2"
+                :tooltip="'管理后台'"
+              />
+              管理后台
             </el-button>
           </div>
         </div>
@@ -55,7 +81,13 @@
           <!-- 技术栈特性 -->
           <div class="feature-card tech-card" @click="handleFeatureClick('tech')">
             <div class="card-icon tech-icon">
-              <el-icon><Setting /></el-icon>
+              <Icon
+                name="tools"
+                category="tool"
+                size="32px"
+                color="currentColor"
+                :tooltip="'现代技术栈'"
+              />
             </div>
             <h3 class="card-title">现代技术栈</h3>
             <p class="card-description">Vue 3 Composition API + Element Plus + UnoCSS</p>
@@ -69,7 +101,13 @@
           <!-- 图标库特性 -->
           <div class="feature-card icons-card" @click="goToIcons">
             <div class="card-icon icons-icon">
-              <el-icon><Grid /></el-icon>
+              <Icon
+                name="gallery"
+                category="system"
+                size="32px"
+                color="currentColor"
+                :tooltip="'图标库'"
+              />
             </div>
             <h3 class="card-title">丰富图标库</h3>
             <p class="card-description">WeUI 图标集，支持搜索、预览和一键复制</p>
@@ -88,7 +126,12 @@
           <!-- 响应式设计特性 -->
           <div class="feature-card responsive-card" @click="handleFeatureClick('responsive')">
             <div class="card-icon responsive-icon">
-              <el-icon><Monitor /></el-icon>
+              <Icon
+                name="i-weui-computer-outlined"
+                size="32px"
+                color="currentColor"
+                :tooltip="'响应式设计'"
+              />
             </div>
             <h3 class="card-title">响应式设计</h3>
             <p class="card-description">适配各种屏幕尺寸，完美的移动端体验</p>
@@ -128,7 +171,8 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { Check, Grid, User, Setting, Monitor } from '@element-plus/icons-vue'
+import { Check } from '@element-plus/icons-vue'
+import Icon from '@/components/Icon.vue'
 
 const router = useRouter()
 
@@ -139,6 +183,10 @@ const goToLogin = () => {
 
 const goToIcons = () => {
   router.push('/icons')
+}
+
+const goToSidebar = () => {
+  router.push('/sidebar/dashboard')
 }
 
 // 特性点击处理

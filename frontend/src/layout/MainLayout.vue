@@ -5,15 +5,13 @@
       class="header-container h-16 bg-gradient-to-r from-indigo-500 to-purple-600 border-b border-gray-200 shadow-lg p-0 flex items-center relative z-1000"
     >
       <div class="w-full h-full flex items-center justify-between px-6 md:px-4 sm:px-3">
-        <!-- 左侧：应用标题/Logo -->
+        <!-- 左侧：应用标题 Logo -->
         <div class="flex items-center">
           <div class="flex items-center gap-3 text-white font-semibold text-lg">
             <div
               class="logo-icon w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
             >
-              <el-icon class="text-5 text-white">
-                <House />
-              </el-icon>
+              <span class="i-weui-home-outlined"></span>
             </div>
             <span class="text-white font-semibold tracking-wide md:hidden">Vue Electron App</span>
           </div>
@@ -27,10 +25,23 @@
               class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
               @click="$router.push('/icons')"
             >
-              <el-icon class="text-4">
-                <Grid />
-              </el-icon>
+              <Icon name="gallery" category="system" size="16px" color="white" tooltip="图标" />
               <span class="sm:hidden">图标</span>
+            </button>
+
+            <!-- 侧边栏布局链接 -->
+            <button
+              class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
+              @click="$router.push('/sidebar/dashboard')"
+            >
+              <Icon
+                name="menu"
+                category="navigation"
+                size="16px"
+                color="white"
+                tooltip="管理后台"
+              />
+              <span class="sm:hidden">管理后台</span>
             </button>
 
             <!-- 主题切换按钮 -->
@@ -39,9 +50,13 @@
               @click="toggleTheme"
               :title="isDark ? '切换到亮色主题' : '切换到暗色主题'"
             >
-              <el-icon class="text-4">
-                <component :is="isDark ? 'Sunny' : 'Moon'" />
-              </el-icon>
+              <Icon
+                :name="isDark ? 'light' : 'dark'"
+                category="theme"
+                size="16px"
+                color="white"
+                :tooltip="isDark ? '切换到亮色主题' : '切换到暗色主题'"
+              />
               <span class="sm:hidden">{{ isDark ? '亮色' : '暗色' }}</span>
             </button>
 
@@ -51,9 +66,7 @@
               @click="toggleSidebar"
               :title="showSidebar ? '隐藏侧边栏' : '显示侧边栏'"
             >
-              <el-icon class="text-4">
-                <Menu />
-              </el-icon>
+              <Icon name="menu" category="navigation" size="16px" color="white" :tooltip="'菜单'" />
               <span class="sm:hidden">菜单</span>
             </button>
 
@@ -62,9 +75,7 @@
               class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
               @click="handleSettings"
             >
-              <el-icon class="text-4">
-                <Setting />
-              </el-icon>
+              <Icon name="settings" category="user" size="16px" color="white" :tooltip="'设置'" />
               <span class="sm:hidden">设置</span>
             </button>
 
@@ -73,26 +84,46 @@
               <button
                 class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
               >
-                <el-icon class="text-4">
-                  <User />
-                </el-icon>
+                <Icon name="user" category="user" size="16px" color="white" :tooltip="'用户菜单'" />
                 <span class="sm:hidden">用户</span>
-                <el-icon class="text-3 sm:hidden">
-                  <ArrowDown />
-                </el-icon>
+                <Icon
+                  name="down"
+                  category="navigation"
+                  size="12px"
+                  color="white"
+                  class="sm:hidden"
+                />
               </button>
               <template #dropdown>
                 <el-dropdown-menu class="user-dropdown">
                   <el-dropdown-item @click="handleProfile">
-                    <el-icon class="mr-2"><User /></el-icon>
+                    <Icon
+                      name="profile"
+                      category="user"
+                      size="16px"
+                      color="currentColor"
+                      class="mr-2"
+                    />
                     个人资料
                   </el-dropdown-item>
                   <el-dropdown-item @click="handleSettings">
-                    <el-icon class="mr-2"><Setting /></el-icon>
+                    <Icon
+                      name="settings"
+                      category="user"
+                      size="16px"
+                      color="currentColor"
+                      class="mr-2"
+                    />
                     设置
                   </el-dropdown-item>
                   <el-dropdown-item divided @click="handleLogout">
-                    <el-icon class="mr-2"><SwitchButton /></el-icon>
+                    <Icon
+                      name="logout"
+                      category="user"
+                      size="16px"
+                      color="currentColor"
+                      class="mr-2"
+                    />
                     退出登录
                   </el-dropdown-item>
                 </el-dropdown-menu>
@@ -223,22 +254,11 @@
 
 <script setup>
 import { computed, watch } from 'vue'
-import {
-  House,
-  Setting,
-  User,
-  Grid,
-  ArrowDown,
-  SwitchButton,
-  Menu,
-  Sunny,
-  Moon,
-  Expand,
-  Fold
-} from '@element-plus/icons-vue'
+import { House } from '@element-plus/icons-vue'
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { useAppStore, useThemeStore } from '@/store'
+import Icon from '@/components/Icon.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -332,188 +352,4 @@ watch(route, () => {
 })
 </script>
 
-<style scoped>
-/* 头部容器样式 */
-.header-container {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* Logo图标样式 */
-.logo-icon {
-  transition: all 0.3s ease;
-}
-
-.logo-icon:hover {
-  transform: scale(1.05);
-  background: rgba(255, 255, 255, 0.3);
-}
-
-/* 导航按钮样式 */
-.nav-button {
-  position: relative;
-  border: none;
-  background: none;
-  cursor: pointer;
-  outline: none;
-  min-height: 36px;
-  border-radius: 8px;
-}
-
-.nav-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.nav-button:active {
-  transform: translateY(0);
-}
-
-/* 用户下拉菜单样式 */
-:deep(.user-dropdown) {
-  border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-:deep(.user-dropdown .el-dropdown-menu__item) {
-  padding: 12px 16px;
-  font-size: 14px;
-  transition: all 0.2s ease;
-}
-
-:deep(.user-dropdown .el-dropdown-menu__item:hover) {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-/* 侧边栏样式 */
-.sidebar {
-  transition: width 0.3s ease;
-}
-
-.sidebar-menu-item {
-  position: relative;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  min-height: 40px;
-}
-
-.sidebar-menu-item.router-link-active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.sidebar-menu-item.router-link-active:hover {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-}
-
-.sidebar-menu-item:not(.router-link-active):hover {
-  background-color: #f3f4f6;
-  color: #4f46e5;
-}
-
-/* 面包屑样式 */
-.breadcrumb-container {
-  transition: all 0.3s ease;
-}
-
-:deep(.el-breadcrumb__item) {
-  font-weight: 500;
-}
-
-:deep(.el-breadcrumb__item:last-child .el-breadcrumb__inner) {
-  color: #4f46e5;
-  font-weight: 600;
-}
-
-:deep(.el-breadcrumb__item .el-breadcrumb__inner:hover) {
-  color: #4f46e5;
-}
-
-/* 确保路由视图内容正确显示 */
-:deep(.router-view-content) {
-  width: 100%;
-  min-height: 100%;
-}
-
-/* 响应式设计 */
-@media (max-width: 768px) {
-  .nav-button {
-    min-height: 32px;
-    padding: 8px 12px !important;
-  }
-
-  .logo-icon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .sidebar {
-    position: fixed;
-    top: 64px;
-    left: 0;
-    height: calc(100vh - 64px);
-    z-index: 1000;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-  }
-
-  .breadcrumb-container {
-    padding: 12px 16px;
-  }
-}
-
-@media (max-width: 640px) {
-  .nav-button span {
-    display: none;
-  }
-
-  .nav-button {
-    padding: 8px !important;
-    min-width: 36px;
-    justify-content: center;
-  }
-
-  .breadcrumb-container {
-    padding: 8px 12px;
-  }
-
-  :deep(.el-breadcrumb) {
-    font-size: 12px;
-  }
-}
-
-/* 暗色主题适配 */
-:deep(.theme-dark) {
-  .sidebar {
-    background-color: #1f2937;
-    border-color: #374151;
-  }
-
-  .sidebar-header {
-    border-color: #374151;
-  }
-
-  .sidebar-menu-item {
-    color: #d1d5db;
-  }
-
-  .sidebar-menu-item:not(.router-link-active):hover {
-    background-color: #374151;
-    color: #f3f4f6;
-  }
-
-  .sidebar-footer {
-    border-color: #374151;
-  }
-
-  .breadcrumb-container {
-    background-color: #1f2937;
-    border-color: #374151;
-  }
-}
-</style>
+<style scoped></style>

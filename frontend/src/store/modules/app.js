@@ -22,12 +22,27 @@ export const useAppStore = defineStore('app', () => {
     showSidebar: false,
     // 侧边栏折叠状态
     sidebarCollapsed: false,
+    // 当前布局类型
+    layoutType: 'main', // 'simple' | 'main' | 'sidebar'
     // 是否全屏模式
     isFullscreen: false,
     // 窗口大小
     windowSize: {
       width: 1200,
       height: 800
+    },
+    // SidebarLayout 特有配置
+    sidebarLayout: {
+      // 侧边栏宽度
+      sidebarWidth: 240,
+      // 侧边栏折叠宽度
+      sidebarCollapsedWidth: 64,
+      // 是否显示面包屑
+      showBreadcrumb: true,
+      // 是否固定侧边栏
+      fixedSidebar: true,
+      // 移动端自动折叠
+      autoCollapseOnMobile: true
     }
   })
 
@@ -101,16 +116,39 @@ export const useAppStore = defineStore('app', () => {
     config.value.locale = locale
   }
 
+  // 设置布局类型
+  const setLayoutType = (type) => {
+    config.value.layoutType = type
+  }
+
+  // 更新SidebarLayout配置
+  const updateSidebarLayoutConfig = (newConfig) => {
+    config.value.sidebarLayout = { ...config.value.sidebarLayout, ...newConfig }
+  }
+
+  // 切换面包屑显示
+  const toggleBreadcrumb = () => {
+    config.value.sidebarLayout.showBreadcrumb = !config.value.sidebarLayout.showBreadcrumb
+  }
+
   // 重置应用状态
   const resetApp = () => {
     config.value = {
       locale: 'zh-CN',
       showSidebar: false,
       sidebarCollapsed: false,
+      layoutType: 'main',
       isFullscreen: false,
       windowSize: {
         width: 1200,
         height: 800
+      },
+      sidebarLayout: {
+        sidebarWidth: 240,
+        sidebarCollapsedWidth: 64,
+        showBreadcrumb: true,
+        fixedSidebar: true,
+        autoCollapseOnMobile: true
       }
     }
     clearError()
@@ -139,6 +177,9 @@ export const useAppStore = defineStore('app', () => {
     setFullscreen,
     updateWindowSize,
     setLocale,
+    setLayoutType,
+    updateSidebarLayoutConfig,
+    toggleBreadcrumb,
     resetApp
   }
 })
