@@ -1,30 +1,25 @@
-import eslintConfig from '@electron-toolkit/eslint-config'
-import eslintConfigPrettier from '@electron-toolkit/eslint-config-prettier'
-import eslintPluginVue from 'eslint-plugin-vue'
-import vueParser from 'vue-eslint-parser'
+import antfu from '@antfu/eslint-config';
 
-export default [
-  { ignores: ['**/node_modules', '**/dist', '**/out'] },
-  eslintConfig,
-  ...eslintPluginVue.configs['flat/recommended'],
-  {
-    files: ['**/*.vue'],
-    languageOptions: {
-      parser: vueParser,
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true
+// 使用 antfu 配置
+export default antfu({
+  vue: {
+    overrides: {
+      'vue/block-order': [
+        'error',
+        {
+          order: [['template', 'script'], 'style'],
         },
-        extraFileExtensions: ['.vue']
-      }
-    }
+      ],
+    },
   },
-  {
-    files: ['**/*.{js,jsx,vue}'],
-    rules: {
-      'vue/require-default-prop': 'off',
-      'vue/multi-word-component-names': 'off'
-    }
+  stylistic: {
+    indent: 2, // 缩进
+    semi: true, // 语句分号
+    quotes: 'single', // 单引号
   },
-  eslintConfigPrettier
-]
+  rules: {
+    'new-cap': ['off', { newIsCap: true, capIsNew: false }],
+    'no-console': 'off', // 忽略console
+  },
+  ignores: ['**/dist/**', '**/out/**', '**/node_modules/**', '**/*.min.js', '**/build/**', 'frontend/types/**'],
+});

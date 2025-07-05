@@ -1,3 +1,103 @@
+<script setup>
+import { House } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
+import { computed, watch } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import Icon from '@/components/icon/index.vue';
+import { useAppStore, useThemeStore } from '@/store';
+
+const router = useRouter();
+const route = useRoute();
+const appStore = useAppStore();
+const themeStore = useThemeStore();
+
+// 响应式状态
+const showSidebar = computed(() => appStore.config.showSidebar);
+const sidebarCollapsed = computed(() => appStore.config.sidebarCollapsed);
+const isDark = computed(() => themeStore.isDark);
+
+// 面包屑导航配置
+const showBreadcrumb = computed(() => route.path !== '/' && route.path !== '/home');
+
+// 面包屑项目
+const breadcrumbItems = computed(() => {
+  const pathSegments = route.path.split('/').filter(Boolean);
+  const items = [{ title: '首页', path: '/home', icon: 'House' }];
+
+  let currentPath = '';
+  pathSegments.forEach((segment) => {
+    currentPath += `/${segment}`;
+
+    // 根据路径生成面包屑项目
+    let title = segment;
+    let icon = null;
+
+    switch (segment) {
+      case 'icons':
+        title = '图标库';
+        icon = 'Grid';
+        break;
+      case 'auth':
+        title = '认证';
+        icon = 'User';
+        break;
+      case 'login':
+        title = '登录';
+        break;
+      case 'settings':
+        title = '设置';
+        icon = 'Setting';
+        break;
+      default:
+        title = segment.charAt(0).toUpperCase() + segment.slice(1);
+    }
+
+    items.push({ title, path: currentPath, icon });
+  });
+
+  return items;
+});
+
+// 切换主题
+function toggleTheme() {
+  themeStore.toggleTheme();
+  ElMessage.success(`已切换到${themeStore.isDark ? '暗色' : '亮色'}主题`);
+}
+
+// 切换侧边栏显示
+function toggleSidebar() {
+  appStore.toggleSidebar();
+}
+
+// 切换侧边栏折叠状态
+function toggleSidebarCollapse() {
+  appStore.toggleSidebarCollapse();
+}
+
+// 处理设置点击
+function handleSettings() {
+  ElMessage.info('设置功能开发中...');
+}
+
+// 处理个人资料点击
+function handleProfile() {
+  ElMessage.info('个人资料功能开发中...');
+}
+
+// 处理退出登录
+function handleLogout() {
+  ElMessage.success('已退出登录');
+  router.push('/auth/login');
+}
+
+// 监听路由变化，在移动端自动隐藏侧边栏
+watch(route, () => {
+  if (window.innerWidth < 768 && showSidebar.value) {
+    appStore.toggleSidebar();
+  }
+});
+</script>
+
 <template>
   <el-container class="main-content w-screen h-screen overflow-hidden">
     <!-- 顶部导航栏 -->
@@ -8,10 +108,8 @@
         <!-- 左侧：应用标题 Logo -->
         <div class="flex items-center">
           <div class="flex items-center gap-3 text-white font-semibold text-lg">
-            <div
-              class="logo-icon w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm"
-            >
-              <span class="i-weui-home-outlined"></span>
+            <div class="logo-icon w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+              <span class="i-weui-home-outlined" />
             </div>
             <span class="text-white font-semibold tracking-wide md:hidden">Vue Electron App</span>
           </div>
@@ -34,21 +132,15 @@
               class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
               @click="$router.push('/sidebar/dashboard')"
             >
-              <Icon
-                name="menu"
-                category="navigation"
-                size="16px"
-                color="white"
-                tooltip="管理后台"
-              />
+              <Icon name="menu" category="navigation" size="16px" color="white" tooltip="管理后台" />
               <span class="sm:hidden">管理后台</span>
             </button>
 
             <!-- 主题切换按钮 -->
             <button
               class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
-              @click="toggleTheme"
               :title="isDark ? '切换到亮色主题' : '切换到暗色主题'"
+              @click="toggleTheme"
             >
               <Icon
                 :name="isDark ? 'light' : 'dark'"
@@ -63,10 +155,10 @@
             <!-- 侧边栏切换按钮 -->
             <button
               class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
-              @click="toggleSidebar"
               :title="showSidebar ? '隐藏侧边栏' : '显示侧边栏'"
+              @click="toggleSidebar"
             >
-              <Icon name="menu" category="navigation" size="16px" color="white" :tooltip="'菜单'" />
+              <Icon name="menu" category="navigation" size="16px" color="white" tooltip="菜单" />
               <span class="sm:hidden">菜单</span>
             </button>
 
@@ -75,7 +167,7 @@
               class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
               @click="handleSettings"
             >
-              <Icon name="settings" category="user" size="16px" color="white" :tooltip="'设置'" />
+              <Icon name="settings" category="user" size="16px" color="white" tooltip="设置" />
               <span class="sm:hidden">设置</span>
             </button>
 
@@ -84,46 +176,22 @@
               <button
                 class="nav-button flex items-center gap-2 px-3 py-2 text-white/90 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200 text-sm font-medium"
               >
-                <Icon name="user" category="user" size="16px" color="white" :tooltip="'用户菜单'" />
+                <Icon name="user" category="user" size="16px" color="white" tooltip="用户菜单" />
                 <span class="sm:hidden">用户</span>
-                <Icon
-                  name="down"
-                  category="navigation"
-                  size="12px"
-                  color="white"
-                  class="sm:hidden"
-                />
+                <Icon name="down" category="navigation" size="12px" color="white" class="sm:hidden" />
               </button>
               <template #dropdown>
                 <el-dropdown-menu class="user-dropdown">
                   <el-dropdown-item @click="handleProfile">
-                    <Icon
-                      name="profile"
-                      category="user"
-                      size="16px"
-                      color="currentColor"
-                      class="mr-2"
-                    />
+                    <Icon name="profile" category="user" size="16px" color="currentColor" class="mr-2" />
                     个人资料
                   </el-dropdown-item>
                   <el-dropdown-item @click="handleSettings">
-                    <Icon
-                      name="settings"
-                      category="user"
-                      size="16px"
-                      color="currentColor"
-                      class="mr-2"
-                    />
+                    <Icon name="settings" category="user" size="16px" color="currentColor" class="mr-2" />
                     设置
                   </el-dropdown-item>
                   <el-dropdown-item divided @click="handleLogout">
-                    <Icon
-                      name="logout"
-                      category="user"
-                      size="16px"
-                      color="currentColor"
-                      class="mr-2"
-                    />
+                    <Icon name="logout" category="user" size="16px" color="currentColor" class="mr-2" />
                     退出登录
                   </el-dropdown-item>
                 </el-dropdown-menu>
@@ -150,7 +218,7 @@
                 class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center"
               >
                 <el-icon class="text-white text-4">
-                  <Grid />
+                  <Icon :name="`el-icon-${item.icon}`" size="1.2em" class="text-white text-4" />
                 </el-icon>
               </div>
               <span class="font-semibold text-gray-800">导航菜单</span>
@@ -160,7 +228,7 @@
                 class="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center"
               >
                 <el-icon class="text-white text-4">
-                  <Grid />
+                  <Icon :name="`el-icon-${item.icon}`" size="1.2em" class="text-white text-4" />
                 </el-icon>
               </div>
             </div>
@@ -175,7 +243,7 @@
                 :class="{ 'justify-center': sidebarCollapsed }"
               >
                 <el-icon class="text-5 flex-shrink-0">
-                  <House />
+                  <Icon :name="`el-icon-${item.icon}`" size="1.5em" class="text-5 flex-shrink-0" />
                 </el-icon>
                 <span v-if="!sidebarCollapsed" class="font-medium">首页</span>
               </router-link>
@@ -186,7 +254,7 @@
                 :class="{ 'justify-center': sidebarCollapsed }"
               >
                 <el-icon class="text-5 flex-shrink-0">
-                  <Grid />
+                  <Icon :name="`el-icon-${item.icon}`" size="1.5em" class="text-5 flex-shrink-0" />
                 </el-icon>
                 <span v-if="!sidebarCollapsed" class="font-medium">图标库</span>
               </router-link>
@@ -197,7 +265,7 @@
                 @click="handleSettings"
               >
                 <el-icon class="text-5 flex-shrink-0">
-                  <Setting />
+                  <Icon :name="`el-icon-${item.icon}`" size="1.5em" class="text-5 flex-shrink-0" />
                 </el-icon>
                 <span v-if="!sidebarCollapsed" class="font-medium">设置</span>
               </div>
@@ -207,12 +275,12 @@
           <!-- 侧边栏底部 -->
           <div class="sidebar-footer p-2 border-t border-gray-100">
             <button
-              @click="toggleSidebarCollapse"
               class="w-full flex items-center justify-center p-2 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-200"
               :title="sidebarCollapsed ? '展开侧边栏' : '折叠侧边栏'"
+              @click="toggleSidebarCollapse"
             >
               <el-icon class="text-5">
-                <component :is="sidebarCollapsed ? 'Expand' : 'Fold'" />
+                <Icon :name="`el-icon-${sidebarCollapsed ? 'expand' : 'fold'}`" size="1.5em" class="text-5" />
               </el-icon>
             </button>
           </div>
@@ -222,10 +290,7 @@
       <!-- 主内容区域 -->
       <el-main class="p-0 overflow-hidden flex flex-col bg-gray-50">
         <!-- 面包屑导航 -->
-        <div
-          v-if="showBreadcrumb"
-          class="breadcrumb-container bg-white border-b border-gray-100 px-6 py-3"
-        >
+        <div v-if="showBreadcrumb" class="breadcrumb-container bg-white border-b border-gray-100 px-6 py-3">
           <el-breadcrumb separator="/" class="text-sm">
             <el-breadcrumb-item
               v-for="item in breadcrumbItems"
@@ -234,7 +299,7 @@
               class="text-gray-600 hover:text-indigo-600"
             >
               <el-icon v-if="item.icon" class="mr-1">
-                <component :is="item.icon" />
+                <Icon :name="`el-icon-${item.icon}`" size="1.2em" class="text-gray-600 mr-1" />
               </el-icon>
               {{ item.title }}
             </el-breadcrumb-item>
@@ -251,105 +316,5 @@
     </el-container>
   </el-container>
 </template>
-
-<script setup>
-import { computed, watch } from 'vue'
-import { House } from '@element-plus/icons-vue'
-import { useRouter, useRoute } from 'vue-router'
-import { ElMessage } from 'element-plus'
-import { useAppStore, useThemeStore } from '@/store'
-import Icon from '@/components/Icon.vue'
-
-const router = useRouter()
-const route = useRoute()
-const appStore = useAppStore()
-const themeStore = useThemeStore()
-
-// 响应式状态
-const showSidebar = computed(() => appStore.config.showSidebar)
-const sidebarCollapsed = computed(() => appStore.config.sidebarCollapsed)
-const isDark = computed(() => themeStore.isDark)
-
-// 面包屑导航配置
-const showBreadcrumb = computed(() => route.path !== '/' && route.path !== '/home')
-
-// 面包屑项目
-const breadcrumbItems = computed(() => {
-  const pathSegments = route.path.split('/').filter(Boolean)
-  const items = [{ title: '首页', path: '/home', icon: 'House' }]
-
-  let currentPath = ''
-  pathSegments.forEach((segment) => {
-    currentPath += `/${segment}`
-
-    // 根据路径生成面包屑项目
-    let title = segment
-    let icon = null
-
-    switch (segment) {
-      case 'icons':
-        title = '图标库'
-        icon = 'Grid'
-        break
-      case 'auth':
-        title = '认证'
-        icon = 'User'
-        break
-      case 'login':
-        title = '登录'
-        break
-      case 'settings':
-        title = '设置'
-        icon = 'Setting'
-        break
-      default:
-        title = segment.charAt(0).toUpperCase() + segment.slice(1)
-    }
-
-    items.push({ title, path: currentPath, icon })
-  })
-
-  return items
-})
-
-// 切换主题
-const toggleTheme = () => {
-  themeStore.toggleTheme()
-  ElMessage.success(`已切换到${themeStore.isDark ? '暗色' : '亮色'}主题`)
-}
-
-// 切换侧边栏显示
-const toggleSidebar = () => {
-  appStore.toggleSidebar()
-}
-
-// 切换侧边栏折叠状态
-const toggleSidebarCollapse = () => {
-  appStore.toggleSidebarCollapse()
-}
-
-// 处理设置点击
-const handleSettings = () => {
-  ElMessage.info('设置功能开发中...')
-}
-
-// 处理个人资料点击
-const handleProfile = () => {
-  ElMessage.info('个人资料功能开发中...')
-}
-
-// 处理退出登录
-const handleLogout = () => {
-  ElMessage.success('已退出登录')
-  router.push('/auth/login')
-}
-
-// 监听路由变化，在移动端自动隐藏侧边栏
-watch(route, () => {
-  if (window.innerWidth < 768 && showSidebar.value) {
-    appStore.toggleSidebar()
-  }
-})
-</script>
 
 <style scoped></style>

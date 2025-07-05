@@ -8,9 +8,7 @@
 
     <!-- 统计卡片 -->
     <div class="stats-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      <div
-        class="stat-card bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg"
-      >
+      <div class="stat-card bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-blue-100 text-sm font-medium">总用户数</p>
@@ -28,9 +26,7 @@
         </div>
       </div>
 
-      <div
-        class="stat-card bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl shadow-lg"
-      >
+      <div class="stat-card bg-gradient-to-r from-green-500 to-green-600 text-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-green-100 text-sm font-medium">活跃用户</p>
@@ -48,9 +44,7 @@
         </div>
       </div>
 
-      <div
-        class="stat-card bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg"
-      >
+      <div class="stat-card bg-gradient-to-r from-purple-500 to-purple-600 text-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-purple-100 text-sm font-medium">数据量</p>
@@ -68,9 +62,7 @@
         </div>
       </div>
 
-      <div
-        class="stat-card bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6 rounded-xl shadow-lg"
-      >
+      <div class="stat-card bg-gradient-to-r from-orange-500 to-orange-600 text-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
             <p class="text-orange-100 text-sm font-medium">收入</p>
@@ -127,13 +119,7 @@
             class="h-16 flex flex-col items-center justify-center"
             @click="handleAction('add-user')"
           >
-            <Icon
-              name="i-weui-add-outlined"
-              size="20px"
-              color="white"
-              class="mb-1"
-              :tooltip="'添加用户'"
-            />
+            <Icon name="i-weui-add-outlined" size="20px" color="white" class="mb-1" :tooltip="'添加用户'" />
             <span class="text-sm">添加用户</span>
           </el-button>
 
@@ -143,13 +129,7 @@
             class="h-16 flex flex-col items-center justify-center"
             @click="handleAction('export-data')"
           >
-            <Icon
-              name="i-weui-download-outlined"
-              size="20px"
-              color="white"
-              class="mb-1"
-              :tooltip="'导出数据'"
-            />
+            <Icon name="i-weui-download-outlined" size="20px" color="white" class="mb-1" :tooltip="'导出数据'" />
             <span class="text-sm">导出数据</span>
           </el-button>
 
@@ -187,12 +167,8 @@
         <el-link type="primary" :underline="false">查看全部</el-link>
       </div>
       <div class="activity-list space-y-4">
-        <div
-          class="activity-item flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors"
-        >
-          <div
-            class="activity-icon w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center"
-          >
+        <div class="activity-item flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
+          <div class="activity-icon w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center">
             <el-icon>
               <User />
             </el-icon>
@@ -204,9 +180,7 @@
           <div class="activity-time text-gray-400 text-sm">2分钟前</div>
         </div>
 
-        <div
-          class="activity-item flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors"
-        >
+        <div class="activity-item flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
           <div
             class="activity-icon w-10 h-10 bg-green-100 text-green-600 rounded-full flex items-center justify-center"
           >
@@ -221,9 +195,7 @@
           <div class="activity-time text-gray-400 text-sm">5分钟前</div>
         </div>
 
-        <div
-          class="activity-item flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors"
-        >
+        <div class="activity-item flex items-center gap-4 p-3 hover:bg-gray-50 rounded-lg transition-colors">
           <div
             class="activity-icon w-10 h-10 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center"
           >
@@ -252,10 +224,10 @@ import {
   TrendCharts,
   Refresh,
   Download,
-  Setting
-} from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
-import Icon from '@/components/Icon.vue'
+  Setting,
+} from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
+import Icon from '@/components/icon/index.vue';
 
 // 处理快速操作
 const handleAction = (action) => {
@@ -263,42 +235,11 @@ const handleAction = (action) => {
     'add-user': '添加用户',
     'export-data': '导出数据',
     'system-settings': '系统设置',
-    'view-reports': '查看报告'
-  }
+    'view-reports': '查看报告',
+  };
 
-  ElMessage.success(`${actionMap[action]}功能开发中...`)
-}
+  ElMessage.success(`${actionMap[action]}功能开发中...`);
+};
 </script>
 
-<style lang="scss" scoped>
-.dashboard-container {
-  .stat-card {
-    transition:
-      transform 0.2s ease,
-      box-shadow 0.2s ease;
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    }
-  }
-
-  .chart-card,
-  .actions-card,
-  .activity-card {
-    transition: box-shadow 0.2s ease;
-
-    &:hover {
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  .activity-item {
-    border-left: 3px solid transparent;
-
-    &:hover {
-      border-left-color: #3b82f6;
-    }
-  }
-}
-</style>
+<style scoped></style>

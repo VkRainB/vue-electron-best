@@ -1,3 +1,254 @@
+<script setup>
+import { Check, Close, DocumentCopy, Loading, Search, Select } from '@element-plus/icons-vue';
+import { ElMessage } from 'element-plus';
+import { computed, onMounted, ref, watch } from 'vue';
+import { useCopyText, useSearchDebounce } from '@/hooks';
+
+// 响应式数据
+const loading = ref(true);
+const allIcons = ref([]);
+const selectedIcons = ref([]);
+const copying = ref(false);
+const copyingIcon = ref('');
+
+// 搜索和筛选
+const searchQuery = ref('');
+const selectedCategory = ref('');
+const viewMode = ref('grid');
+
+// 显示设置
+const iconSize = ref('6');
+const columnsCount = ref(8);
+const showIconNames = ref(true);
+
+// 分页
+const currentPage = ref(1);
+const pageSize = ref(100);
+
+// 图标分类
+const categories = ref([
+  { label: '导航', value: 'navigation' },
+  { label: '操作', value: 'action' },
+  { label: '状态', value: 'status' },
+  { label: '媒体', value: 'media' },
+  { label: '通信', value: 'communication' },
+  { label: '文件', value: 'file' },
+  { label: '编辑', value: 'edit' },
+  { label: '设备', value: 'device' },
+  { label: '其他', value: 'other' },
+]);
+
+// 使用搜索防抖hook
+const { searchResults, isSearching, setSearchQuery } = useSearchDebounce(async query => {
+  if (!query.trim()) return allIcons.value;
+
+  return allIcons.value.filter(
+    icon =>
+      icon.displayName.toLowerCase().includes(query.toLowerCase()) ||
+      icon.name.toLowerCase().includes(query.toLowerCase())
+  );
+}, 300);
+
+// 使用复制hook
+const { copy } = useCopyText();
+
+// 计算属性
+const filteredIcons = computed(() => {
+  let icons = searchQuery.value ? searchResults.value : allIcons.value;
+
+  // 按分类筛选
+  if (selectedCategory.value) {
+    icons = icons.filter(icon => icon.category === selectedCategory.value);
+  }
+
+  // 分页
+  const start = (currentPage.value - 1) * pageSize.value;
+  const end = start + pageSize.value;
+  return icons.slice(start, end);
+});
+
+const totalPages = computed(() => {
+  const total = searchQuery.value ? searchResults.value.length : allIcons.value.length;
+  return Math.ceil(total / pageSize.value);
+});
+
+// 图标分类映射
+function getCategoryByName(name) {
+  const categoryMap = {
+    add: 'action',
+    delete: 'action',
+    edit: 'edit',
+    close: 'action',
+    back: 'navigation',
+    arrow: 'navigation',
+    home: 'navigation',
+    search: 'action',
+    setting: 'action',
+    user: 'communication',
+    phone: 'communication',
+    message: 'communication',
+    mail: 'communication',
+    file: 'file',
+    folder: 'file',
+    image: 'media',
+    video: 'media',
+    music: 'media',
+    camera: 'device',
+    location: 'device',
+    time: 'status',
+    success: 'status',
+    error: 'status',
+    warning: 'status',
+    info: 'status',
+  };
+
+  for (const [key, category] of Object.entries(categoryMap)) {
+    if (name.includes(key)) {
+      return category;
+    }
+  }
+
+  return 'other';
+}
+
+// 方法
+async function loadIcons() {
+  loading.value = true;
+  try {
+    const iconsModule = await import('@iconify-json/weui/icons.json');
+    const iconNames = Object.keys(iconsModule.icons);
+
+    allIcons.value = iconNames.map(name => {
+      const iconName = `i-weui-${name}`;
+      return {
+        name: iconName,
+        displayName: name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+        category: getCategoryByName(name),
+        originalName: name,
+      };
+    });
+
+    // 预加载图标类名以解决UnoCSS缓存问题
+    const iconClasses = allIcons.value.map(icon => icon.name);
+    await preloadIconClasses(iconClasses);
+  } catch (error) {
+    console.error('加载图标失败:', error);
+    ElMessage.error('加载图标失败，请刷新页面重试');
+  } finally {
+    loading.value = false;
+  }
+}
+
+// 预加载图标类名以解决UnoCSS动态类名缓存问题
+async function preloadIconClasses(iconClasses) {
+  // 创建隐藏的div来触发UnoCSS加载这些类名
+  const preloadDiv = document.createElement('div');
+  preloadDiv.style.position = 'absolute';
+  preloadDiv.style.left = '-9999px';
+  preloadDiv.style.top = '-9999px';
+  preloadDiv.style.visibility = 'hidden';
+
+  iconClasses.forEach(iconClass => {
+    const iconEl = document.createElement('div');
+    iconEl.className = `${iconClass} w-4 h-4 w-6 h-6 w-8 h-8`;
+    preloadDiv.appendChild(iconEl);
+  });
+
+  document.body.appendChild(preloadDiv);
+
+  // 等待一帧后移除
+  await new Promise(resolve => requestAnimationFrame(resolve));
+  document.body.removeChild(preloadDiv);
+}
+
+function handleSearch(query) {
+  setSearchQuery(query);
+  currentPage.value = 1;
+}
+
+function handleCategoryChange() {
+  currentPage.value = 1;
+}
+
+function clearFilters() {
+  searchQuery.value = '';
+  selectedCategory.value = '';
+  currentPage.value = 1;
+}
+
+function toggleIconSelection(iconName) {
+  const index = selectedIcons.value.indexOf(iconName);
+  if (index > -1) {
+    selectedIcons.value.splice(index, 1);
+  } else {
+    selectedIcons.value.push(iconName);
+  }
+}
+
+function selectAll() {
+  selectedIcons.value = filteredIcons.value.map(icon => icon.name);
+}
+
+function clearSelection() {
+  selectedIcons.value = [];
+}
+
+async function copyIconClass(iconName) {
+  copyingIcon.value = iconName;
+  try {
+    const success = await copy(iconName);
+    if (success) {
+      ElMessage.success(`已复制: ${iconName}`);
+    } else {
+      ElMessage.error('复制失败');
+    }
+  } catch (error) {
+    ElMessage.error('复制失败');
+  } finally {
+    copyingIcon.value = '';
+  }
+}
+
+async function copySelectedIcons() {
+  if (selectedIcons.value.length === 0) return;
+
+  copying.value = true;
+  try {
+    const iconList = selectedIcons.value.join('\n');
+    const success = await copy(iconList);
+    if (success) {
+      ElMessage.success(`已复制 ${selectedIcons.value.length} 个图标类名`);
+      clearSelection();
+    } else {
+      ElMessage.error('批量复制失败');
+    }
+  } catch (error) {
+    ElMessage.error('批量复制失败');
+  } finally {
+    copying.value = false;
+  }
+}
+
+function handleSizeChange(size) {
+  pageSize.value = size;
+  currentPage.value = 1;
+}
+
+function handleCurrentChange(page) {
+  currentPage.value = page;
+}
+
+// 监听搜索查询变化
+watch(searchQuery, () => {
+  currentPage.value = 1;
+});
+
+// 组件挂载时加载图标
+onMounted(() => {
+  loadIcons();
+});
+</script>
+
 <template>
   <div class="icons-page min-h-full bg-gray-50">
     <!-- 页面头部 -->
@@ -15,26 +266,24 @@
 
         <!-- 操作按钮 -->
         <div class="flex items-center gap-3">
-          <el-button
-            v-if="selectedIcons.length > 0"
-            type="primary"
-            @click="copySelectedIcons"
-            :loading="copying"
-          >
-            <el-icon class="mr-1"><DocumentCopy /></el-icon>
+          <el-button v-if="selectedIcons.length > 0" type="primary" :loading="copying" @click="copySelectedIcons">
+            <el-icon class="mr-1">
+              <DocumentCopy />
+            </el-icon>
             批量复制 ({{ selectedIcons.length }})
           </el-button>
 
           <el-button v-if="selectedIcons.length > 0" @click="clearSelection">
-            <el-icon class="mr-1"><Close /></el-icon>
+            <el-icon class="mr-1">
+              <Close />
+            </el-icon>
             清除选择
           </el-button>
 
-          <el-button
-            @click="selectAll"
-            v-if="filteredIcons.length > 0 && selectedIcons.length === 0"
-          >
-            <el-icon class="mr-1"><Select /></el-icon>
+          <el-button v-if="filteredIcons.length > 0 && selectedIcons.length === 0" @click="selectAll">
+            <el-icon class="mr-1">
+              <Select />
+            </el-icon>
             全选
           </el-button>
         </div>
@@ -46,12 +295,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
         <!-- 搜索框 -->
         <div class="lg:col-span-2">
-          <el-input
-            v-model="searchQuery"
-            placeholder="搜索图标名称..."
-            clearable
-            @input="handleSearch"
-          >
+          <el-input v-model="searchQuery" placeholder="搜索图标名称..." clearable @input="handleSearch">
             <template #prefix>
               <el-icon><Search /></el-icon>
             </template>
@@ -60,12 +304,7 @@
 
         <!-- 分类筛选 -->
         <div>
-          <el-select
-            v-model="selectedCategory"
-            placeholder="选择分类"
-            clearable
-            @change="handleCategoryChange"
-          >
+          <el-select v-model="selectedCategory" placeholder="选择分类" clearable @change="handleCategoryChange">
             <el-option label="全部分类" value="" />
             <el-option
               v-for="category in categories"
@@ -98,14 +337,7 @@
 
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium text-gray-700">每行显示:</span>
-          <el-slider
-            v-model="columnsCount"
-            :min="4"
-            :max="12"
-            :step="2"
-            :show-tooltip="false"
-            style="width: 100px"
-          />
+          <el-slider v-model="columnsCount" :min="4" :max="12" :step="2" :show-tooltip="false" style="width: 100px" />
           <span class="text-sm text-gray-500 min-w-8">{{ columnsCount }}</span>
         </div>
 
@@ -119,19 +351,20 @@
     <div class="icons-content flex-1 p-6">
       <!-- 加载状态 -->
       <div v-if="loading" class="flex items-center justify-center py-20">
-        <el-icon class="animate-spin text-4xl text-indigo-500"><Loading /></el-icon>
+        <el-icon class="animate-spin text-4xl text-indigo-500">
+          <Loading />
+        </el-icon>
         <span class="ml-3 text-gray-600">加载图标中...</span>
       </div>
 
       <!-- 空状态 -->
-      <div
-        v-else-if="filteredIcons.length === 0"
-        class="flex flex-col items-center justify-center py-20"
-      >
-        <el-icon class="text-6xl text-gray-400 mb-4"><Search /></el-icon>
+      <div v-else-if="filteredIcons.length === 0" class="flex flex-col items-center justify-center py-20">
+        <el-icon class="text-6xl text-gray-400 mb-4">
+          <Search />
+        </el-icon>
         <h3 class="text-lg font-medium text-gray-900 mb-2">未找到匹配的图标</h3>
         <p class="text-gray-500">尝试调整搜索条件或清除筛选器</p>
-        <el-button @click="clearFilters" class="mt-4">清除筛选</el-button>
+        <el-button class="mt-4" @click="clearFilters">清除筛选</el-button>
       </div>
 
       <!-- 网格视图 -->
@@ -157,7 +390,7 @@
 
           <!-- 图标 -->
           <div class="icon-display">
-            <div :class="[icon.name, `w-${iconSize}`, `h-${iconSize}`, 'text-gray-600']"></div>
+            <div class="text-gray-600" :class="[icon.name, `w-${iconSize}`, `h-${iconSize}`]" />
           </div>
 
           <!-- 图标名称 -->
@@ -170,8 +403,8 @@
             <el-button
               size="small"
               type="primary"
-              @click.stop="copyIconClass(icon.name)"
               :loading="copyingIcon === icon.name"
+              @click.stop="copyIconClass(icon.name)"
             >
               <el-icon><DocumentCopy /></el-icon>
             </el-button>
@@ -197,22 +430,24 @@
             />
 
             <!-- 图标 -->
-            <div :class="[icon.name, 'w-6 h-6', 'text-gray-600']"></div>
+            <div class="w-6 h-6 text-gray-600" :class="[icon.name]" />
 
             <!-- 图标信息 -->
             <div class="flex-1">
-              <div class="font-medium text-gray-900">{{ icon.displayName }}</div>
-              <div class="text-sm text-gray-500">{{ icon.name }}</div>
-              <div v-if="icon.category" class="text-xs text-gray-400">{{ icon.category }}</div>
+              <div class="font-medium text-gray-900">
+                {{ icon.displayName }}
+              </div>
+              <div class="text-sm text-gray-500">
+                {{ icon.name }}
+              </div>
+              <div v-if="icon.category" class="text-xs text-gray-400">
+                {{ icon.category }}
+              </div>
             </div>
 
             <!-- 操作按钮 -->
             <div class="flex items-center gap-2">
-              <el-button
-                size="small"
-                @click.stop="copyIconClass(icon.name)"
-                :loading="copyingIcon === icon.name"
-              >
+              <el-button size="small" :loading="copyingIcon === icon.name" @click.stop="copyIconClass(icon.name)">
                 <el-icon><DocumentCopy /></el-icon>
                 复制
               </el-button>
@@ -236,257 +471,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed, onMounted, watch } from 'vue'
-import { Search, DocumentCopy, Close, Select, Check, Loading } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
-import { useCopyText, useSearchDebounce } from '@/hooks'
-
-// 响应式数据
-const loading = ref(true)
-const allIcons = ref([])
-const selectedIcons = ref([])
-const copying = ref(false)
-const copyingIcon = ref('')
-
-// 搜索和筛选
-const searchQuery = ref('')
-const selectedCategory = ref('')
-const viewMode = ref('grid')
-
-// 显示设置
-const iconSize = ref('6')
-const columnsCount = ref(8)
-const showIconNames = ref(true)
-
-// 分页
-const currentPage = ref(1)
-const pageSize = ref(100)
-
-// 图标分类
-const categories = ref([
-  { label: '导航', value: 'navigation' },
-  { label: '操作', value: 'action' },
-  { label: '状态', value: 'status' },
-  { label: '媒体', value: 'media' },
-  { label: '通信', value: 'communication' },
-  { label: '文件', value: 'file' },
-  { label: '编辑', value: 'edit' },
-  { label: '设备', value: 'device' },
-  { label: '其他', value: 'other' }
-])
-
-// 使用搜索防抖hook
-const { searchResults, isSearching, setSearchQuery } = useSearchDebounce(async (query) => {
-  if (!query.trim()) return allIcons.value
-
-  return allIcons.value.filter(
-    (icon) =>
-      icon.displayName.toLowerCase().includes(query.toLowerCase()) ||
-      icon.name.toLowerCase().includes(query.toLowerCase())
-  )
-}, 300)
-
-// 使用复制hook
-const { copy } = useCopyText()
-
-// 计算属性
-const filteredIcons = computed(() => {
-  let icons = searchQuery.value ? searchResults.value : allIcons.value
-
-  // 按分类筛选
-  if (selectedCategory.value) {
-    icons = icons.filter((icon) => icon.category === selectedCategory.value)
-  }
-
-  // 分页
-  const start = (currentPage.value - 1) * pageSize.value
-  const end = start + pageSize.value
-  return icons.slice(start, end)
-})
-
-const totalPages = computed(() => {
-  const total = searchQuery.value ? searchResults.value.length : allIcons.value.length
-  return Math.ceil(total / pageSize.value)
-})
-
-// 图标分类映射
-const getCategoryByName = (name) => {
-  const categoryMap = {
-    add: 'action',
-    delete: 'action',
-    edit: 'edit',
-    close: 'action',
-    back: 'navigation',
-    arrow: 'navigation',
-    home: 'navigation',
-    search: 'action',
-    setting: 'action',
-    user: 'communication',
-    phone: 'communication',
-    message: 'communication',
-    mail: 'communication',
-    file: 'file',
-    folder: 'file',
-    image: 'media',
-    video: 'media',
-    music: 'media',
-    camera: 'device',
-    location: 'device',
-    time: 'status',
-    success: 'status',
-    error: 'status',
-    warning: 'status',
-    info: 'status'
-  }
-
-  for (const [key, category] of Object.entries(categoryMap)) {
-    if (name.includes(key)) {
-      return category
-    }
-  }
-
-  return 'other'
-}
-
-// 方法
-const loadIcons = async () => {
-  loading.value = true
-  try {
-    const iconsModule = await import('@iconify-json/weui/icons.json')
-    const iconNames = Object.keys(iconsModule.icons)
-
-    allIcons.value = iconNames.map((name) => {
-      const iconName = `i-weui-${name}`
-      return {
-        name: iconName,
-        displayName: name.replace(/-/g, ' ').replace(/\b\w/g, (l) => l.toUpperCase()),
-        category: getCategoryByName(name),
-        originalName: name
-      }
-    })
-
-    // 预加载图标类名以解决UnoCSS缓存问题
-    const iconClasses = allIcons.value.map((icon) => icon.name)
-    await preloadIconClasses(iconClasses)
-  } catch (error) {
-    console.error('加载图标失败:', error)
-    ElMessage.error('加载图标失败，请刷新页面重试')
-  } finally {
-    loading.value = false
-  }
-}
-
-// 预加载图标类名以解决UnoCSS动态类名缓存问题
-const preloadIconClasses = async (iconClasses) => {
-  // 创建隐藏的div来触发UnoCSS加载这些类名
-  const preloadDiv = document.createElement('div')
-  preloadDiv.style.position = 'absolute'
-  preloadDiv.style.left = '-9999px'
-  preloadDiv.style.top = '-9999px'
-  preloadDiv.style.visibility = 'hidden'
-
-  iconClasses.forEach((iconClass) => {
-    const iconEl = document.createElement('div')
-    iconEl.className = `${iconClass} w-4 h-4 w-6 h-6 w-8 h-8`
-    preloadDiv.appendChild(iconEl)
-  })
-
-  document.body.appendChild(preloadDiv)
-
-  // 等待一帧后移除
-  await new Promise((resolve) => requestAnimationFrame(resolve))
-  document.body.removeChild(preloadDiv)
-}
-
-const handleSearch = (query) => {
-  setSearchQuery(query)
-  currentPage.value = 1
-}
-
-const handleCategoryChange = () => {
-  currentPage.value = 1
-}
-
-const clearFilters = () => {
-  searchQuery.value = ''
-  selectedCategory.value = ''
-  currentPage.value = 1
-}
-
-const toggleIconSelection = (iconName) => {
-  const index = selectedIcons.value.indexOf(iconName)
-  if (index > -1) {
-    selectedIcons.value.splice(index, 1)
-  } else {
-    selectedIcons.value.push(iconName)
-  }
-}
-
-const selectAll = () => {
-  selectedIcons.value = filteredIcons.value.map((icon) => icon.name)
-}
-
-const clearSelection = () => {
-  selectedIcons.value = []
-}
-
-const copyIconClass = async (iconName) => {
-  copyingIcon.value = iconName
-  try {
-    const success = await copy(iconName)
-    if (success) {
-      ElMessage.success(`已复制: ${iconName}`)
-    } else {
-      ElMessage.error('复制失败')
-    }
-  } catch (error) {
-    ElMessage.error('复制失败')
-  } finally {
-    copyingIcon.value = ''
-  }
-}
-
-const copySelectedIcons = async () => {
-  if (selectedIcons.value.length === 0) return
-
-  copying.value = true
-  try {
-    const iconList = selectedIcons.value.join('\n')
-    const success = await copy(iconList)
-    if (success) {
-      ElMessage.success(`已复制 ${selectedIcons.value.length} 个图标类名`)
-      clearSelection()
-    } else {
-      ElMessage.error('批量复制失败')
-    }
-  } catch (error) {
-    ElMessage.error('批量复制失败')
-  } finally {
-    copying.value = false
-  }
-}
-
-const handleSizeChange = (size) => {
-  pageSize.value = size
-  currentPage.value = 1
-}
-
-const handleCurrentChange = (page) => {
-  currentPage.value = page
-}
-
-// 监听搜索查询变化
-watch(searchQuery, () => {
-  currentPage.value = 1
-})
-
-// 组件挂载时加载图标
-onMounted(() => {
-  loadIcons()
-})
-</script>
 
 <style scoped>
 .icons-page {

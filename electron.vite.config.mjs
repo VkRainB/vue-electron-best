@@ -1,13 +1,14 @@
-import { resolve } from 'node:path'
-import { defineConfig, loadEnv } from 'electron-vite'
-import { createElectronConfig, createVitePlugins, rendererBuildConfig } from './.build/vite'
-const pathResolve = (dir) => {
-  return resolve(__dirname, '.', dir)
+import { resolve } from 'node:path';
+import { defineConfig, loadEnv } from 'electron-vite';
+import { createElectronConfig, createVitePlugins, rendererBuildConfig } from './.build/vite';
+
+function pathResolve(dir) {
+  return resolve(__dirname, '.', dir);
 }
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode)
-  console.log('环境变量 env -> ', env)
+  const env = loadEnv(mode);
+  console.log('环境变量 env -> ', env);
   // const { VITE_PORT } = env
 
   return {
@@ -21,11 +22,11 @@ export default defineConfig(({ mode }) => {
       },
       resolve: {
         alias: {
-          '@': pathResolve('frontend/src')
-        }
+          '@': pathResolve('frontend/src'),
+        },
       },
       plugins: createVitePlugins(),
-      build: rendererBuildConfig()
-    }
-  }
-})
+      build: rendererBuildConfig(),
+    },
+  };
+});

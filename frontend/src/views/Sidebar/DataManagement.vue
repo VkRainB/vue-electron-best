@@ -10,19 +10,14 @@
     <div class="toolbar bg-white p-4 rounded-xl shadow-lg mb-6">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-4">
-          <el-input
-            v-model="searchQuery"
-            placeholder="搜索数据..."
-            class="w-64"
-            clearable
-          >
+          <el-input v-model="searchQuery" placeholder="搜索数据..." class="w-64" clearable>
             <template #prefix>
               <el-icon>
-                <Search />
+                <Icon name="el-icon-Search" size="1em" />
               </el-icon>
             </template>
           </el-input>
-          
+
           <el-select v-model="selectedCategory" placeholder="选择分类" class="w-32">
             <el-option label="全部" value="all" />
             <el-option label="用户数据" value="users" />
@@ -30,25 +25,25 @@
             <el-option label="产品数据" value="products" />
           </el-select>
         </div>
-        
+
         <div class="flex items-center gap-2">
           <el-button type="primary" @click="handleAdd">
-            <el-icon class="mr-1">
-              <Plus />
+            <el-icon>
+              <Icon name="el-icon-Plus" size="1em" class="mr-1" />
             </el-icon>
             添加数据
           </el-button>
-          
+
           <el-button type="success" @click="handleExport">
-            <el-icon class="mr-1">
-              <Download />
+            <el-icon>
+              <Icon name="el-icon-Download" size="1em" class="mr-1" />
             </el-icon>
             导出
           </el-button>
-          
+
           <el-button type="warning" @click="handleRefresh">
-            <el-icon class="mr-1">
-              <Refresh />
+            <el-icon>
+              <Icon name="el-icon-Refresh" size="1em" class="mr-1" />
             </el-icon>
             刷新
           </el-button>
@@ -66,9 +61,9 @@
         @selection-change="handleSelectionChange"
       >
         <el-table-column type="selection" width="55" />
-        
+
         <el-table-column prop="id" label="ID" width="80" />
-        
+
         <el-table-column prop="name" label="名称" min-width="120">
           <template #default="{ row }">
             <div class="flex items-center gap-2">
@@ -77,7 +72,7 @@
             </div>
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="category" label="分类" width="100">
           <template #default="{ row }">
             <el-tag :type="getCategoryType(row.category)">
@@ -85,7 +80,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="status" label="状态" width="100">
           <template #default="{ row }">
             <el-tag :type="getStatusType(row.status)">
@@ -93,31 +88,23 @@
             </el-tag>
           </template>
         </el-table-column>
-        
+
         <el-table-column prop="createTime" label="创建时间" width="160" />
-        
+
         <el-table-column prop="updateTime" label="更新时间" width="160" />
-        
+
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" size="small" @click="handleView(row)">
-              查看
-            </el-button>
-            <el-button type="warning" size="small" @click="handleEdit(row)">
-              编辑
-            </el-button>
-            <el-button type="danger" size="small" @click="handleDelete(row)">
-              删除
-            </el-button>
+            <el-button type="primary" size="small" @click="handleView(row)">查看</el-button>
+            <el-button type="warning" size="small" @click="handleEdit(row)">编辑</el-button>
+            <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      
+
       <!-- 分页 -->
       <div class="pagination-container p-4 flex justify-between items-center">
-        <div class="text-gray-600 text-sm">
-          共 {{ total }} 条数据，已选择 {{ selectedRows.length }} 条
-        </div>
+        <div class="text-gray-600 text-sm">共 {{ total }} 条数据，已选择 {{ selectedRows.length }} 条</div>
         <el-pagination
           v-model:current-page="currentPage"
           v-model:page-size="pageSize"
@@ -133,24 +120,19 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import {
-  Search,
-  Plus,
-  Download,
-  Refresh
-} from '@element-plus/icons-vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ref, onMounted } from 'vue';
+import { Search, Plus, Download, Refresh } from '@element-plus/icons-vue';
+import { ElMessage, ElMessageBox } from 'element-plus';
 
 // 响应式数据
-const searchQuery = ref('')
-const selectedCategory = ref('all')
-const loading = ref(false)
-const tableData = ref([])
-const selectedRows = ref([])
-const currentPage = ref(1)
-const pageSize = ref(20)
-const total = ref(0)
+const searchQuery = ref('');
+const selectedCategory = ref('all');
+const loading = ref(false);
+const tableData = ref([]);
+const selectedRows = ref([]);
+const currentPage = ref(1);
+const pageSize = ref(20);
+const total = ref(0);
 
 // 模拟数据
 const mockData = [
@@ -161,7 +143,7 @@ const mockData = [
     status: '活跃',
     avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
     createTime: '2024-01-15 10:30:00',
-    updateTime: '2024-01-20 14:20:00'
+    updateTime: '2024-01-20 14:20:00',
   },
   {
     id: 2,
@@ -170,7 +152,7 @@ const mockData = [
     status: '正常',
     avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
     createTime: '2024-01-16 09:15:00',
-    updateTime: '2024-01-21 16:45:00'
+    updateTime: '2024-01-21 16:45:00',
   },
   {
     id: 3,
@@ -179,138 +161,108 @@ const mockData = [
     status: '待审核',
     avatar: 'https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png',
     createTime: '2024-01-17 11:20:00',
-    updateTime: '2024-01-22 13:10:00'
-  }
-]
+    updateTime: '2024-01-22 13:10:00',
+  },
+];
 
 // 获取分类标签类型
 const getCategoryType = (category) => {
   const typeMap = {
-    '用户数据': 'primary',
-    '订单数据': 'success',
-    '产品数据': 'warning'
-  }
-  return typeMap[category] || 'info'
-}
+    用户数据: 'primary',
+    订单数据: 'success',
+    产品数据: 'warning',
+  };
+  return typeMap[category] || 'info';
+};
 
 // 获取状态标签类型
 const getStatusType = (status) => {
   const typeMap = {
-    '活跃': 'success',
-    '正常': 'primary',
-    '待审核': 'warning',
-    '已禁用': 'danger'
-  }
-  return typeMap[status] || 'info'
-}
+    活跃: 'success',
+    正常: 'primary',
+    待审核: 'warning',
+    已禁用: 'danger',
+  };
+  return typeMap[status] || 'info';
+};
 
 // 处理选择变化
 const handleSelectionChange = (selection) => {
-  selectedRows.value = selection
-}
+  selectedRows.value = selection;
+};
 
 // 处理添加
 const handleAdd = () => {
-  ElMessage.success('添加数据功能开发中...')
-}
+  ElMessage.success('添加数据功能开发中...');
+};
 
 // 处理导出
 const handleExport = () => {
   if (selectedRows.value.length === 0) {
-    ElMessage.warning('请先选择要导出的数据')
-    return
+    ElMessage.warning('请先选择要导出的数据');
+    return;
   }
-  ElMessage.success(`正在导出 ${selectedRows.value.length} 条数据...`)
-}
+  ElMessage.success(`正在导出 ${selectedRows.value.length} 条数据...`);
+};
 
 // 处理刷新
 const handleRefresh = () => {
-  loading.value = true
+  loading.value = true;
   setTimeout(() => {
-    loadData()
-    loading.value = false
-    ElMessage.success('数据已刷新')
-  }, 1000)
-}
+    loadData();
+    loading.value = false;
+    ElMessage.success('数据已刷新');
+  }, 1000);
+};
 
 // 处理查看
 const handleView = (row) => {
-  ElMessage.info(`查看数据：${row.name}`)
-}
+  ElMessage.info(`查看数据：${row.name}`);
+};
 
 // 处理编辑
 const handleEdit = (row) => {
-  ElMessage.info(`编辑数据：${row.name}`)
-}
+  ElMessage.info(`编辑数据：${row.name}`);
+};
 
 // 处理删除
 const handleDelete = (row) => {
-  ElMessageBox.confirm(
-    `确定要删除数据"${row.name}"吗？`,
-    '确认删除',
-    {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'warning'
-    }
-  ).then(() => {
-    ElMessage.success('删除成功')
-  }).catch(() => {
-    ElMessage.info('已取消删除')
+  ElMessageBox.confirm(`确定要删除数据"${row.name}"吗？`, '确认删除', {
+    confirmButtonText: '确定',
+    cancelButtonText: '取消',
+    type: 'warning',
   })
-}
+    .then(() => {
+      ElMessage.success('删除成功');
+    })
+    .catch(() => {
+      ElMessage.info('已取消删除');
+    });
+};
 
 // 处理页面大小变化
 const handleSizeChange = (size) => {
-  pageSize.value = size
-  loadData()
-}
+  pageSize.value = size;
+  loadData();
+};
 
 // 处理当前页变化
 const handleCurrentChange = (page) => {
-  currentPage.value = page
-  loadData()
-}
+  currentPage.value = page;
+  loadData();
+};
 
 // 加载数据
 const loadData = () => {
   // 模拟API调用
-  tableData.value = mockData
-  total.value = mockData.length
-}
+  tableData.value = mockData;
+  total.value = mockData.length;
+};
 
 // 组件挂载时加载数据
 onMounted(() => {
-  loadData()
-})
+  loadData();
+});
 </script>
 
-<style lang="scss" scoped>
-.data-management-container {
-  .toolbar {
-    transition: box-shadow 0.2s ease;
-    
-    &:hover {
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-  }
-  
-  .table-container {
-    transition: box-shadow 0.2s ease;
-    
-    &:hover {
-      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-    }
-  }
-  
-  :deep(.el-table) {
-    .el-table__row {
-      transition: background-color 0.2s ease;
-      
-      &:hover {
-        background-color: #f8fafc;
-      }
-    }
-  }
-}
-</style>
+<style scoped></style>
