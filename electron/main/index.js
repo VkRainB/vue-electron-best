@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import process from 'node:process';
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
 import { app, BrowserWindow, shell } from 'electron';
 import icon from '../../resources/icon.png?asset';
