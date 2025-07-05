@@ -10,8 +10,8 @@ export const navigationIcons = {
   menu: 'i-weui-list-outlined',
   close: 'i-weui-close-outlined',
   down: 'i-weui-arrow-down-outlined',
-  up: 'i-weui-arrow-up-outlined'
-}
+  up: 'i-weui-arrow-up-outlined',
+};
 
 // 操作类图标 - 只包含确实存在的WeUI图标
 export const actionIcons = {
@@ -20,51 +20,51 @@ export const actionIcons = {
   edit: 'i-weui-edit-outlined',
   search: 'i-weui-search-outlined',
   download: 'i-weui-download-outlined',
-  share: 'i-weui-share-outlined'
-}
+  share: 'i-weui-share-outlined',
+};
 
 // 状态类图标 - 只包含确实存在的WeUI图标
 export const statusIcons = {
   success: 'i-weui-success-outlined',
   error: 'i-weui-error-outlined',
   warning: 'i-weui-warning-outlined',
-  info: 'i-weui-info-outlined'
-}
+  info: 'i-weui-info-outlined',
+};
 
 // 用户相关图标 - 只包含确实存在的WeUI图标
 export const userIcons = {
   user: 'i-weui-user-outlined',
-  settings: 'i-weui-setting-outlined'
-}
+  settings: 'i-weui-setting-outlined',
+};
 
 // 通信类图标 - 只包含确实存在的WeUI图标
 export const communicationIcons = {
   phone: 'i-weui-phone-outlined',
-  message: 'i-weui-message-outlined'
-}
+  message: 'i-weui-message-outlined',
+};
 
 // 文件相关图标 - 只包含确实存在的WeUI图标
 export const fileIcons = {
   file: 'i-weui-file-outlined',
-  folder: 'i-weui-folder-outlined'
-}
+  folder: 'i-weui-folder-outlined',
+};
 
 // 系统功能图标 - 只包含确实存在的WeUI图标
 export const systemIcons = {
   location: 'i-weui-location-outlined',
-  camera: 'i-weui-camera-outlined'
-}
+  camera: 'i-weui-camera-outlined',
+};
 
 // 主题相关图标 - 只包含确实存在的WeUI图标
 export const themeIcons = {
   light: 'i-weui-sun-outlined',
-  dark: 'i-weui-moon-outlined'
-}
+  dark: 'i-weui-moon-outlined',
+};
 
 // 其他常用图标
 export const otherIcons = {
   // 这里可以添加其他确实存在的WeUI图标
-}
+};
 
 // 合并所有图标配置
 export const allIcons = {
@@ -76,8 +76,8 @@ export const allIcons = {
   ...fileIcons,
   ...systemIcons,
   ...themeIcons,
-  ...otherIcons
-}
+  ...otherIcons,
+};
 
 // 图标分类映射
 export const iconCategories = {
@@ -89,38 +89,38 @@ export const iconCategories = {
   file: fileIcons,
   system: systemIcons,
   theme: themeIcons,
-  other: otherIcons
-}
+  other: otherIcons,
+};
 
 // 获取图标的工具函数
-export const getIcon = (category, name) => {
-  const categoryIcons = iconCategories[category]
-  return categoryIcons?.[name] || allIcons[name] || 'i-weui-circle-outlined'
+export function getIcon(category, name) {
+  const categoryIcons = iconCategories[category];
+  return categoryIcons?.[name] || allIcons[name] || 'i-weui-circle-outlined';
 }
 
 // 检查图标是否存在
-export const hasIcon = (category, name) => {
-  const categoryIcons = iconCategories[category]
-  return !!(categoryIcons?.[name] || allIcons[name])
+export function hasIcon(category, name) {
+  const categoryIcons = iconCategories[category];
+  return !!(categoryIcons?.[name] || allIcons[name]);
 }
 
 // 获取分类下的所有图标
-export const getCategoryIcons = (category) => {
-  return iconCategories[category] || {}
+export function getCategoryIcons(category) {
+  return iconCategories[category] || {};
 }
 
 // 搜索图标
-export const searchIcons = (query) => {
-  const results = []
-  const lowerQuery = query.toLowerCase()
+export function searchIcons(query) {
+  const results = [];
+  const lowerQuery = query.toLowerCase();
 
   Object.entries(allIcons).forEach(([name, icon]) => {
     if (name.toLowerCase().includes(lowerQuery) || icon.toLowerCase().includes(lowerQuery)) {
-      results.push({ name, icon })
+      results.push({ name, icon });
     }
-  })
+  });
 
-  return results
+  return results;
 }
 
 // 常用图标快捷方式 - 只使用确实存在的WeUI图标
@@ -141,8 +141,8 @@ export const commonIcons = {
   close: getIcon('navigation', 'close'),
   back: getIcon('navigation', 'back'),
   download: getIcon('action', 'download'),
-  share: getIcon('action', 'share')
-}
+  share: getIcon('action', 'share'),
+};
 
 export default {
   allIcons,
@@ -151,5 +151,5 @@ export default {
   getIcon,
   hasIcon,
   getCategoryIcons,
-  searchIcons
-}
+  searchIcons,
+};

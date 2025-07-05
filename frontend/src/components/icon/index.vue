@@ -16,11 +16,14 @@ const iconStyle = computed(() => ({
 function renderIcon() {
   if (props.name.startsWith('el-icon-')) {
     return h(resolveComponent(props.name), { style: iconStyle.value, class: 'icon' });
-  } else if (props.name.startsWith('svg-')) {
+  }
+  else if (props.name.startsWith('svg-')) {
     return h(resolveComponent(props.name), { style: iconStyle.value, class: 'icon' });
-  } else if (isExternal(props.name)) {
+  }
+  else if (isExternal(props.name)) {
     return h('img', { src: props.name, style: iconStyle.value, class: 'icon' });
-  } else {
+  }
+  else {
     return h('i', { class: [props.name, 'icon'], style: iconStyle.value });
   }
 }
