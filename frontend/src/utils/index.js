@@ -4,11 +4,11 @@
  */
 
 // 导出实际使用的工具函数
-export * from './common'
-
 // 默认导出
-import * as commonUtils from './common'
+import * as commonUtils from './common';
+
+export * from './common';
 
 export default {
-  common: commonUtils
-}
+  common: commonUtils,
+};

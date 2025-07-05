@@ -1,42 +1,42 @@
-import { defineConfig, presetIcons, presetWind3 } from 'unocss'
+import icons from '@iconify-json/weui/icons.json';
 
-import icons from '@iconify-json/weui/icons.json'
+import { defineConfig, presetIcons, presetWind3 } from 'unocss';
 
-const generateSafeList = () => {
+function generateSafeList() {
   return Object.keys(icons.icons).flatMap((item) => {
-    return `i-weui-${item}`
-  })
+    return `i-weui-${item}`;
+  });
 }
 
-const safeList = generateSafeList()
+const safeList = generateSafeList();
 
 export default defineConfig({
   presets: [
     presetWind3(),
     presetIcons({
       collections: {
-        weui: () => import('@iconify-json/weui/icons.json').then((i) => i.default)
+        weui: () => import('@iconify-json/weui/icons.json').then(i => i.default),
       },
       extraProperties: {
-        display: 'inline-block',
-        'vertical-align': 'middle'
-      }
-    })
+        'display': 'inline-block',
+        'vertical-align': 'middle',
+      },
+    }),
   ],
   safelist: safeList,
   shortcuts: [
     // 自定义快捷方式
     ['card', 'bg-white rounded-lg shadow-md p-6'],
-    ['flex-center', 'flex items-center justify-center']
+    ['flex-center', 'flex items-center justify-center'],
   ],
   theme: {
     breakpoints: {
-      sm: '640px',
-      md: '768px',
-      lg: '1024px',
-      xl: '1280px',
-      '2xl': '1536px'
-    }
+      'sm': '640px',
+      'md': '768px',
+      'lg': '1024px',
+      'xl': '1280px',
+      '2xl': '1536px',
+    },
   },
   rules: [
     // 自定义规则
@@ -51,6 +51,6 @@ export default defineConfig({
     // 圆角规则
     [/^rounded-(\d+)$/, ([, d]) => ({ 'border-radius': `${d * 0.25}rem` })],
     // 最小宽度规则
-    [/^min-w-(\d+)$/, ([, d]) => ({ 'min-width': `${d * 0.25}rem` })]
-  ]
-})
+    [/^min-w-(\d+)$/, ([, d]) => ({ 'min-width': `${d * 0.25}rem` })],
+  ],
+});

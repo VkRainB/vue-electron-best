@@ -4,16 +4,16 @@
  */
 
 // 导出实际使用的hooks
-export { useClipboard, useCopyText } from './useClipboard'
-export { useDebounce, useSearchDebounce } from './useDebounce'
-
 // 默认导出
-import { useClipboard, useCopyText } from './useClipboard'
-import { useDebounce, useSearchDebounce } from './useDebounce'
+import { useClipboard, useCopyText } from './useClipboard';
+import { useDebounce, useSearchDebounce } from './useDebounce';
+
+export { useClipboard, useCopyText } from './useClipboard';
+export { useDebounce, useSearchDebounce } from './useDebounce';
 
 export default {
   useClipboard,
   useCopyText,
   useDebounce,
-  useSearchDebounce
-}
+  useSearchDebounce,
+};

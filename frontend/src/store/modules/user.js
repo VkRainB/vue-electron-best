@@ -3,8 +3,8 @@
  * 管理用户信息、认证状态等
  */
 
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
 
 export const useUserStore = defineStore('user', () => {
   // 用户信息
@@ -15,8 +15,8 @@ export const useUserStore = defineStore('user', () => {
     avatar: '',
     nickname: '',
     role: 'user',
-    permissions: []
-  })
+    permissions: [],
+  });
 
   // 认证状态
   const auth = ref({
@@ -24,8 +24,8 @@ export const useUserStore = defineStore('user', () => {
     token: '',
     refreshToken: '',
     loginTime: null,
-    lastActiveTime: null
-  })
+    lastActiveTime: null,
+  });
 
   // 用户偏好设置
   const preferences = ref({
@@ -43,17 +43,17 @@ export const useUserStore = defineStore('user', () => {
     // 显示偏好
     showWelcomeMessage: true,
     showTips: true,
-    compactMode: false
-  })
+    compactMode: false,
+  });
 
   // 计算属性
-  const isAuthenticated = computed(() => auth.value.isLoggedIn && !!auth.value.token)
+  const isAuthenticated = computed(() => auth.value.isLoggedIn && !!auth.value.token);
   const hasPermission = computed(() => (permission) => {
-    return userInfo.value.permissions.includes(permission)
-  })
+    return userInfo.value.permissions.includes(permission);
+  });
   const displayName = computed(() => {
-    return userInfo.value.nickname || userInfo.value.username || '未知用户'
-  })
+    return userInfo.value.nickname || userInfo.value.username || '未知用户';
+  });
 
   // 登录
   const login = async (credentials) => {
@@ -69,26 +69,27 @@ export const useUserStore = defineStore('user', () => {
         avatar: '',
         nickname: credentials.username,
         role: 'user',
-        permissions: ['read', 'write']
-      }
+        permissions: ['read', 'write'],
+      };
 
       const mockAuth = {
         isLoggedIn: true,
         token: 'mock-jwt-token',
         refreshToken: 'mock-refresh-token',
         loginTime: Date.now(),
-        lastActiveTime: Date.now()
-      }
+        lastActiveTime: Date.now(),
+      };
 
-      userInfo.value = mockUser
-      auth.value = mockAuth
+      userInfo.value = mockUser;
+      auth.value = mockAuth;
 
-      return { success: true, user: mockUser }
-    } catch (error) {
-      console.error('Login failed:', error)
-      return { success: false, error: error.message }
+      return { success: true, user: mockUser };
     }
-  }
+    catch (error) {
+      console.error('Login failed:', error);
+      return { success: false, error: error.message };
+    }
+  };
 
   // 登出
   const logout = async () => {
@@ -104,50 +105,51 @@ export const useUserStore = defineStore('user', () => {
         avatar: '',
         nickname: '',
         role: 'user',
-        permissions: []
-      }
+        permissions: [],
+      };
 
       auth.value = {
         isLoggedIn: false,
         token: '',
         refreshToken: '',
         loginTime: null,
-        lastActiveTime: null
-      }
+        lastActiveTime: null,
+      };
 
-      return { success: true }
-    } catch (error) {
-      console.error('Logout failed:', error)
-      return { success: false, error: error.message }
+      return { success: true };
     }
-  }
+    catch (error) {
+      console.error('Logout failed:', error);
+      return { success: false, error: error.message };
+    }
+  };
 
   // 更新用户信息
   const updateUserInfo = (newInfo) => {
-    userInfo.value = { ...userInfo.value, ...newInfo }
-  }
+    userInfo.value = { ...userInfo.value, ...newInfo };
+  };
 
   // 更新用户偏好
   const updatePreferences = (newPreferences) => {
-    preferences.value = { ...preferences.value, ...newPreferences }
-  }
+    preferences.value = { ...preferences.value, ...newPreferences };
+  };
 
   // 更新最后活跃时间
   const updateLastActiveTime = () => {
     if (auth.value.isLoggedIn) {
-      auth.value.lastActiveTime = Date.now()
+      auth.value.lastActiveTime = Date.now();
     }
-  }
+  };
 
   // 检查权限
   const checkPermission = (permission) => {
-    return userInfo.value.permissions.includes(permission)
-  }
+    return userInfo.value.permissions.includes(permission);
+  };
 
   // 检查角色
   const hasRole = (role) => {
-    return userInfo.value.role === role
-  }
+    return userInfo.value.role === role;
+  };
 
   // 刷新token
   const refreshToken = async () => {
@@ -156,17 +158,18 @@ export const useUserStore = defineStore('user', () => {
       // const response = await authAPI.refreshToken(auth.value.refreshToken)
 
       // 模拟刷新成功
-      auth.value.token = 'new-mock-jwt-token'
-      auth.value.lastActiveTime = Date.now()
+      auth.value.token = 'new-mock-jwt-token';
+      auth.value.lastActiveTime = Date.now();
 
-      return { success: true }
-    } catch (error) {
-      console.error('Token refresh failed:', error)
-      // 刷新失败，清除认证状态
-      await logout()
-      return { success: false, error: error.message }
+      return { success: true };
     }
-  }
+    catch (error) {
+      console.error('Token refresh failed:', error);
+      // 刷新失败，清除认证状态
+      await logout();
+      return { success: false, error: error.message };
+    }
+  };
 
   return {
     // 状态
@@ -187,6 +190,6 @@ export const useUserStore = defineStore('user', () => {
     updateLastActiveTime,
     checkPermission,
     hasRole,
-    refreshToken
-  }
-})
+    refreshToken,
+  };
+});

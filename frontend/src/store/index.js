@@ -3,20 +3,20 @@
  * 统一导出所有store模块
  */
 
-import { createPinia } from 'pinia'
+import { createPinia } from 'pinia';
 
 // 导入所有store模块
-import { useAppStore } from './modules/app'
-import { useUserStore } from './modules/user'
-import { useThemeStore } from './modules/theme'
+import { useAppStore } from './modules/app';
+import { useThemeStore } from './modules/theme';
+import { useUserStore } from './modules/user';
 
 /**
  * 创建并配置Pinia实例
- * @param {Object} app - Vue应用实例
+ * @param {object} app - Vue应用实例
  */
 export function setupStore(app) {
-  const pinia = createPinia()
-  app.use(pinia)
+  const pinia = createPinia();
+  app.use(pinia);
 }
 
 /**
@@ -24,9 +24,9 @@ export function setupStore(app) {
  */
 export {
   useAppStore,
+  useThemeStore,
   useUserStore,
-  useThemeStore
-}
+};
 
 /**
  * 获取所有store实例的便捷方法
@@ -36,6 +36,6 @@ export function useStores() {
   return {
     app: useAppStore(),
     user: useUserStore(),
-    theme: useThemeStore()
-  }
+    theme: useThemeStore(),
+  };
 }

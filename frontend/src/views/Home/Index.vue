@@ -50,7 +50,9 @@ function handleFeatureClick(feature) {
             <span class="title-highlight">开发框架</span>
           </h1>
 
-          <p class="hero-description">基于 Vue 3、Element Plus 和 UnoCSS 构建的高性能桌面应用模板</p>
+          <p class="hero-description">
+            基于 Vue 3、Element Plus 和 UnoCSS 构建的高性能桌面应用模板
+          </p>
 
           <div class="hero-actions">
             <el-button type="primary" size="large" class="action-button primary-button" @click="goToIcons">
@@ -88,8 +90,12 @@ function handleFeatureClick(feature) {
       <!-- 特性展示区域 -->
       <section class="features-section">
         <div class="section-header">
-          <h2 class="section-title">核心特性</h2>
-          <p class="section-subtitle">现代化的技术栈，优雅的用户体验</p>
+          <h2 class="section-title">
+            核心特性
+          </h2>
+          <p class="section-subtitle">
+            现代化的技术栈，优雅的用户体验
+          </p>
         </div>
 
         <div class="features-grid">
@@ -98,8 +104,12 @@ function handleFeatureClick(feature) {
             <div class="card-icon tech-icon">
               <Icon name="tools" category="tool" size="32px" color="currentColor" tooltip="现代技术栈" />
             </div>
-            <h3 class="card-title">现代技术栈</h3>
-            <p class="card-description">Vue 3 Composition API + Element Plus + UnoCSS</p>
+            <h3 class="card-title">
+              现代技术栈
+            </h3>
+            <p class="card-description">
+              Vue 3 Composition API + Element Plus + UnoCSS
+            </p>
             <div class="card-tags">
               <span class="tag">Vue 3</span>
               <span class="tag">Element Plus</span>
@@ -112,8 +122,12 @@ function handleFeatureClick(feature) {
             <div class="card-icon icons-icon">
               <Icon name="gallery" category="system" size="32px" color="currentColor" tooltip="图标库" />
             </div>
-            <h3 class="card-title">丰富图标库</h3>
-            <p class="card-description">WeUI 图标集，支持搜索、预览和一键复制</p>
+            <h3 class="card-title">
+              丰富图标库
+            </h3>
+            <p class="card-description">
+              WeUI 图标集，支持搜索、预览和一键复制
+            </p>
             <div class="card-stats">
               <span class="stat">
                 <span class="stat-number">162+</span>
@@ -131,8 +145,12 @@ function handleFeatureClick(feature) {
             <div class="card-icon responsive-icon">
               <Icon name="i-weui-computer-outlined" size="32px" color="currentColor" tooltip="响应式设计" />
             </div>
-            <h3 class="card-title">响应式设计</h3>
-            <p class="card-description">适配各种屏幕尺寸，完美的移动端体验</p>
+            <h3 class="card-title">
+              响应式设计
+            </h3>
+            <p class="card-description">
+              适配各种屏幕尺寸，完美的移动端体验
+            </p>
             <div class="card-features">
               <div class="feature-item">
                 <el-icon class="feature-icon">
@@ -155,12 +173,18 @@ function handleFeatureClick(feature) {
       <section class="quickstart-section">
         <div class="quickstart-card">
           <div class="quickstart-content">
-            <h3 class="quickstart-title">快速开始</h3>
-            <p class="quickstart-description">探索应用的各项功能，体验现代化的桌面应用开发</p>
+            <h3 class="quickstart-title">
+              快速开始
+            </h3>
+            <p class="quickstart-description">
+              探索应用的各项功能，体验现代化的桌面应用开发
+            </p>
           </div>
 
           <div class="quickstart-actions">
-            <el-button type="primary" class="quickstart-button" @click="goToIcons">开始探索</el-button>
+            <el-button type="primary" class="quickstart-button" @click="goToIcons">
+              开始探索
+            </el-button>
           </div>
         </div>
       </section>

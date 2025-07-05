@@ -39,13 +39,14 @@ const categories = ref([
 ]);
 
 // 使用搜索防抖hook
-const { searchResults, isSearching, setSearchQuery } = useSearchDebounce(async query => {
-  if (!query.trim()) return allIcons.value;
+const { searchResults, isSearching, setSearchQuery } = useSearchDebounce(async (query) => {
+  if (!query.trim())
+    return allIcons.value;
 
   return allIcons.value.filter(
     icon =>
-      icon.displayName.toLowerCase().includes(query.toLowerCase()) ||
-      icon.name.toLowerCase().includes(query.toLowerCase())
+      icon.displayName.toLowerCase().includes(query.toLowerCase())
+      || icon.name.toLowerCase().includes(query.toLowerCase()),
   );
 }, 300);
 
@@ -118,7 +119,7 @@ async function loadIcons() {
     const iconsModule = await import('@iconify-json/weui/icons.json');
     const iconNames = Object.keys(iconsModule.icons);
 
-    allIcons.value = iconNames.map(name => {
+    allIcons.value = iconNames.map((name) => {
       const iconName = `i-weui-${name}`;
       return {
         name: iconName,
@@ -131,10 +132,12 @@ async function loadIcons() {
     // 预加载图标类名以解决UnoCSS缓存问题
     const iconClasses = allIcons.value.map(icon => icon.name);
     await preloadIconClasses(iconClasses);
-  } catch (error) {
+  }
+  catch (error) {
     console.error('加载图标失败:', error);
     ElMessage.error('加载图标失败，请刷新页面重试');
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 }
@@ -148,7 +151,7 @@ async function preloadIconClasses(iconClasses) {
   preloadDiv.style.top = '-9999px';
   preloadDiv.style.visibility = 'hidden';
 
-  iconClasses.forEach(iconClass => {
+  iconClasses.forEach((iconClass) => {
     const iconEl = document.createElement('div');
     iconEl.className = `${iconClass} w-4 h-4 w-6 h-6 w-8 h-8`;
     preloadDiv.appendChild(iconEl);
@@ -180,7 +183,8 @@ function toggleIconSelection(iconName) {
   const index = selectedIcons.value.indexOf(iconName);
   if (index > -1) {
     selectedIcons.value.splice(index, 1);
-  } else {
+  }
+  else {
     selectedIcons.value.push(iconName);
   }
 }
@@ -199,18 +203,22 @@ async function copyIconClass(iconName) {
     const success = await copy(iconName);
     if (success) {
       ElMessage.success(`已复制: ${iconName}`);
-    } else {
+    }
+    else {
       ElMessage.error('复制失败');
     }
-  } catch (error) {
+  }
+  catch (error) {
     ElMessage.error('复制失败');
-  } finally {
+  }
+  finally {
     copyingIcon.value = '';
   }
 }
 
 async function copySelectedIcons() {
-  if (selectedIcons.value.length === 0) return;
+  if (selectedIcons.value.length === 0)
+    return;
 
   copying.value = true;
   try {
@@ -219,12 +227,15 @@ async function copySelectedIcons() {
     if (success) {
       ElMessage.success(`已复制 ${selectedIcons.value.length} 个图标类名`);
       clearSelection();
-    } else {
+    }
+    else {
       ElMessage.error('批量复制失败');
     }
-  } catch (error) {
+  }
+  catch (error) {
     ElMessage.error('批量复制失败');
-  } finally {
+  }
+  finally {
     copying.value = false;
   }
 }
@@ -255,7 +266,9 @@ onMounted(() => {
     <div class="page-header bg-white border-b border-gray-200 px-6 py-4">
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-gray-900">WeUI 图标库</h1>
+          <h1 class="text-2xl font-bold text-gray-900">
+            WeUI 图标库
+          </h1>
           <p class="text-sm text-gray-600 mt-1">
             共 {{ filteredIcons.length }} / {{ allIcons.length }} 个图标
             <span v-if="selectedIcons.length > 0" class="ml-2 text-indigo-600">
@@ -329,9 +342,15 @@ onMounted(() => {
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium text-gray-700">图标大小:</span>
           <el-radio-group v-model="iconSize" size="small">
-            <el-radio-button label="4">小</el-radio-button>
-            <el-radio-button label="6">中</el-radio-button>
-            <el-radio-button label="8">大</el-radio-button>
+            <el-radio-button label="4">
+              小
+            </el-radio-button>
+            <el-radio-button label="6">
+              中
+            </el-radio-button>
+            <el-radio-button label="8">
+              大
+            </el-radio-button>
           </el-radio-group>
         </div>
 
@@ -342,7 +361,9 @@ onMounted(() => {
         </div>
 
         <div class="flex items-center gap-2">
-          <el-checkbox v-model="showIconNames">显示图标名称</el-checkbox>
+          <el-checkbox v-model="showIconNames">
+            显示图标名称
+          </el-checkbox>
         </div>
       </div>
     </div>
@@ -362,9 +383,15 @@ onMounted(() => {
         <el-icon class="text-6xl text-gray-400 mb-4">
           <Search />
         </el-icon>
-        <h3 class="text-lg font-medium text-gray-900 mb-2">未找到匹配的图标</h3>
-        <p class="text-gray-500">尝试调整搜索条件或清除筛选器</p>
-        <el-button class="mt-4" @click="clearFilters">清除筛选</el-button>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">
+          未找到匹配的图标
+        </h3>
+        <p class="text-gray-500">
+          尝试调整搜索条件或清除筛选器
+        </p>
+        <el-button class="mt-4" @click="clearFilters">
+          清除筛选
+        </el-button>
       </div>
 
       <!-- 网格视图 -->
@@ -374,7 +401,7 @@ onMounted(() => {
         :style="{ gridTemplateColumns: `repeat(${columnsCount}, 1fr)` }"
       >
         <div
-          v-for="(icon, index) in filteredIcons"
+          v-for="(icon) in filteredIcons"
           :key="icon.name"
           class="icon-item"
           :class="{ selected: selectedIcons.includes(icon.name) }"

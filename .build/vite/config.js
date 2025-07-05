@@ -1,12 +1,12 @@
-import { resolve } from 'node:path'
-import process from 'node:process'
+import { resolve } from 'node:path';
+import process from 'node:process';
 
-import { externalizeDepsPlugin } from 'electron-vite'
-import { visualizer } from 'rollup-plugin-visualizer'
+import { externalizeDepsPlugin } from 'electron-vite';
+import { visualizer } from 'rollup-plugin-visualizer';
 
-const root = process.cwd()
+const root = process.cwd();
 function pathResolve(dir) {
-  return resolve(root, '.', dir)
+  return resolve(root, '.', dir);
 }
 
 // 主进程和预加载配置
@@ -16,11 +16,11 @@ export function createElectronConfig(entryPath) {
     build: {
       rollupOptions: {
         input: {
-          index: pathResolve(entryPath)
-        }
-      }
-    }
-  }
+          index: pathResolve(entryPath),
+        },
+      },
+    },
+  };
 }
 
 // 打包配置
@@ -28,7 +28,7 @@ export function rendererBuildConfig() {
   return {
     rollupOptions: {
       input: {
-        index: pathResolve('frontend/index.html')
+        index: pathResolve('frontend/index.html'),
       },
       plugins: [
         visualizer({
@@ -36,8 +36,8 @@ export function rendererBuildConfig() {
           open: false,
           gzipSize: true,
           brotliSize: true,
-          template: 'treemap' // flamegraph 火焰图
-        })
+          template: 'treemap', // flamegraph 火焰图
+        }),
       ],
       output: {
         chunkFileNames: 'js/[name]-[hash].js',
@@ -49,23 +49,23 @@ export function rendererBuildConfig() {
           groups: [
             {
               name: 'element-plus',
-              test: (id) => id.includes('node_modules/element-plus'),
-              priority: 10
-            }
+              test: id => id.includes('node_modules/element-plus'),
+              priority: 10,
+            },
             // { name: 'jszip', test: id => id.includes('node_modules/jszip'), priority: 9 }
-          ]
-        }
-      }
+          ],
+        },
+      },
     },
     // 代码压缩
     minify: 'terser', // 代码压缩增加时间
     chunkSizeWarningLimit: 700,
     terserOptions: {
       compress: {
-        pure_funcs: ['console.log', 'console.warn'], //需要去除的 pure_funcs: ['console.log', 'console.warn', 'console.info', 'console.debug']
-        drop_debugger: true
+        pure_funcs: ['console.log', 'console.warn'], // 需要去除的 pure_funcs: ['console.log', 'console.warn', 'console.info', 'console.debug']
+        drop_debugger: true,
         // drop_console: true
-      }
-    }
-  }
+      },
+    },
+  };
 }

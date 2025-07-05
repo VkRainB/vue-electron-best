@@ -5,11 +5,15 @@
     <div class="w-full max-w-md flex flex-col items-center">
       <div class="w-full bg-white/95 rounded-4 p-10 sm:p-8 shadow-2xl backdrop-blur-md">
         <div class="text-center mb-8">
-          <h1 class="text-7 sm:text-6 font-semibold text-gray-800 mb-2">欢迎登录</h1>
-          <p class="text-4 sm:text-3.5 text-gray-600">Vue Electron 应用</p>
+          <h1 class="text-7 sm:text-6 font-semibold text-gray-800 mb-2">
+            欢迎登录
+          </h1>
+          <p class="text-4 sm:text-3.5 text-gray-600">
+            Vue Electron 应用
+          </p>
         </div>
 
-        <el-form class="w-full" :model="loginForm" :rules="rules" ref="loginFormRef">
+        <el-form ref="loginFormRef" class="w-full" :model="loginForm" :rules="rules">
           <el-form-item prop="username" class="mb-6">
             <el-input
               v-model="loginForm.username"
@@ -35,8 +39,8 @@
             <el-button
               type="primary"
               class="w-full h-12 text-4 font-medium rounded-2"
-              @click="handleLogin"
               :loading="loading"
+              @click="handleLogin"
             >
               登录
             </el-button>
@@ -44,7 +48,7 @@
         </el-form>
 
         <div class="text-center mt-6">
-          <el-button @click="goToMain" class="text-indigo-600 text-sm hover:text-indigo-800">
+          <el-button class="text-indigo-600 text-sm hover:text-indigo-800" @click="goToMain">
             跳过登录，直接进入主页
           </el-button>
         </div>
@@ -54,51 +58,54 @@
 </template>
 
 <script setup>
-import { ref, reactive } from 'vue'
-import { useRouter } from 'vue-router'
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const router = useRouter()
-const loginFormRef = ref()
-const loading = ref(false)
+const router = useRouter();
+const loginFormRef = ref();
+const loading = ref(false);
 
 // 表单数据
 const loginForm = reactive({
   username: '',
-  password: ''
-})
+  password: '',
+});
 
 // 表单验证规则
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
-    { min: 6, message: '密码长度不能少于6位', trigger: 'blur' }
-  ]
-}
+    { min: 6, message: '密码长度不能少于6位', trigger: 'blur' },
+  ],
+};
 
 // 登录处理
-const handleLogin = async () => {
+async function handleLogin() {
   try {
-    const valid = await loginFormRef.value.validate()
-    if (!valid) return
+    const valid = await loginFormRef.value.validate();
+    if (!valid)
+      return;
 
-    loading.value = true
+    loading.value = true;
 
     // 模拟登录请求
-    await new Promise((resolve) => setTimeout(resolve, 1000))
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
-    ElMessage.success('登录成功！')
-    router.push('/home')
-  } catch (error) {
-    ElMessage.error('登录失败，请检查用户名和密码')
-  } finally {
-    loading.value = false
+    ElMessage.success('登录成功！');
+    router.push('/home');
+  }
+  catch (error) {
+    ElMessage.error('登录失败，请检查用户名和密码');
+  }
+  finally {
+    loading.value = false;
   }
 }
 
 // 跳转到主页
-const goToMain = () => {
-  router.push('/home')
+function goToMain() {
+  router.push('/home');
 }
 </script>

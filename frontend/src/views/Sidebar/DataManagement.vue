@@ -2,8 +2,12 @@
   <div class="data-management-container">
     <!-- 页面标题 -->
     <div class="page-header mb-6">
-      <h1 class="text-2xl font-bold text-gray-800 mb-2">数据管理</h1>
-      <p class="text-gray-600">管理和查看系统中的各类数据</p>
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">
+        数据管理
+      </h1>
+      <p class="text-gray-600">
+        管理和查看系统中的各类数据
+      </p>
     </div>
 
     <!-- 操作工具栏 -->
@@ -95,16 +99,24 @@
 
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="{ row }">
-            <el-button type="primary" size="small" @click="handleView(row)">查看</el-button>
-            <el-button type="warning" size="small" @click="handleEdit(row)">编辑</el-button>
-            <el-button type="danger" size="small" @click="handleDelete(row)">删除</el-button>
+            <el-button type="primary" size="small" @click="handleView(row)">
+              查看
+            </el-button>
+            <el-button type="warning" size="small" @click="handleEdit(row)">
+              编辑
+            </el-button>
+            <el-button type="danger" size="small" @click="handleDelete(row)">
+              删除
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <!-- 分页 -->
       <div class="pagination-container p-4 flex justify-between items-center">
-        <div class="text-gray-600 text-sm">共 {{ total }} 条数据，已选择 {{ selectedRows.length }} 条</div>
+        <div class="text-gray-600 text-sm">
+          共 {{ total }} 条数据，已选择 {{ selectedRows.length }} 条
+        </div>
         <el-pagination
           v-model:current-page="currentPage"
           v-model:page-size="pageSize"
@@ -120,9 +132,8 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { Search, Plus, Download, Refresh } from '@element-plus/icons-vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { onMounted, ref } from 'vue';
 
 // 响应式数据
 const searchQuery = ref('');
@@ -166,17 +177,17 @@ const mockData = [
 ];
 
 // 获取分类标签类型
-const getCategoryType = (category) => {
+function getCategoryType(category) {
   const typeMap = {
     用户数据: 'primary',
     订单数据: 'success',
     产品数据: 'warning',
   };
   return typeMap[category] || 'info';
-};
+}
 
 // 获取状态标签类型
-const getStatusType = (status) => {
+function getStatusType(status) {
   const typeMap = {
     活跃: 'success',
     正常: 'primary',
@@ -184,49 +195,49 @@ const getStatusType = (status) => {
     已禁用: 'danger',
   };
   return typeMap[status] || 'info';
-};
+}
 
 // 处理选择变化
-const handleSelectionChange = (selection) => {
+function handleSelectionChange(selection) {
   selectedRows.value = selection;
-};
+}
 
 // 处理添加
-const handleAdd = () => {
+function handleAdd() {
   ElMessage.success('添加数据功能开发中...');
-};
+}
 
 // 处理导出
-const handleExport = () => {
+function handleExport() {
   if (selectedRows.value.length === 0) {
     ElMessage.warning('请先选择要导出的数据');
     return;
   }
   ElMessage.success(`正在导出 ${selectedRows.value.length} 条数据...`);
-};
+}
 
 // 处理刷新
-const handleRefresh = () => {
+function handleRefresh() {
   loading.value = true;
   setTimeout(() => {
     loadData();
     loading.value = false;
     ElMessage.success('数据已刷新');
   }, 1000);
-};
+}
 
 // 处理查看
-const handleView = (row) => {
+function handleView(row) {
   ElMessage.info(`查看数据：${row.name}`);
-};
+}
 
 // 处理编辑
-const handleEdit = (row) => {
+function handleEdit(row) {
   ElMessage.info(`编辑数据：${row.name}`);
-};
+}
 
 // 处理删除
-const handleDelete = (row) => {
+function handleDelete(row) {
   ElMessageBox.confirm(`确定要删除数据"${row.name}"吗？`, '确认删除', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
@@ -238,26 +249,26 @@ const handleDelete = (row) => {
     .catch(() => {
       ElMessage.info('已取消删除');
     });
-};
+}
 
 // 处理页面大小变化
-const handleSizeChange = (size) => {
+function handleSizeChange(size) {
   pageSize.value = size;
   loadData();
-};
+}
 
 // 处理当前页变化
-const handleCurrentChange = (page) => {
+function handleCurrentChange(page) {
   currentPage.value = page;
   loadData();
-};
+}
 
 // 加载数据
-const loadData = () => {
+function loadData() {
   // 模拟API调用
   tableData.value = mockData;
   total.value = mockData.length;
-};
+}
 
 // 组件挂载时加载数据
 onMounted(() => {

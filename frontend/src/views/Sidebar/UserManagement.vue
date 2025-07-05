@@ -2,8 +2,12 @@
   <div class="user-management-container">
     <!-- 页面标题 -->
     <div class="page-header mb-6">
-      <h1 class="text-2xl font-bold text-gray-800 mb-2">用户管理</h1>
-      <p class="text-gray-600">管理系统用户信息和权限</p>
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">
+        用户管理
+      </h1>
+      <p class="text-gray-600">
+        管理系统用户信息和权限
+      </p>
     </div>
 
     <!-- 统计卡片 -->
@@ -11,8 +15,12 @@
       <div class="stat-card bg-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-gray-600 text-sm font-medium">总用户数</p>
-            <p class="text-3xl font-bold text-blue-600">1,234</p>
+            <p class="text-gray-600 text-sm font-medium">
+              总用户数
+            </p>
+            <p class="text-3xl font-bold text-blue-600">
+              1,234
+            </p>
           </div>
           <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
             <Icon name="el-icon-User" size="2em" color="#2563eb" />
@@ -23,8 +31,12 @@
       <div class="stat-card bg-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-gray-600 text-sm font-medium">活跃用户</p>
-            <p class="text-3xl font-bold text-green-600">856</p>
+            <p class="text-gray-600 text-sm font-medium">
+              活跃用户
+            </p>
+            <p class="text-3xl font-bold text-green-600">
+              856
+            </p>
           </div>
           <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
             <Icon name="el-icon-UserFilled" size="2em" color="#22c55e" />
@@ -35,8 +47,12 @@
       <div class="stat-card bg-white p-6 rounded-xl shadow-lg">
         <div class="flex items-center justify-between">
           <div>
-            <p class="text-gray-600 text-sm font-medium">新增用户</p>
-            <p class="text-3xl font-bold text-orange-600">42</p>
+            <p class="text-gray-600 text-sm font-medium">
+              新增用户
+            </p>
+            <p class="text-3xl font-bold text-orange-600">
+              42
+            </p>
           </div>
           <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
             <Icon name="el-icon-Plus" size="2em" color="#f59e42" />
@@ -48,7 +64,9 @@
     <!-- 用户列表 -->
     <div class="user-list bg-white p-6 rounded-xl shadow-lg">
       <div class="list-header flex items-center justify-between mb-4">
-        <h3 class="text-lg font-semibold text-gray-800">用户列表</h3>
+        <h3 class="text-lg font-semibold text-gray-800">
+          用户列表
+        </h3>
         <el-button type="primary" @click="handleAddUser">
           <Icon name="el-icon-Plus" size="1em" class="mr-1" />
           添加用户
@@ -64,8 +82,12 @@
           <div class="flex items-center gap-3 mb-3">
             <el-avatar :size="48" :src="user.avatar" />
             <div>
-              <h4 class="font-semibold text-gray-800">{{ user.name }}</h4>
-              <p class="text-gray-600 text-sm">{{ user.email }}</p>
+              <h4 class="font-semibold text-gray-800">
+                {{ user.name }}
+              </h4>
+              <p class="text-gray-600 text-sm">
+                {{ user.email }}
+              </p>
             </div>
           </div>
 
@@ -91,9 +113,15 @@
           </div>
 
           <div class="user-actions mt-4 flex gap-2">
-            <el-button type="primary" size="small" @click="handleEditUser(user)">编辑</el-button>
-            <el-button type="warning" size="small" @click="handleResetPassword(user)">重置密码</el-button>
-            <el-button type="danger" size="small" @click="handleDeleteUser(user)">删除</el-button>
+            <el-button type="primary" size="small" @click="handleEditUser(user)">
+              编辑
+            </el-button>
+            <el-button type="warning" size="small" @click="handleResetPassword(user)">
+              重置密码
+            </el-button>
+            <el-button type="danger" size="small" @click="handleDeleteUser(user)">
+              删除
+            </el-button>
           </div>
         </div>
       </div>
@@ -102,9 +130,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { User, UserFilled, Plus } from '@element-plus/icons-vue';
 import { ElMessage, ElMessageBox } from 'element-plus';
+import { ref } from 'vue';
 
 // 模拟用户数据
 const users = ref([
@@ -138,37 +165,37 @@ const users = ref([
 ]);
 
 // 获取角色标签类型
-const getRoleType = (role) => {
+function getRoleType(role) {
   const typeMap = {
     管理员: 'danger',
     编辑: 'warning',
     用户: 'primary',
   };
   return typeMap[role] || 'info';
-};
+}
 
 // 获取状态标签类型
-const getStatusType = (status) => {
+function getStatusType(status) {
   const typeMap = {
     活跃: 'success',
     禁用: 'danger',
     待审核: 'warning',
   };
   return typeMap[status] || 'info';
-};
+}
 
 // 处理添加用户
-const handleAddUser = () => {
+function handleAddUser() {
   ElMessage.success('添加用户功能开发中...');
-};
+}
 
 // 处理编辑用户
-const handleEditUser = (user) => {
+function handleEditUser(user) {
   ElMessage.info(`编辑用户：${user.name}`);
-};
+}
 
 // 处理重置密码
-const handleResetPassword = (user) => {
+function handleResetPassword(user) {
   ElMessageBox.confirm(`确定要重置用户"${user.name}"的密码吗？`, '确认重置', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
@@ -180,10 +207,10 @@ const handleResetPassword = (user) => {
     .catch(() => {
       ElMessage.info('已取消重置');
     });
-};
+}
 
 // 处理删除用户
-const handleDeleteUser = (user) => {
+function handleDeleteUser(user) {
   ElMessageBox.confirm(`确定要删除用户"${user.name}"吗？`, '确认删除', {
     confirmButtonText: '确定',
     cancelButtonText: '取消',
@@ -195,7 +222,7 @@ const handleDeleteUser = (user) => {
     .catch(() => {
       ElMessage.info('已取消删除');
     });
-};
+}
 </script>
 
 <style scoped></style>

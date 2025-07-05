@@ -11,10 +11,11 @@ class ServiceAPI {
   constructor() {
     // 检查是否在Electron环境中
     if (!window.api?.service) {
-      console.warn('Service API not available. Running in browser mode.')
-      this.isElectronMode = false
-    } else {
-      this.isElectronMode = true
+      console.warn('Service API not available. Running in browser mode.');
+      this.isElectronMode = false;
+    }
+    else {
+      this.isElectronMode = true;
     }
   }
 
@@ -27,15 +28,16 @@ class ServiceAPI {
    */
   async callMethod(serviceName, methodName, ...args) {
     if (!this.isElectronMode) {
-      throw new Error('Service calls are only available in Electron environment')
+      throw new Error('Service calls are only available in Electron environment');
     }
 
     try {
-      const result = await window.api.service.callMethod(serviceName, methodName, ...args)
-      return result
-    } catch (error) {
-      console.error(`Service call failed: ${serviceName}.${methodName}`, error)
-      throw new Error(`服务调用失败: ${error.message || '未知错误'}`)
+      const result = await window.api.service.callMethod(serviceName, methodName, ...args);
+      return result;
+    }
+    catch (error) {
+      console.error(`Service call failed: ${serviceName}.${methodName}`, error);
+      throw new Error(`服务调用失败: ${error.message || '未知错误'}`);
     }
   }
 
@@ -44,12 +46,12 @@ class ServiceAPI {
    * @returns {boolean} 服务是否可用
    */
   isAvailable() {
-    return this.isElectronMode
+    return this.isElectronMode;
   }
 }
 
 // 创建全局服务API实例
-export const serviceAPI = new ServiceAPI()
+export const serviceAPI = new ServiceAPI();
 
 /**
  * 图片服务API
@@ -57,8 +59,8 @@ export const serviceAPI = new ServiceAPI()
  */
 export class ImageAPI {
   constructor(serviceAPI) {
-    this.service = serviceAPI
-    this.serviceName = 'image'
+    this.service = serviceAPI;
+    this.serviceName = 'image';
   }
 
   /**
@@ -66,7 +68,7 @@ export class ImageAPI {
    * @returns {Promise<string>} 图片目录路径
    */
   async getPicturesDirectory() {
-    return await this.service.callMethod(this.serviceName, 'getPicturesDirectory')
+    return await this.service.callMethod(this.serviceName, 'getPicturesDirectory');
   }
 
   /**
@@ -75,34 +77,34 @@ export class ImageAPI {
    * @returns {Promise<Array>} 图片和目录列表
    */
   async listPictures(dirPath = null) {
-    return await this.service.callMethod(this.serviceName, 'listPictures', dirPath)
+    return await this.service.callMethod(this.serviceName, 'listPictures', dirPath);
   }
 
   /**
    * 读取图片文件
    * @param {string} imagePath - 图片文件路径
-   * @returns {Promise<Object>} 图片数据对象 {data, mimeType, size}
+   * @returns {Promise<object>} 图片数据对象 {data, mimeType, size}
    */
   async readImage(imagePath) {
-    return await this.service.callMethod(this.serviceName, 'readImage', imagePath)
+    return await this.service.callMethod(this.serviceName, 'readImage', imagePath);
   }
 
   /**
    * 获取图片信息
    * @param {string} imagePath - 图片文件路径
-   * @returns {Promise<Object>} 图片信息对象
+   * @returns {Promise<object>} 图片信息对象
    */
   async getImageInfo(imagePath) {
-    return await this.service.callMethod(this.serviceName, 'getImageInfo', imagePath)
+    return await this.service.callMethod(this.serviceName, 'getImageInfo', imagePath);
   }
 
   /**
    * 显示图片选择对话框
-   * @param {Object} [options] - 对话框选项
-   * @returns {Promise<Object>} 选择结果 {canceled, filePaths}
+   * @param {object} [options] - 对话框选项
+   * @returns {Promise<object>} 选择结果 {canceled, filePaths}
    */
   async showImageSelectDialog(options = {}) {
-    return await this.service.callMethod(this.serviceName, 'showImageSelectDialog', options)
+    return await this.service.callMethod(this.serviceName, 'showImageSelectDialog', options);
   }
 
   /**
@@ -111,22 +113,22 @@ export class ImageAPI {
    * @returns {Promise<Array>} 图片信息数组
    */
   async getMultipleImageInfo(imagePaths) {
-    return await this.service.callMethod(this.serviceName, 'getMultipleImageInfo', imagePaths)
+    return await this.service.callMethod(this.serviceName, 'getMultipleImageInfo', imagePaths);
   }
 
   /**
    * 批量读取图片数据
    * @param {Array<string>} imagePaths - 图片路径数组
-   * @param {number} [maxCount=10] - 最大读取数量
+   * @param {number} [maxCount] - 最大读取数量
    * @returns {Promise<Array>} 图片数据数组
    */
   async readMultipleImages(imagePaths, maxCount = 10) {
-    return await this.service.callMethod(this.serviceName, 'readMultipleImages', imagePaths, maxCount)
+    return await this.service.callMethod(this.serviceName, 'readMultipleImages', imagePaths, maxCount);
   }
 }
 
 // 创建图片API实例
-export const imageAPI = new ImageAPI(serviceAPI)
+export const imageAPI = new ImageAPI(serviceAPI);
 
 /**
  * API模块导出
@@ -134,5 +136,5 @@ export const imageAPI = new ImageAPI(serviceAPI)
  */
 export default {
   service: serviceAPI,
-  image: imageAPI
-}
+  image: imageAPI,
+};

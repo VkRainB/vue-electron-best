@@ -2,8 +2,12 @@
   <div class="help-container">
     <!-- 页面标题 -->
     <div class="page-header mb-6">
-      <h1 class="text-2xl font-bold text-gray-800 mb-2">帮助中心</h1>
-      <p class="text-gray-600">查找常见问题解答和使用指南</p>
+      <h1 class="text-2xl font-bold text-gray-800 mb-2">
+        帮助中心
+      </h1>
+      <p class="text-gray-600">
+        查找常见问题解答和使用指南
+      </p>
     </div>
 
     <!-- 搜索框 -->
@@ -30,7 +34,9 @@
 
         <el-collapse v-model="activeFAQ" accordion>
           <el-collapse-item v-for="faq in faqs" :key="faq.id" :title="faq.question" :name="faq.id">
-            <p class="text-gray-600 leading-relaxed">{{ faq.answer }}</p>
+            <p class="text-gray-600 leading-relaxed">
+              {{ faq.answer }}
+            </p>
           </el-collapse-item>
         </el-collapse>
       </div>
@@ -58,8 +64,12 @@
                 </el-icon>
               </div>
               <div>
-                <h4 class="font-medium text-gray-800">{{ guide.title }}</h4>
-                <p class="text-gray-600 text-sm">{{ guide.description }}</p>
+                <h4 class="font-medium text-gray-800">
+                  {{ guide.title }}
+                </h4>
+                <p class="text-gray-600 text-sm">
+                  {{ guide.description }}
+                </p>
               </div>
             </div>
           </div>
@@ -83,8 +93,12 @@
               </el-icon>
               <span class="font-medium text-gray-800">在线客服</span>
             </div>
-            <p class="text-gray-600 text-sm mb-3">工作时间：9:00-18:00</p>
-            <el-button type="primary" size="small" @click="openChat">开始对话</el-button>
+            <p class="text-gray-600 text-sm mb-3">
+              工作时间：9:00-18:00
+            </p>
+            <el-button type="primary" size="small" @click="openChat">
+              开始对话
+            </el-button>
           </div>
 
           <div class="support-item p-4 bg-gray-50 rounded-lg">
@@ -94,8 +108,12 @@
               </el-icon>
               <span class="font-medium text-gray-800">电话支持</span>
             </div>
-            <p class="text-gray-600 text-sm mb-3">400-123-4567</p>
-            <el-button type="success" size="small" @click="callSupport">拨打电话</el-button>
+            <p class="text-gray-600 text-sm mb-3">
+              400-123-4567
+            </p>
+            <el-button type="success" size="small" @click="callSupport">
+              拨打电话
+            </el-button>
           </div>
 
           <div class="support-item p-4 bg-gray-50 rounded-lg">
@@ -105,8 +123,12 @@
               </el-icon>
               <span class="font-medium text-gray-800">邮件支持</span>
             </div>
-            <p class="text-gray-600 text-sm mb-3">support@example.com</p>
-            <el-button type="warning" size="small" @click="sendEmail">发送邮件</el-button>
+            <p class="text-gray-600 text-sm mb-3">
+              support@example.com
+            </p>
+            <el-button type="warning" size="small" @click="sendEmail">
+              发送邮件
+            </el-button>
           </div>
         </div>
       </div>
@@ -134,8 +156,12 @@
             </el-icon>
           </div>
           <div class="video-info p-3">
-            <h4 class="font-medium text-gray-800 mb-1">{{ video.title }}</h4>
-            <p class="text-gray-600 text-sm">{{ video.duration }}</p>
+            <h4 class="font-medium text-gray-800 mb-1">
+              {{ video.title }}
+            </h4>
+            <p class="text-gray-600 text-sm">
+              {{ video.duration }}
+            </p>
           </div>
         </div>
       </div>
@@ -144,20 +170,11 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
 import {
   Search,
-  QuestionFilled,
-  Document,
-  Service,
-  Message,
-  Phone,
-  VideoPlay,
-  User,
-  Setting,
-  DataBoard,
 } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
+import { ref } from 'vue';
 
 // 搜索查询
 const searchQuery = ref('');
@@ -229,36 +246,36 @@ const videos = ref([
 ]);
 
 // 处理搜索
-const handleSearch = () => {
+function handleSearch() {
   if (searchQuery.value) {
     ElMessage.info(`搜索: ${searchQuery.value}`);
   }
-};
+}
 
 // 打开指南
-const openGuide = (guide) => {
+function openGuide(guide) {
   ElMessage.info(`打开指南: ${guide.title}`);
-};
+}
 
 // 打开在线客服
-const openChat = () => {
+function openChat() {
   ElMessage.success('正在连接在线客服...');
-};
+}
 
 // 拨打电话
-const callSupport = () => {
+function callSupport() {
   ElMessage.info('正在拨打客服电话...');
-};
+}
 
 // 发送邮件
-const sendEmail = () => {
+function sendEmail() {
   ElMessage.info('正在打开邮件客户端...');
-};
+}
 
 // 播放视频
-const playVideo = (video) => {
+function playVideo(video) {
   ElMessage.info(`播放视频: ${video.title}`);
-};
+}
 </script>
 
 <style scoped></style>

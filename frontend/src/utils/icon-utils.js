@@ -20,11 +20,11 @@ export const iconSizes = {
  * 主题颜色映射
  */
 export const themeColors = {
-  primary: '#3b82f6',
-  success: '#10b981',
-  warning: '#f59e0b',
-  danger: '#ef4444',
-  info: '#6b7280',
+  'primary': '#3b82f6',
+  'success': '#10b981',
+  'warning': '#f59e0b',
+  'danger': '#ef4444',
+  'info': '#6b7280',
   // 暗色主题颜色
   'primary-dark': '#60a5fa',
   'success-dark': '#34d399',
@@ -243,37 +243,37 @@ export function getPageIcon(pageType) {
 export function getFileIcon(fileType) {
   const fileIconMap = {
     // 文档类型
-    pdf: getIcon('file', 'pdf'),
-    doc: getIcon('file', 'word'),
-    docx: getIcon('file', 'word'),
-    xls: getIcon('file', 'excel'),
-    xlsx: getIcon('file', 'excel'),
-    ppt: getIcon('file', 'document'),
-    pptx: getIcon('file', 'document'),
-    txt: getIcon('file', 'document'),
+    'pdf': getIcon('file', 'pdf'),
+    'doc': getIcon('file', 'word'),
+    'docx': getIcon('file', 'word'),
+    'xls': getIcon('file', 'excel'),
+    'xlsx': getIcon('file', 'excel'),
+    'ppt': getIcon('file', 'document'),
+    'pptx': getIcon('file', 'document'),
+    'txt': getIcon('file', 'document'),
 
     // 图片类型
-    jpg: getIcon('file', 'image'),
-    jpeg: getIcon('file', 'image'),
-    png: getIcon('file', 'image'),
-    gif: getIcon('file', 'image'),
-    svg: getIcon('file', 'image'),
-    webp: getIcon('file', 'image'),
+    'jpg': getIcon('file', 'image'),
+    'jpeg': getIcon('file', 'image'),
+    'png': getIcon('file', 'image'),
+    'gif': getIcon('file', 'image'),
+    'svg': getIcon('file', 'image'),
+    'webp': getIcon('file', 'image'),
 
     // 视频类型
-    mp4: getIcon('file', 'video'),
-    avi: getIcon('file', 'video'),
-    mov: getIcon('file', 'video'),
-    wmv: getIcon('file', 'video'),
+    'mp4': getIcon('file', 'video'),
+    'avi': getIcon('file', 'video'),
+    'mov': getIcon('file', 'video'),
+    'wmv': getIcon('file', 'video'),
 
     // 音频类型
-    mp3: getIcon('file', 'audio'),
-    wav: getIcon('file', 'audio'),
-    flac: getIcon('file', 'audio'),
+    'mp3': getIcon('file', 'audio'),
+    'wav': getIcon('file', 'audio'),
+    'flac': getIcon('file', 'audio'),
 
     // 压缩文件
-    zip: getIcon('file', 'folder'),
-    rar: getIcon('file', 'folder'),
+    'zip': getIcon('file', 'folder'),
+    'rar': getIcon('file', 'folder'),
     '7z': getIcon('file', 'folder'),
   };
 
