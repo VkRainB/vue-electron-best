@@ -1,9 +1,9 @@
-<script setup></script>
-
 <template>
   <div>
-    <h1>Icons</h1>
+    <h1>SidebarLayout</h1>
   </div>
 </template>
+
+<script setup></script>
 
 <style scoped></style>

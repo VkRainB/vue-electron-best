@@ -1,10 +1,8 @@
 import process from 'node:process';
 import { electronAPI } from '@electron-toolkit/preload';
 import { clipboard, contextBridge } from 'electron';
-import { invoke } from '../main/services/channels';
 
 const api = {
-  invoke,
   clipboard,
 };
 if (process.contextIsolated) {

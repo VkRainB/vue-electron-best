@@ -4,12 +4,14 @@ import { electronApp, is, optimizer } from '@electron-toolkit/utils';
 import { app, BrowserWindow, shell } from 'electron';
 import icon from '../../resources/icon.png?asset';
 import { loadAllServices, setupServiceRequests } from './services';
+import { setChannelListener } from './utils/index.js';
+import log from './utils/logger.js';
 
 function createWindow() {
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
-    show: false,
+    width: 1024,
+    height: 768,
+    frame: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -36,6 +38,10 @@ function createWindow() {
 
   // 设置服务请求处理
   setupServiceRequests();
+
+  log.info('mainWindow', '启动了');
+  // 设置通道监听
+  setChannelListener(mainWindow);
 }
 
 app.whenReady().then(async () => {
@@ -43,6 +49,8 @@ app.whenReady().then(async () => {
 
   // 加载所有服务
   await loadAllServices();
+
+  optimizer.registerFramelessWindowIpc();
 
   app.on('browser-window-created', (_, window) => {
     // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
