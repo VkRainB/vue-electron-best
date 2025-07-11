@@ -26,5 +26,10 @@ export function setChannelListener(_win) {
       win.setMinimumSize(0, 0);
       win.center();
     }
+
+    // 取消窗口限制
+    // see https://www.electronjs.org/docs/latest/api/browser-window#winsetminimumsizewidth-height
+    // win.setMaximumSize(Number.MAX_VALUE, Number.MAX_VALUE)
+    // win.setMinimumSize(0, 0)
   });
 }
