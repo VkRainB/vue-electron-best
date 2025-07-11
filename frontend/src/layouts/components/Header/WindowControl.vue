@@ -1,20 +1,12 @@
 <template>
   <div class="window-controls">
-    <el-icon :size="16" @click="minWindow">
-      <Minus />
-    </el-icon>
-    <el-icon :size="16" @click="toggleFullScreen">
-      <FullScreen />
-    </el-icon>
-    <el-icon :size="16" @click="closeWindow">
-      <Close />
-    </el-icon>
+    <Icon name="el-icon-minus" size="16" @click="minWindow" />
+    <Icon name="el-icon-fullScreen" size="16" @click="toggleFullScreen" />
+    <Icon name="el-icon-close" size="16" @click="closeWindow" />
   </div>
 </template>
 
 <script setup>
-import { Close, FullScreen, Minus } from '@element-plus/icons-vue';
-
 function minWindow() {
   window.electron.ipcRenderer.send('win:invoke', 'min');
 }

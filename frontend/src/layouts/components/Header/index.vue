@@ -2,9 +2,11 @@
   <header class="app-header">
     <!-- 标题栏：窗口拖拽和控制按钮 -->
     <div class="title-bar">
-      <div class="app-icon" @click="handleRefresh">
-        <Icon name="i-weui-star-outlined" />
-        <div>Application</div>
+      <div class="app-icon">
+        <Icon name="el-icon-house" size="16" @click="handleRefresh" />
+        <div class="text-14px">
+          软件平台
+        </div>
       </div>
       <WindowControl />
     </div>

@@ -55,7 +55,7 @@ function copyName(name) {
           class="w-18 h-16 flex flex-col items-center justify-center bg-white rounded shadow hover:shadow-lg transition cursor-pointer"
           @click="copyName(name)"
         >
-          <Icon :name="name" />
+          <Icon :name="name" color="#A6A7A9" />
           <span class="text-xs mt-2 break-all text-gray-500 text-center">{{ name.replace('el-icon-', '') }}</span>
         </div>
       </div>
