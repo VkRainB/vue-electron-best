@@ -12,10 +12,6 @@
     <!-- 导航内容区域 -->
     <nav class="nav-content">
       <div class="nav-left">
-        <el-icon class="toggle-btn" @click="toggleSidebar">
-          <Menu v-if="isCollapse" />
-          <Close v-else />
-        </el-icon>
         <slot name="nav-left" />
       </div>
       <div class="nav-center">
@@ -29,22 +25,12 @@
 </template>
 
 <script setup>
-import { Close, Menu } from '@element-plus/icons-vue';
-import { storeToRefs } from 'pinia';
 import Icon from '@/components/icon/index.vue';
-import { useDesignStore } from '@/stores';
 import WindowControl from './WindowControl.vue';
-
-const designStore = useDesignStore();
-const { isCollapse } = storeToRefs(designStore);
 
 function handleRefresh() {
   window.location.hash = '';
   location.reload();
-}
-
-function toggleSidebar() {
-  designStore.setCollapse(!isCollapse.value);
 }
 </script>
 

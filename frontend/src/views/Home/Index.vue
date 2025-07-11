@@ -26,7 +26,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import Icon from '@/components/icon/index.vue';
 
 const features = ref([
   {

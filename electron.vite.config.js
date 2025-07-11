@@ -6,7 +6,8 @@ function pathResolve(dir) {
   return resolve(__dirname, '.', dir);
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig((cnf) => {
+  const { mode } = cnf;
   const env = loadEnv(mode);
   console.log('环境变量 env -> ', env);
   // const { VITE_PORT } = env
@@ -25,7 +26,7 @@ export default defineConfig(({ mode }) => {
           '@': pathResolve('frontend/src'),
         },
       },
-      plugins: createVitePlugins(),
+      plugins: createVitePlugins(cnf),
       build: rendererBuildConfig(),
     },
   };

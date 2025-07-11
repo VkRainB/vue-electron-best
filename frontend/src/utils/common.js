@@ -16,13 +16,6 @@ export function registerIcons(app) {
   for (const i in icons) {
     app.component(`el-icon-${icons[i].name}`, icons[i]);
   }
-
-  // 自动注册 src/icons/svg 下的 svg 图标为全局组件，命名为 svg-xxx
-  const svgFiles = import.meta.glob('@/icons/svg/*.svg', { eager: true });
-  Object.keys(svgFiles).forEach((file) => {
-    const name = `svg-${file.split('/').pop().replace('.svg', '')}`;
-    app.component(name, svgFiles[file].default || svgFiles[file]);
-  });
 }
 
 /**

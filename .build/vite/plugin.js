@@ -5,8 +5,9 @@ import AutoImport from 'unplugin-auto-import/vite';
 import ElementPlus from 'unplugin-element-plus/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import Components from 'unplugin-vue-components/vite';
+import createSvgIcon from './svg-icon';
 
-export function createVitePlugins() {
+export function createVitePlugins({ command }) {
   return [
     vue(),
     vueJsx(),
@@ -27,5 +28,6 @@ export function createVitePlugins() {
     ElementPlus({
       useSource: true,
     }),
+    createSvgIcon(command === 'build'),
   ];
 }

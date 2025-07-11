@@ -5,6 +5,7 @@ import store from './stores';
 import { registerIcons } from './utils';
 import './assets/base.css';
 import 'uno.css';
+import 'virtual:svg-icons-register';
 
 async function setup() {
   const app = createApp(App);
