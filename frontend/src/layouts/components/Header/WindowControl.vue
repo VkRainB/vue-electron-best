@@ -26,9 +26,20 @@ function closeWindow() {
   window.electron.ipcRenderer.send('win:invoke', 'close');
 }
 
-function toggleFullScreen() {
+async function   toggleFullScreen () {
   window.electron.ipcRenderer.send('win:invoke', 'max');
 }
+
+
+onMounted(() => {
+  window.electron.ipcRenderer.removeAllListeners('win:maximize-state');
+  window.electron.ipcRenderer.on('win:maximize-state', (event, { isMaximized }) => {
+    console.log('窗口是否最大化:', isMaximized);
+    // 这里可以做UI切换等
+  });
+});
+
+
 </script>
 
 <style scoped>

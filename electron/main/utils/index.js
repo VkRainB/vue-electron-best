@@ -2,6 +2,8 @@ import { ipcMain, BrowserWindow } from 'electron';
 
 import logger from './logger.js';
 
+// invoke / handle
+//  send / on
 export function setChannelListener(_win) {
   // 获取日志
   ipcMain.handle('get-log-config', () => {
@@ -32,4 +34,15 @@ export function setChannelListener(_win) {
     // win.setMaximumSize(Number.MAX_VALUE, Number.MAX_VALUE)
     // win.setMinimumSize(0, 0)
   });
+
+  // 监听窗口最大化/还原，并通知渲染进程
+  function sendMaximizeState() {
+    console.log('sendMaximizeState');
+    const isMaximized = _win.isMaximized();
+    console.log('isMaximized', isMaximized)
+    _win.webContents.send('win:maximize-state', { isMaximized });
+  }
+
+  _win.on('maximize', sendMaximizeState);
+  _win.on('unmaximize', sendMaximizeState);
 }
