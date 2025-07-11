@@ -1,13 +1,8 @@
 <!-- Main -->
 <script setup>
-import { storeToRefs } from 'pinia';
-
-import { useDesignStore } from '@/stores';
 import { useKeepAliveStore } from '@/stores/modules/keepAlive';
 
-const designStore = useDesignStore();
 const keepAliveStore = useKeepAliveStore();
-const { navbarHeight } = storeToRefs(designStore);
 
 // 刷新当前路由页面缓存方法
 const isRouterShow = ref(true);
@@ -16,9 +11,9 @@ provide('refresh', refreshMainPage);
 </script>
 
 <template>
-  <div class="main" :style="{ height: `calc(100vh - ${navbarHeight})` }">
+  <div class="main" style="height: calc(100vh - var(--navbar-height));">
     <slot />
-    <div class="main-router p-5">
+    <div class="main-router main-scroll  w-full p-5">
       <router-view v-slot="{ Component, route }">
         <transition mode="out-in" appear>
           <keep-alive :max="10" :include="keepAliveStore.keepAliveName">
@@ -33,5 +28,10 @@ provide('refresh', refreshMainPage);
 <style scoped lang="scss">
 .main {
   overflow: hidden;
+}
+.main-scroll{
+  height: calc(100% - var(--tabs-height));
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 </style>

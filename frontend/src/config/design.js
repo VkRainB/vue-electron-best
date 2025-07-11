@@ -5,8 +5,7 @@ const design = {
   // 布局模式
   layout: 'vertical',
 
-  // 导航栏高度
-  navbarHeight: '85px',
+
 
   // 是否折叠菜单
   isCollapse: false,

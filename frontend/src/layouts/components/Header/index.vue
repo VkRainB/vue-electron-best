@@ -3,16 +3,13 @@
     <!-- 标题栏：窗口拖拽和控制按钮 -->
     <div class="title-bar">
       <div class="app-icon">
-        <Icon name="el-icon-house" size="16" @click="handleRefresh" />
-        <div class="text-14px">
-          软件平台
-        </div>
+        <slot name="app-icon" />
       </div>
-      <WindowControl />
+      <WindowControl :icon-color="props.color" :controls="props.controls" />
     </div>
 
     <!-- 导航内容区域 -->
-    <nav class="nav-content">
+    <nav v-if="hasAnyNavSlot" class="nav-content" :class="hasAnyNavSlot ? 'h-50px' : 'h-0px hidden'">
       <div class="nav-left">
         <slot name="nav-left" />
       </div>
@@ -27,13 +24,23 @@
 </template>
 
 <script setup>
-import Icon from '@/components/icon/index.vue';
+import { useSlots } from 'vue';
 import WindowControl from './WindowControl.vue';
 
-function handleRefresh() {
-  window.location.hash = '';
-  location.reload();
-}
+const props = defineProps({
+  color: String, // 图标颜色
+  controls: Array, // 渲染的控件
+});
+
+const slots = useSlots();
+
+const hasAnyNavSlot = computed(() => {
+  return !!(
+    (slots['nav-left'] && slots['nav-left']().length)
+    || (slots['nav-center'] && slots['nav-center']().length)
+    || (slots['nav-right'] && slots['nav-right']().length)
+  );
+});
 </script>
 
 <style lang="scss" scoped>
@@ -45,13 +52,13 @@ function handleRefresh() {
 
 .title-bar {
   /* 透明渐变毛玻璃 */
-  backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
   z-index: 99;
   width: 100%;
-  height: 35px;
+  height: var(--window-controls-height);
   -webkit-app-region: drag;
-  background-color: rgba(0, 0, 0, 0);
   display: flex;
+  background-color: rgba(0, 0, 0, 0);
   justify-content: space-between;
   align-items: center;
   padding: 0 10px;
@@ -63,12 +70,10 @@ function handleRefresh() {
   align-items: center;
   justify-content: center;
   -webkit-app-region: no-drag;
-  cursor: pointer;
 }
 
 .nav-content {
   width: 100%;
-  height: 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;

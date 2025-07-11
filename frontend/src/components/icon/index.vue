@@ -4,7 +4,7 @@ import { computed, h, resolveComponent } from 'vue';
 const props = defineProps({
   name: { type: String, required: true },
   size: { type: [String, Number], default: '20px' },
-  color: { type: String, default: '#000' },
+  color: { type: String, default: '#696868' },
   customClass: { type: String, default: '' },
   customStyle: { type: String, default: '' },
 });

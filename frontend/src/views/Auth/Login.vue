@@ -1,16 +1,13 @@
 <template>
   <div
-    class="w-screen h-screen bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center p-5 sm:p-4 box-border"
+    class="w-full h-full bg-white flex items-center justify-center"
   >
-    <div class="w-full max-w-md flex flex-col items-center">
-      <div class="w-full bg-white/95 rounded-4 p-10 sm:p-8 shadow-2xl backdrop-blur-md">
-        <div class="text-center mb-8">
-          <h1 class="text-7 sm:text-6 font-semibold text-gray-800 mb-2">
-            欢迎登录
-          </h1>
-          <p class="text-4 sm:text-3.5 text-gray-600">
-            Vue Electron 应用
-          </p>
+    <div class=" flex flex-col items-center">
+      <div class="w-full rounded-4 p-8 select-none only-xs:shadow-0  xs:shadow-2xl ">
+        <div class="flex justify-center mb-8">
+          <div class=" mb-2">
+            <Icon name="svg-sys-electron" size="50" />
+          </div>
         </div>
 
         <el-form ref="loginFormRef" class="w-full" :model="loginForm" :rules="rules">
@@ -19,20 +16,35 @@
               v-model="loginForm.username"
               placeholder="请输入用户名"
               size="large"
-              prefix-icon="User"
+              :prefix-icon="User"
               class="h-12"
             />
           </el-form-item>
 
           <el-form-item prop="password" class="mb-6">
             <el-input
+              ref="pwdInputRef"
               v-model="loginForm.password"
-              type="password"
+              :type="passwordVisible ? 'text' : 'password'"
               placeholder="请输入密码"
-              prefix-icon="Lock"
-              show-password
+              :prefix-icon="Lock"
+              size="large"
               class="h-12"
-            />
+            >
+              <template #suffix>
+                <el-icon style="cursor: pointer;" @click="handleTogglePwdVisible">
+                  <component :is="passwordVisible ? View : Hide" />
+                </el-icon>
+              </template>
+            </el-input>
+          </el-form-item>
+
+          <!-- 记住密码/自动登录 -->
+          <el-form-item>
+            <div class="w-full flex justify-between">
+              <el-checkbox v-model="remenberPsw" label="记住密码" size="large" />
+              <el-checkbox v-model="autoLogin" label="自动登录" size="large" />
+            </div>
           </el-form-item>
 
           <el-form-item>
@@ -46,20 +58,15 @@
             </el-button>
           </el-form-item>
         </el-form>
-
-        <div class="text-center mt-6">
-          <el-button class="text-indigo-600 text-sm hover:text-indigo-800" @click="goToMain">
-            跳过登录，直接进入主页
-          </el-button>
-        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import { Hide, Lock, User, View } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
-import { reactive, ref } from 'vue';
+import { nextTick, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -80,6 +87,26 @@ const rules = {
     { min: 6, message: '密码长度不能少于6位', trigger: 'blur' },
   ],
 };
+
+const remenberPsw = ref(false); // 记住密码
+const autoLogin = ref(false); // 自动登录
+const passwordVisible = ref(false); // 密码可见性
+const pwdInputRef = ref();
+async function handleTogglePwdVisible() {
+  passwordVisible.value = !passwordVisible.value;
+  await nextTick();
+  const inputEl = pwdInputRef.value?.input;
+  if (inputEl) {
+    inputEl.focus();
+    // 延迟执行，确保DOM完全更新
+    setTimeout(() => {
+      const textLength = inputEl.value.length;
+      // 直接设置光标位置到末尾
+      inputEl.selectionStart = textLength;
+      inputEl.selectionEnd = textLength;
+    }, 0);
+  }
+}
 
 // 登录处理
 async function handleLogin() {
@@ -103,9 +130,14 @@ async function handleLogin() {
     loading.value = false;
   }
 }
-
-// 跳转到主页
-function goToMain() {
-  router.push('/home');
-}
 </script>
+
+<style scoped lang="scss"> 
+// 300px取消边框
+@media (width: 300px) {
+  .only-xs\:shadow-0 {
+    box-shadow: none
+  }
+}
+
+</style>

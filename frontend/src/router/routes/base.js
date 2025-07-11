@@ -33,7 +33,7 @@ const basicRoutes = [
   // 使用简单布局的路由（用于登录页面等）
   {
     path: '/auth',
-    component: MainLayout,
+    component: SimpleLayout,
     name: 'Auth',
     children: [
       {

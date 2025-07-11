@@ -1,18 +1,52 @@
-<template>
-  <div class="w-screen h-screen overflow-hidden bg-white flex flex-col">
-    <router-view />
-  </div>
-</template>
-
+<!-- 简单布局 -->
 <script setup>
-// 简单布局，无需任何逻辑
+import Header from '@/layouts/components/Header/index.vue';
 </script>
 
-<style scoped>
-/* 确保内容全屏显示 */
-:deep(.router-view-content) {
-  width: 100%;
-  height: 100%;
-  flex: 1;
+<template>
+  <el-container class="main-layout">
+    <el-header class="main-layout__header" height="var(--window-controls-height">
+      <Header class="bg-#409EFF" color="white" :controls="['min', 'close']">
+        <template #app-icon>
+          <div class="text-white">
+            标题
+          </div>
+        </template>
+      </Header>
+    </el-header>
+
+    <el-container class="main-layout__body">
+      <el-main class="main-layout__content">
+        <router-view />
+      </el-main>
+    </el-container>
+  </el-container>
+</template>
+
+<style lang="scss" scoped>
+.main-layout {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &__header {
+    --el-header-padding:0px;
+  }
+
+  &__body {
+    flex: 1;
+    min-height: 0;
+
+  }
+  &__content {
+    --el-main-padding:0px;
+  }
 }
+</style>
+
+<style lang="scss">
+
 </style>

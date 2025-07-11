@@ -1,4 +1,4 @@
-<!-- 纵向布局作为基础布局 -->
+<!-- 基础布局 -->
 <script setup>
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
@@ -11,21 +11,32 @@ import { useDesignStore } from '@/stores';
 
 const router = useRouter();
 const designStore = useDesignStore();
-const { isCollapse, navbarHeight } = storeToRefs(designStore);
+const { isCollapse } = storeToRefs(designStore);
 
 function toggleSidebar() {
   designStore.setCollapse(!isCollapse.value);
 }
 
-function goRouter() {
-  router.push('/icons');
+function goRouter(name) {
+  router.push({ name });
+}
+
+function handleRefresh() {
+  window.location.hash = '';
+  location.reload();
 }
 </script>
 
 <template>
   <el-container class="main-layout">
-    <el-header class="main-layout__header" :height="navbarHeight">
+    <el-header class="main-layout__header" height="var(--navbar-height)">
       <Header>
+        <template #app-icon>
+          <Icon name="el-icon-house" size="16" class="cursor-pointer" @click="handleRefresh" />
+          <div class="text-14px select-none">
+            软件平台
+          </div>
+        </template>
         <template #nav-left>
           <el-icon class="main-layout__toggle-btn" @click="toggleSidebar">
             <Icon v-if="isCollapse" name="el-icon-menu" />
@@ -34,7 +45,8 @@ function goRouter() {
         </template>
 
         <template #nav-right>
-          <Icon name="svg-sys-electron" @click="goRouter" />
+          <Icon name="i-weui-like-outlined" @click="goRouter('Icons')" />
+          <Icon name="i-weui-me-outlined" @click="goRouter('Login')" />
         </template>
       </Header>
     </el-header>
@@ -44,7 +56,7 @@ function goRouter() {
         <Aside />
         <Main>
           <template #default>
-            <div class="h-30px bg-#E9ECF2">
+            <div style="height: var(--tabs-height);" class=" bg-#E9ECF2">
               标签页
             </div>
           </template>

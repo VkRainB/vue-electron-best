@@ -1,4 +1,14 @@
 :root {
+  /* 导航栏高度（控件+插槽50px） */
+  --navbar-height: 85px;
+
+  /* 窗口控件高度 */
+  --window-controls-height: 35px;
+
+  /*标签栏高度 */
+  --tabs-height: 30px;
+
+  /* 侧边栏宽度 */
   --sidebar-width: 200px;
 }
 
@@ -17,6 +27,7 @@ body {
   font-family: 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', Arial, sans-serif;
   background: #f6f7fb;
   color: #222;
+  scrollbar-gutter: stable overlay;
 }
 
 * {

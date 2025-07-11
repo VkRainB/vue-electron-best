@@ -25,7 +25,7 @@ function copyName(name) {
 </script>
 
 <template>
-  <div class="p-6">
+  <div class="p-0">
     <h1 class="text-3xl font-bold mb-6 border-b pb-2">
       Icons
     </h1>
