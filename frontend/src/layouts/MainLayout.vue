@@ -11,7 +11,7 @@ import { useDesignStore } from '@/stores';
 
 const router = useRouter();
 const designStore = useDesignStore();
-const { isCollapse } = storeToRefs(designStore);
+const { isCollapse, navbarHeight } = storeToRefs(designStore);
 
 function toggleSidebar() {
   designStore.setCollapse(!isCollapse.value);
@@ -23,11 +23,11 @@ function goRouter() {
 </script>
 
 <template>
-  <el-container class="layout-container">
-    <el-header class="layout-header" height="85px">
+  <el-container class="main-layout">
+    <el-header class="main-layout__header" :height="navbarHeight">
       <Header>
         <template #nav-left>
-          <el-icon class="toggle-btn" @click="toggleSidebar">
+          <el-icon class="main-layout__toggle-btn" @click="toggleSidebar">
             <Icon v-if="isCollapse" name="el-icon-menu" />
             <Icon v-else name="el-icon-grid" />
           </el-icon>
@@ -39,17 +39,23 @@ function goRouter() {
       </Header>
     </el-header>
 
-    <el-container class="layout-container-main" :class="{ 'is-collapse': isCollapse }">
-      <el-main class="layout-main">
+    <el-container class="main-layout__body" :class="{ collapse: isCollapse }">
+      <el-main class="main-layout__content">
         <Aside />
-        <Main />
+        <Main>
+          <template #default>
+            <div class="h-30px bg-#E9ECF2">
+              标签页
+            </div>
+          </template>
+        </Main>
       </el-main>
     </el-container>
   </el-container>
 </template>
 
 <style lang="scss" scoped>
-.layout-container {
+.main-layout {
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -57,19 +63,25 @@ function goRouter() {
   display: flex;
   flex-direction: column;
 
-  .layout-header{
+  &__header {
     --el-header-padding:0px;
   }
 
-  .layout-container-main {
+  &__body {
     flex: 1;
     min-height: 0;
     margin-left: var(--sidebar-width, 200px);
     transition: margin-left 0.3s ease;
+
   }
-  .is-collapse{
-    margin-left: 0px;
+  &__content {
+    --el-main-padding:0px;
   }
+
+  .collapse {
+      margin-left: 0px;
+    }
+
 }
 </style>
 

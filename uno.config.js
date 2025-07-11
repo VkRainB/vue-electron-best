@@ -15,10 +15,10 @@ export default defineConfig({
     presetWind3(),
     presetIcons({
       collections: {
-        weui: () => import('@iconify-json/weui/icons.json').then(i => i.default),
+        weui: () => import('@iconify-json/weui/icons.json').then((i) => i.default),
       },
       extraProperties: {
-        'display': 'inline-block',
+        display: 'inline-block',
         'vertical-align': 'middle',
       },
     }),
@@ -31,17 +31,17 @@ export default defineConfig({
   ],
   theme: {
     breakpoints: {
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
       '2xl': '1536px',
     },
   },
   rules: [
     // 自定义规则
-    [/^m-(\d+)$/, ([, d]) => ({ margin: `${d}px` })],
-    [/^p-(\d+)$/, ([, d]) => ({ padding: `${d}px` })],
+    [/^m-(\d+)$/, ([, d]) => ({ margin: `${d * 0.25}rem` })],
+    [/^p-(\d+)$/, ([, d]) => ({ padding: `${d * 0.25}rem` })],
     // 高度规则
     [/^h-(\d+)$/, ([, d]) => ({ height: `${d * 0.25}rem` })],
     // z-index 规则
