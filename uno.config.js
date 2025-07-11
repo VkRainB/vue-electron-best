@@ -41,17 +41,5 @@ export default defineConfig({
   },
   rules: [
     // 自定义规则
-    [/^m-(\d+)$/, ([, d]) => ({ margin: `${d * 0.25}rem` })],
-    [/^p-(\d+)$/, ([, d]) => ({ padding: `${d * 0.25}rem` })],
-    // 高度规则
-    [/^h-(\d+)$/, ([, d]) => ({ height: `${d * 0.25}rem` })],
-    // z-index 规则
-    [/^z-(\d+)$/, ([, d]) => ({ 'z-index': d })],
-    // 文本大小规则
-    [/^text-(\d+(?:\.\d+)?)$/, ([, d]) => ({ 'font-size': `${d * 0.25}rem` })],
-    // 圆角规则
-    [/^rounded-(\d+)$/, ([, d]) => ({ 'border-radius': `${d * 0.25}rem` })],
-    // 最小宽度规则
-    [/^min-w-(\d+)$/, ([, d]) => ({ 'min-width': `${d * 0.25}rem` })],
   ],
 });

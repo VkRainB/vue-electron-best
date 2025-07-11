@@ -3,8 +3,8 @@
     class="w-full h-full bg-white flex items-center justify-center"
   >
     <div class=" flex flex-col items-center">
-      <div class="w-full rounded-4 p-8 select-none only-xs:shadow-0  xs:shadow-2xl ">
-        <div class="flex justify-center mb-8">
+      <div class="w-full rounded-4 p-8 pt-5 select-none only-xs:shadow-0  xs:shadow-2xl ">
+        <div class="flex justify-center mb-5">
           <div class=" mb-2">
             <Icon name="svg-sys-electron" size="50" />
           </div>
@@ -15,9 +15,9 @@
             <el-input
               v-model="loginForm.username"
               placeholder="请输入用户名"
-              size="large"
+             size="large"
               :prefix-icon="User"
-              class="h-12"
+              
             />
           </el-form-item>
 
@@ -29,7 +29,6 @@
               placeholder="请输入密码"
               :prefix-icon="Lock"
               size="large"
-              class="h-12"
             >
               <template #suffix>
                 <el-icon style="cursor: pointer;" @click="handleTogglePwdVisible">
@@ -50,6 +49,7 @@
           <el-form-item>
             <el-button
               type="primary"
+              size="default"
               class="w-full h-12 text-4 font-medium rounded-2"
               :loading="loading"
               @click="handleLogin"
@@ -111,9 +111,9 @@ async function handleTogglePwdVisible() {
 // 登录处理
 async function handleLogin() {
   try {
-    const valid = await loginFormRef.value.validate();
-    if (!valid)
-      return;
+    // const valid = await loginFormRef.value.validate();
+    // if (!valid) return;
+     
 
     loading.value = true;
 
@@ -121,6 +121,7 @@ async function handleLogin() {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     ElMessage.success('登录成功！');
+    window.electron.ipcRenderer.send('win:setSize', 'normal');
     router.push('/home');
   }
   catch (error) {
