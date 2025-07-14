@@ -16,13 +16,17 @@ function formatWithColors(level, message) {
   let tag = '';
   if (level === 'info') {
     tag = colors.gray(colors.bold(message));
-  } else if (level === 'warn') {
+  }
+  else if (level === 'warn') {
     tag = colors.yellow(colors.bold(message));
-  } else if (level === 'error') {
+  }
+  else if (level === 'error') {
     tag = colors.red(colors.bold(message));
-  } else if (level === 'debug') {
+  }
+  else if (level === 'debug') {
     tag = colors.magenta(colors.bold(message));
-  } else {
+  }
+  else {
     tag = colors.white(colors.bold(message));
   }
   return `${tag}`;
@@ -39,10 +43,12 @@ log.transports.console.writeFn = (options) => {
     try {
       const encoded = iconv.encode(formattedMessage, 'gbk');
       process.stdout.write(Buffer.concat([encoded, Buffer.from('\n')]));
-    } catch (e) {
+    }
+    catch (e) {
       process.stdout.write(`${e}\n`);
     }
-  } else {
+  }
+  else {
     process.stdout.write(`${formattedMessage}\n`);
   }
 };

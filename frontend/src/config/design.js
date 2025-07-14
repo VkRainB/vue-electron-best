@@ -5,8 +5,6 @@ const design = {
   // 布局模式
   layout: 'vertical',
 
-
-
   // 是否折叠菜单
   isCollapse: false,
 };

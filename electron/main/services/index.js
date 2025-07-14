@@ -1,5 +1,3 @@
-import { ipcMain } from 'electron';
-
 // 服务注册中心
 export const serviceRegistry = new Map();
 

@@ -1,11 +1,3 @@
-<template>
-  <div class="window-controls">
-    <Icon v-if="controls.includes('min')" name="el-icon-semiSelect" size="16" :color="props.iconColor" @click="minWindow" />
-    <Icon v-if="controls.includes('max')" name="svg-sys-max" size="16" :color="iconColor" @click="toggleFullScreen" />
-    <Icon v-if="controls.includes('close')" name="el-icon-closeBold" size="16" :color="iconColor" @click="closeWindow" />
-  </div>
-</template>
-
 <script setup>
 const props = defineProps({
   iconColor: {
@@ -26,10 +18,9 @@ function closeWindow() {
   window.electron.ipcRenderer.send('win:invoke', 'close');
 }
 
-async function   toggleFullScreen () {
+async function toggleFullScreen() {
   window.electron.ipcRenderer.send('win:invoke', 'max');
 }
-
 
 onMounted(() => {
   window.electron.ipcRenderer.removeAllListeners('win:maximize-state');
@@ -38,9 +29,15 @@ onMounted(() => {
     // 这里可以做UI切换等
   });
 });
-
-
 </script>
+
+<template>
+  <div class="window-controls">
+    <Icon v-if="controls.includes('min')" name="el-icon-semiSelect" size="16" :color="props.iconColor" @click="minWindow" />
+    <Icon v-if="controls.includes('max')" name="svg-sys-max" size="16" :color="iconColor" @click="toggleFullScreen" />
+    <Icon v-if="controls.includes('close')" name="el-icon-closeBold" size="16" :color="iconColor" @click="closeWindow" />
+  </div>
+</template>
 
 <style scoped>
 .window-controls {

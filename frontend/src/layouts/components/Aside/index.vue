@@ -1,3 +1,11 @@
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useDesignStore } from '@/stores';
+
+const designStore = useDesignStore();
+const { isCollapse } = storeToRefs(designStore);
+</script>
+
 <template>
   <el-aside
     class="aside-container"
@@ -6,14 +14,6 @@
     <div>侧边栏内容</div>
   </el-aside>
 </template>
-
-<script setup>
-import { storeToRefs } from 'pinia';
-import { useDesignStore } from '@/stores';
-
-const designStore = useDesignStore();
-const { isCollapse } = storeToRefs(designStore);
-</script>
 
 <style lang="scss" scoped>
 .aside-container {

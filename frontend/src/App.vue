@@ -9,7 +9,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <el-config-provider :locale="locale" size="small" :message="{ offset :37}">
+  <el-config-provider :locale="locale" size="small" :message="{ offset: 37 }">
     <RouterView />
   </el-config-provider>
 </template>

@@ -7,7 +7,6 @@ export const useDesignStore = defineStore(
   'design',
   () => {
     const layout = ref(reLayout);
-  
 
     // 最终是否展开左侧菜单
     const isCollapse = ref(reisCollapse);
@@ -24,5 +23,5 @@ export const useDesignStore = defineStore(
   },
   {
     persist: true,
-  }
+  },
 );

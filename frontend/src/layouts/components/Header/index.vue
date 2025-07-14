@@ -1,3 +1,23 @@
+<script setup>
+import { useSlots } from 'vue';
+import WindowControl from './WindowControl.vue';
+
+const props = defineProps({
+  color: String, // 图标颜色
+  controls: Array, // 渲染的控件
+});
+
+const slots = useSlots();
+
+const hasAnyNavSlot = computed(() => {
+  return !!(
+    (slots['nav-left'] && slots['nav-left']().length)
+    || (slots['nav-center'] && slots['nav-center']().length)
+    || (slots['nav-right'] && slots['nav-right']().length)
+  );
+});
+</script>
+
 <template>
   <header class="app-header">
     <!-- 标题栏：窗口拖拽和控制按钮 -->
@@ -22,26 +42,6 @@
     </nav>
   </header>
 </template>
-
-<script setup>
-import { useSlots } from 'vue';
-import WindowControl from './WindowControl.vue';
-
-const props = defineProps({
-  color: String, // 图标颜色
-  controls: Array, // 渲染的控件
-});
-
-const slots = useSlots();
-
-const hasAnyNavSlot = computed(() => {
-  return !!(
-    (slots['nav-left'] && slots['nav-left']().length)
-    || (slots['nav-center'] && slots['nav-center']().length)
-    || (slots['nav-right'] && slots['nav-right']().length)
-  );
-});
-</script>
 
 <style lang="scss" scoped>
 .app-header {

@@ -1,29 +1,3 @@
-<template>
-  <div class="home-container">
-    <!-- 欢迎区域 -->
-    <div class="welcome-section">
-      <Icon name="i-weui-star-outlined" size="80" color="var(--el-color-primary)" />
-      <h1 class="welcome-title">
-        欢迎使用
-      </h1>
-      <p class="welcome-desc">
-        Vue3 + Electron + Element Plus 模板
-      </p>
-    </div>
-
-    <!-- 功能卡片区域 -->
-    <div class="features-grid">
-      <el-card v-for="feature in features" :key="feature.title" class="feature-card">
-        <div class="feature-content">
-          <Icon :name="feature.icon" size="32" :color="feature.color" />
-          <h3>{{ feature.title }}</h3>
-          <p>{{ feature.description }}</p>
-        </div>
-      </el-card>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import { ref } from 'vue';
 
@@ -54,6 +28,32 @@ const features = ref([
   },
 ]);
 </script>
+
+<template>
+  <div class="home-container">
+    <!-- 欢迎区域 -->
+    <div class="welcome-section">
+      <Icon name="i-weui-star-outlined" size="80" color="var(--el-color-primary)" />
+      <h1 class="welcome-title">
+        欢迎使用
+      </h1>
+      <p class="welcome-desc">
+        Vue3 + Electron + Element Plus 模板
+      </p>
+    </div>
+
+    <!-- 功能卡片区域 -->
+    <div class="features-grid">
+      <el-card v-for="feature in features" :key="feature.title" class="feature-card">
+        <div class="feature-content">
+          <Icon :name="feature.icon" size="32" :color="feature.color" />
+          <h3>{{ feature.title }}</h3>
+          <p>{{ feature.description }}</p>
+        </div>
+      </el-card>
+    </div>
+  </div>
+</template>
 
 <style scoped lang="scss">
 .home-container {
