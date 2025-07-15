@@ -1,13 +1,15 @@
-import type { ElectronAPI } from '@electron-toolkit/preload'
+import type { ElectronAPI, IpcRenderer } from '@electron-toolkit/preload';
 
-export {}
+export {};
 declare global {
+  const ipc: IpcRenderer;
   interface Window {
-    readonly electron: ElectronAPI
+    readonly electron: ElectronAPI;
     readonly api: {
-      clipboard
-      nativeImage
-      pkg
-    }
+      clipboard;
+      nativeImage;
+      pkg;
+    };
+    ipc: IpcRenderer;
   }
 }
