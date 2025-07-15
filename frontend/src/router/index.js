@@ -9,12 +9,11 @@ export const router = createRouter({
 
 // 添加全局前置守卫
 router.beforeEach((to, from, next) => {
-  // 判断是否去到 login 页面
-  if (to.path === '/auth/login') {
-    // 兼容性判断，防止 window.electron 不存在
-    if (window.electron && window.electron.ipcRenderer) {
-      window.electron.ipcRenderer.send('win:setSize', 'small');
-    }
+  if (to.path === '/home') {
+    // ipc.invoke('win:get-state').then((state) => {
+    //   // 不是最大化则恢复窗口大小
+    //   !state.isMaximized && ipc.send('win:setSize', 'large');
+    // });
   }
   next();
 });

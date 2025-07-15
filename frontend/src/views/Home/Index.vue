@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue';
+import images from '@/assets/images';
 
 const features = ref([
   {
@@ -15,12 +16,6 @@ const features = ref([
     color: '#67C23A',
   },
   {
-    icon: 'i-weui-brush',
-    title: '主题定制',
-    description: '支持自定义主题和暗黑模式',
-    color: '#E6A23C',
-  },
-  {
     icon: 'i-weui-lightning-bolt',
     title: '快速开发',
     description: '提供完整的开发框架和工具链',
@@ -33,7 +28,7 @@ const features = ref([
   <div class="home-container">
     <!-- 欢迎区域 -->
     <div class="welcome-section">
-      <Icon name="i-weui-star-outlined" size="80" color="var(--el-color-primary)" />
+      <img class="w-20 h-20" :src="images.dome.dog">
       <h1 class="welcome-title">
         欢迎使用
       </h1>

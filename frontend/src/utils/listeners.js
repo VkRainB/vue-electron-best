@@ -1,0 +1,25 @@
+import { ref } from 'vue';
+
+export function trayRefresh() {
+  ipc.removeAllListeners('tray:refresh');
+  ipc.on('tray:refresh', () => {
+    // 刷新
+    location.hash = '';
+    location.reload();
+  });
+}
+
+export function netDisconnect() {
+  const networkStart = ref(true);
+  ipc.removeAllListeners('net:disconnect');
+  ipc.on('net:disconnect', () => {
+    networkStart.value = false;
+    let timer = setTimeout(() => {
+      networkStart.value = true;
+      clearTimeout(timer);
+      timer = null;
+    }, 2000);
+  });
+
+  return networkStart;
+}

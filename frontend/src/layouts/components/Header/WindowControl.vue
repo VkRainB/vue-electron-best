@@ -1,5 +1,5 @@
 <script setup>
-const props = defineProps({
+defineProps({
   iconColor: {
     type: String,
     default: '#696868',
@@ -10,6 +10,7 @@ const props = defineProps({
     default: () => ['min', 'max', 'close'],
   },
 });
+const isMax = ref(false);
 function minWindow() {
   window.electron.ipcRenderer.send('win:invoke', 'min');
 }
@@ -25,16 +26,15 @@ async function toggleFullScreen() {
 onMounted(() => {
   window.electron.ipcRenderer.removeAllListeners('win:maximize-state');
   window.electron.ipcRenderer.on('win:maximize-state', (event, { isMaximized }) => {
-    console.log('窗口是否最大化:', isMaximized);
-    // 这里可以做UI切换等
+    isMax.value = isMaximized;
   });
 });
 </script>
 
 <template>
   <div class="window-controls">
-    <Icon v-if="controls.includes('min')" name="el-icon-semiSelect" size="16" :color="props.iconColor" @click="minWindow" />
-    <Icon v-if="controls.includes('max')" name="svg-sys-max" size="16" :color="iconColor" @click="toggleFullScreen" />
+    <Icon v-if="controls.includes('min')" name="el-icon-semiSelect" size="16" :color="iconColor" @click="minWindow" />
+    <Icon v-if="controls.includes('max')" :name="isMax ? 'i-weui-photo-wall-outlined' : 'svg-sys-max'" size="16" :color="iconColor" @click="toggleFullScreen" />
     <Icon v-if="controls.includes('close')" name="el-icon-closeBold" size="16" :color="iconColor" @click="closeWindow" />
   </div>
 </template>

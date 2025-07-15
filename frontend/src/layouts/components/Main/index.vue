@@ -13,10 +13,11 @@ provide('refresh', refreshMainPage);
 <template>
   <div class="main" style="height: calc(100vh - var(--navbar-height));">
     <slot />
-    <div class="main-router main-scroll  w-full p-5">
+    <div class="main-router main-scroll  w-full p-2">
       <router-view v-slot="{ Component, route }">
         <transition mode="out-in" appear>
-          <keep-alive :max="10" :include="keepAliveStore.keepAliveName">
+          <!-- <keep-alive :max="10" :include="keepAliveStore.keepAliveName"> -->
+          <keep-alive>
             <component :is="Component" v-if="isRouterShow" :key="route.fullPath" />
           </keep-alive>
         </transition>

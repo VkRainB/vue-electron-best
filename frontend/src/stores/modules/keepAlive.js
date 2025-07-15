@@ -12,7 +12,7 @@ export const useKeepAliveStore = defineStore(
     };
 
     const removeKeepAliveName = (name) => {
-      keepAliveName.value = keepAliveName.value.filter(item => item !== name);
+      keepAliveName.value = keepAliveName.value.filter((item) => item !== name);
     };
 
     const setKeepAliveName = (name) => {
@@ -28,5 +28,5 @@ export const useKeepAliveStore = defineStore(
   },
   {
     persist: true,
-  },
+  }
 );

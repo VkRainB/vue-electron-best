@@ -7,7 +7,7 @@ const basicRoutes = [
   {
     path: '/',
     component: MainLayout,
-    redirect: '/home',
+    redirect: '/auth/login',
     name: 'MainApp',
     meta: {
       title: '主应用',
@@ -15,12 +15,27 @@ const basicRoutes = [
     children: [
       {
         path: 'home',
-        component: () => import('@/views/Home/Index.vue'),
+        component: () => import('@/views/home/index.vue'),
         name: 'Home',
       },
       {
+        path: 'page1',
+        component: () => import('@/views/page1/index.vue'),
+        name: 'Page1',
+      },
+      {
+        path: 'page2',
+        component: () => import('@/views/page2/index.vue'),
+        name: 'Page2',
+      },
+      {
+        path: 'page3',
+        component: () => import('@/views/page3/index.vue'),
+        name: 'Page3',
+      },
+      {
         path: 'icons',
-        component: () => import('@/views/Icons/Index.vue'),
+        component: () => import('@/views/icons/index.vue'),
         name: 'Icons',
         meta: {
           title: '图标展示',
@@ -38,7 +53,7 @@ const basicRoutes = [
     children: [
       {
         path: 'login',
-        component: () => import('@/views/Auth/Login.vue'),
+        component: () => import('@/views/auth/login.vue'),
         name: 'Login',
       },
     ],

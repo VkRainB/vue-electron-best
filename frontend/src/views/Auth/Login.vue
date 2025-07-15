@@ -1,20 +1,20 @@
 <script setup>
 import { Hide, Lock, User, View } from '@element-plus/icons-vue';
 import { ElMessage } from 'element-plus';
+import { storeToRefs } from 'pinia';
 import { nextTick, reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Update from '@/components/app/updatePage.vue';
+import { useAppStore } from '@/stores/modules/app';
 
+const { showUpdate } = storeToRefs(useAppStore());
 const router = useRouter();
 const loginFormRef = ref();
 const loading = ref(false);
-
-// 表单数据
 const loginForm = reactive({
   username: '',
   password: '',
 });
-
-// 表单验证规则
 const rules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [
@@ -22,11 +22,16 @@ const rules = {
     { min: 6, message: '密码长度不能少于6位', trigger: 'blur' },
   ],
 };
-
 const remenberPsw = ref(false); // 记住密码
 const autoLogin = ref(false); // 自动登录
 const passwordVisible = ref(false); // 密码可见性
 const pwdInputRef = ref();
+
+watch(() => showUpdate.value, (newValue) => {
+  newValue ? ipc.send('win:setSize', 'normal') : ipc.send('win:setSize', 'small');
+}, { immediate: true });
+
+// 切换密码可见性
 async function handleTogglePwdVisible() {
   passwordVisible.value = !passwordVisible.value;
   await nextTick();
@@ -42,7 +47,6 @@ async function handleTogglePwdVisible() {
     }, 0);
   }
 }
-
 // 登录处理
 async function handleLogin() {
   try {
@@ -55,7 +59,9 @@ async function handleLogin() {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     ElMessage.success('登录成功！');
-    window.electron.ipcRenderer.send('win:setSize', 'normal');
+    nextTick(() => {
+      window.electron.ipcRenderer.send('win:setSize', 'large');
+    });
     router.push('/home');
   }
   finally {
@@ -66,6 +72,7 @@ async function handleLogin() {
 
 <template>
   <div
+    v-show="!showUpdate"
     class="w-full h-full bg-white flex items-center justify-center"
   >
     <div class=" flex flex-col items-center">
@@ -126,10 +133,11 @@ async function handleLogin() {
       </div>
     </div>
   </div>
+  <Update v-show="showUpdate" />
 </template>
 
 <style scoped lang="scss">
-// 300px取消边框
+// 300px取消阴影
 @media (width: 300px) {
   .only-xs\:shadow-0 {
     box-shadow: none

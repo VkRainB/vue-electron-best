@@ -34,6 +34,12 @@ body {
   box-sizing: border-box;
 }
 
+ul,
+li {
+  list-style: none;
+  font-size: 14px;
+}
+
 button,
 input,
 textarea {
