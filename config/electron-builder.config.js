@@ -57,12 +57,10 @@ const config = {
   mac: {
     entitlementsInherit: 'build/entitlements.mac.plist',
     extendInfo: {
-      NSCameraUsageDescription: 'Application requests access to the device\'s camera.',
-      NSMicrophoneUsageDescription: 'Application requests access to the device\'s microphone.',
-      NSDocumentsFolderUsageDescription:
-        'Application requests access to the user\'s Documents folder.',
-      NSDownloadsFolderUsageDescription:
-        'Application requests access to the user\'s Downloads folder.',
+      NSCameraUsageDescription: "Application requests access to the device's camera.",
+      NSMicrophoneUsageDescription: "Application requests access to the device's microphone.",
+      NSDocumentsFolderUsageDescription: "Application requests access to the user's Documents folder.",
+      NSDownloadsFolderUsageDescription: "Application requests access to the user's Downloads folder.",
     },
     notarize: false,
   },
@@ -80,7 +78,7 @@ const config = {
   publish: [
     {
       provider: 'generic',
-      url: 'http://',
+      url: 'http://example/update.com',
     },
   ],
   electronDownload: {
