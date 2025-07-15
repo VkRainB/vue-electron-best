@@ -1,8 +1,18 @@
-// 服务注册中心
-export const serviceRegistry = new Map();
+import { creatTray } from './os/tray';
+import { setWebRequestListener } from './os/webRequest';
+import { setWindowListener } from './os/window';
 
-// 加载相关服务
-export async function loadAllServices() {}
+export function setServerListener(_win) {
+  // 创建托盘
+  creatTray(_win);
 
-// 设置服务请求处理
-export function setupServiceRequests() {}
+  // 窗口监听
+  setWindowListener(_win);
+
+  // 监听离线
+  setWebRequestListener(_win);
+}
+
+export * from './os/tray';
+export * from './os/webRequest';
+export * from './os/window';
