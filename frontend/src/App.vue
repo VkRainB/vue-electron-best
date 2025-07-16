@@ -1,13 +1,14 @@
 <script setup>
 import { RouterView } from 'vue-router';
 import NetTips from '@/components/app/netTips.vue';
-import { netDisconnect, trayRefresh } from './utils';
+import { netDisconnect, reloadListener, trayRefresh } from './utils/listeners';
 
 const netStart = netDisconnect();
 const versions = reactive({ ...window.electron.process.versions });
 
 onMounted(() => {
   trayRefresh();
+  reloadListener();
   console.log('versions', versions);
 });
 </script>

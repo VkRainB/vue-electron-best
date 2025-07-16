@@ -29,7 +29,7 @@ const hasAnyNavSlot = computed(() => {
     </div>
 
     <!-- 导航内容区域 -->
-    <nav v-if="hasAnyNavSlot" class="nav-content" :class="hasAnyNavSlot ? 'h-50px' : 'h-0px hidden'">
+    <nav v-if="hasAnyNavSlot" class="nav-content " :style="hasAnyNavSlot ? 'height: var(--navbar-height);' : 'h-0 hidden'">
       <div class="nav-left">
         <slot name="nav-left" />
       </div>
@@ -80,7 +80,7 @@ const hasAnyNavSlot = computed(() => {
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
-  background-color: var(--el-bg-color);
+  background-color: var(--navbar-bg-color);
   border-bottom: 1px solid var(--el-border-color-light);
 }
 

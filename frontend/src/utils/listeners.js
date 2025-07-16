@@ -23,3 +23,11 @@ export function netDisconnect() {
 
   return networkStart;
 }
+
+export function reloadListener() {
+  ipc.removeAllListeners('app:reload');
+  ipc.on('app:reload', () => {
+    location.hash = '';
+    location.reload();
+  });
+}

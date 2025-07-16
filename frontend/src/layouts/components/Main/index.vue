@@ -11,7 +11,7 @@ provide('refresh', refreshMainPage);
 </script>
 
 <template>
-  <div class="main" style="height: calc(100vh - var(--navbar-height));">
+  <div class="main" style="height: calc(100vh - var(--top-height));">
     <slot />
     <div class="main-router main-scroll  w-full p-2">
       <router-view v-slot="{ Component, route }">

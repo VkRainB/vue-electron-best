@@ -19,10 +19,6 @@ const designStore = useDesignStore();
 const { isCollapse } = storeToRefs(designStore);
 const currentRouteName = computed(() => route.name);
 
-setInterval(() => {
-  console.log('currentRouteName', currentRouteName.value);
-}, 1000);
-
 const menuList = [
   { label: '页面1', componentName: 'Page1' },
   { label: '页面2', componentName: 'Page2' },
@@ -42,27 +38,34 @@ function changeRouter(val) {
   }
 }
 
-function handleRefresh() {
-  window.location.hash = '';
-  location.reload();
+function changeZoom(direction) {
+  ipc.send('zoom:changed', direction);
+}
+
+function outLogin() {
+  router.push({ name: 'Login' });
+}
+
+function exitLogin() {
+  ipc.send('app:quit');
 }
 </script>
 
 <template>
   <el-container class="main-layout">
-    <el-header class="main-layout__header" height="var(--navbar-height)">
+    <el-header class="main-layout__header" height="var(--top-height)">
       <Header class="header__bg">
         <template #app-icon>
-          <Icon name="el-icon-house" size="16" class="cursor-pointer" @click="handleRefresh" />
+          <Icon name="el-icon-house" size="16" class="cursor-pointer" />
           <div class="text-14px select-none">
             软件平台
           </div>
         </template>
         <template #nav-left>
-          <el-icon class="main-layout__toggle-btn" @click="toggleSidebar">
+          <!-- <el-icon class="main-layout__toggle-btn" @click="toggleSidebar">
             <Icon v-if="isCollapse" name="el-icon-menu" />
             <Icon v-else name="el-icon-grid" />
-          </el-icon>
+          </el-icon> -->
         </template>
 
         <template #nav-right>
@@ -90,17 +93,15 @@ function handleRefresh() {
                         <Icon name="svg-sys-exit" size="small" />
                         <span class="select-none">退出登录</span>
                       </div>
-                      <div class="flex items-center gap-1 cursor-pointer" @click="changeWindowSize('max')">
+                      <div class="flex items-center gap-1 cursor-pointer" @click="changeZoom('in')">
                         <Icon name="el-icon-zoomIn" size="16" />
-
                         <span class="select-none">放大</span>
                       </div>
-                      <div class="flex items-center gap-1 cursor-pointer" @click="changeWindowSize('min')">
+                      <div class="flex items-center gap-1 cursor-pointer" @click="changeZoom('out')">
                         <Icon name="el-icon-zoomOut" size="16" />
-
                         <span class="select-none">缩小</span>
                       </div>
-                      <div class="flex items-center gap-1 cursor-pointer" @click="changeWindowSize('auto')">
+                      <div class="flex items-center gap-1 cursor-pointer" @click="changeZoom('auto')">
                         <Icon name="el-icon-refresh" size="16" />
                         <span class="select-none">还原大小</span>
                       </div>
@@ -108,7 +109,7 @@ function handleRefresh() {
                     <template #reference>
                       <div class="cursor-pointer">
                         <img :src="images.dome.avatar" class="w-[28px]" alt="">
-                        <p class="text-[12px] text-center ">
+                        <p class="text-[12px] text-center text-white ">
                           {{ retLoginName }}
                         </p>
                       </div>

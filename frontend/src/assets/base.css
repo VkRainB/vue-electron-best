@@ -1,9 +1,12 @@
 :root {
-  /* 导航栏高度（控件+插槽50px） */
-  --navbar-height: 85px;
-
   /* 窗口控件高度 */
   --window-controls-height: 35px;
+
+  /* 导航栏高度 */
+  --navbar-height: 80px;
+
+  /* 顶部总高度 = 窗口控件高度 + 导航栏高度 */
+  --top-height: calc(var(--window-controls-height) + var(--navbar-height));
 
   /*标签栏高度 */
   --tabs-height: 30px;
@@ -13,6 +16,9 @@
 
   /* 主题颜色 */
   --theme-color: #409eff;
+
+  /* 顶部导航栏背景色 */
+  --navbar-bg-color: #0075f6;
 }
 
 *,
@@ -51,8 +57,8 @@ textarea {
 
 /* 统一的滚动条样式 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 4px;
+  height: 4px;
   background-color: #f5f5f5;
 }
 
