@@ -9,7 +9,7 @@ export function creatTray(_win) {
       {
         label: '刷新软件',
         click: () => {
-          _win.webContents.send('tray:refresh', 'refresh');
+          _win.webContents.send('tray:refresh');
         },
       },
       {
