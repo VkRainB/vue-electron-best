@@ -124,7 +124,7 @@ async function handleLogin() {
             <el-button
               type="primary"
               size="default"
-              class="w-full h-12 text-4 font-medium rounded-2"
+              class="w-full text-4 font-medium rounded-2"
               :loading="loading"
               @click="handleLogin"
             >
