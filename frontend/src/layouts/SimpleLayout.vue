@@ -6,7 +6,7 @@ import Header from '@/layouts/components/Header/index.vue';
 <template>
   <el-container class="main-layout">
     <el-header class="main-layout__header" height="var(--window-controls-height">
-      <Header class="bg-#409EFF" color="white" :controls="['min', 'close']">
+      <Header class="header__bg" color="white" :controls="['min', 'close']">
         <template #app-icon>
           <div class="text-white">
             标题
@@ -34,6 +34,9 @@ import Header from '@/layouts/components/Header/index.vue';
 
   &__header {
     --el-header-padding:0px;
+    .header__bg{
+      background-color: var(--theme-color);
+    }
   }
 
   &__body {

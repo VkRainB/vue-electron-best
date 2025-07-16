@@ -51,7 +51,7 @@ function handleRefresh() {
 <template>
   <el-container class="main-layout">
     <el-header class="main-layout__header" height="var(--navbar-height)">
-      <Header>
+      <Header class="header__bg">
         <template #app-icon>
           <Icon name="el-icon-house" size="16" class="cursor-pointer" @click="handleRefresh" />
           <div class="text-14px select-none">

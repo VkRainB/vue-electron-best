@@ -10,6 +10,9 @@
 
   /* 侧边栏宽度 */
   --sidebar-width: 200px;
+
+  /* 主题颜色 */
+  --theme-color: #409eff;
 }
 
 *,

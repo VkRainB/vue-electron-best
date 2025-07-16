@@ -59,10 +59,12 @@ async function handleLogin() {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     ElMessage.success('登录成功！');
-    nextTick(() => {
-      window.electron.ipcRenderer.send('win:setSize', 'large');
-    });
+
     router.push('/home');
+    await nextTick();
+    setTimeout(() => {
+      window.electron.ipcRenderer.send('win:setSize', 'large');
+    }, 500);
   }
   finally {
     loading.value = false;

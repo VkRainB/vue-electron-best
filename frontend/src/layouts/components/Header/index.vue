@@ -48,6 +48,8 @@ const hasAnyNavSlot = computed(() => {
   width: 100%;
   display: flex;
   flex-direction: column;
+  // 过度背景颜色
+  transition: all 0.3s;
 }
 
 .title-bar {
