@@ -55,6 +55,9 @@ const basicRoutes = [
         path: 'login',
         component: () => import('@/views/auth/login.vue'),
         name: 'Login',
+        meta: {
+          close: 'exit',
+        },
       },
     ],
   },

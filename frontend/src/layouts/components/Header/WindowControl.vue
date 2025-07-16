@@ -1,4 +1,6 @@
 <script setup>
+import { useRoute } from 'vue-router';
+
 defineProps({
   iconColor: {
     type: String,
@@ -10,22 +12,30 @@ defineProps({
     default: () => ['min', 'max', 'close'],
   },
 });
+
+const route = useRoute();
+const closeAction = route.matched.find(r => r.name === 'Login') || {};
 const isMax = ref(false);
 function minWindow() {
-  window.electron.ipcRenderer.send('win:invoke', 'min');
+  ipc.send('win:invoke', 'min');
 }
 
 function closeWindow() {
-  window.electron.ipcRenderer.send('win:invoke', 'close');
+  if (closeAction?.meta?.close === 'exit') {
+    ipc.send('app:exit');
+  }
+  else {
+    ipc.send('win:invoke', 'close');
+  }
 }
 
 async function toggleFullScreen() {
-  window.electron.ipcRenderer.send('win:invoke', 'max');
+  ipc.send('win:invoke', 'max');
 }
 
 onMounted(() => {
-  window.electron.ipcRenderer.removeAllListeners('win:maximize-state');
-  window.electron.ipcRenderer.on('win:maximize-state', (event, { isMaximized }) => {
+  ipc.removeAllListeners('win:maximize-state');
+  ipc.on('win:maximize-state', (event, { isMaximized }) => {
     isMax.value = isMaximized;
   });
 });

@@ -20,4 +20,8 @@ export function setUtilsListener(_win) {
   ipcMain.on('app:quit', () => {
     app.quit();
   });
+
+  ipcMain.on('app:exit', () => {
+    app.exit();
+  });
 }

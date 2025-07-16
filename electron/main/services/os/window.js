@@ -61,7 +61,9 @@ export function setWindowListener(_win) {
   // 窗口关闭事件
   !ALLOW_MULTIPLE_INSTANCES &&
     _win.on('close', (e) => {
-      if (!_win.isDestroyed()) {
+      console.log('close winodw');
+      // 判断失焦是因为托盘关闭会失去焦点
+      if (_win.isFocused()) {
         e.preventDefault();
         _win.hide();
       }
