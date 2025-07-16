@@ -1,4 +1,5 @@
 import { ipcMain, shell } from 'electron';
+import { ALLOW_MULTIPLE_INSTANCES } from '../../index';
 
 export function setWindowListener(_win) {
   // 窗口大小调整
@@ -56,4 +57,13 @@ export function setWindowListener(_win) {
     shell.openExternal(details.url);
     return { action: 'deny' };
   });
+
+  // 窗口关闭事件
+  !ALLOW_MULTIPLE_INSTANCES &&
+    _win.on('close', (e) => {
+      if (!_win.isDestroyed()) {
+        e.preventDefault();
+        _win.hide();
+      }
+    });
 }
