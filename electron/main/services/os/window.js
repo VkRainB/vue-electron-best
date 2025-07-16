@@ -18,6 +18,7 @@ export function setWindowListener(_win) {
       // _win.setMinimumSize(500, 300);
       _win.center();
     } else if (action === 'large') {
+      // _win.unmaximize(); // 最大化情况下窗口化尺寸设置不会改变
       _win.setSize(1024, 768);
       _win.center();
     } else {
