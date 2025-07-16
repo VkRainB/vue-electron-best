@@ -47,7 +47,7 @@ function outLogin() {
 }
 
 function exitLogin() {
-  ipc.send('app:quit');
+  ipc.send('app:exit');
 }
 </script>
 

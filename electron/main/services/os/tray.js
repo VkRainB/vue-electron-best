@@ -27,4 +27,5 @@ export function creatTray(_win) {
       _win.focus();
     });
   }
+  return traty;
 }

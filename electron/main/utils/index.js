@@ -17,11 +17,5 @@ export function setUtilsListener(_win) {
     return logger.getConfig();
   });
 
-  ipcMain.on('app:quit', () => {
-    app.quit();
-  });
 
-  ipcMain.on('app:exit', () => {
-    app.exit();
-  });
 }
