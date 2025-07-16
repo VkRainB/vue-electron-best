@@ -1,6 +1,6 @@
 import icons from '@iconify-json/weui/icons.json';
 
-import { defineConfig, presetIcons, presetWind3 } from 'unocss';
+import { defineConfig, presetIcons, presetWind3, transformerDirectives } from 'unocss';
 
 function generateSafeList() {
   return Object.keys(icons.icons).flatMap((item) => {
@@ -15,14 +15,15 @@ export default defineConfig({
     presetWind3(),
     presetIcons({
       collections: {
-        weui: () => import('@iconify-json/weui/icons.json').then(i => i.default),
+        weui: () => import('@iconify-json/weui/icons.json').then((i) => i.default),
       },
       extraProperties: {
-        'display': 'inline-block',
+        display: 'inline-block',
         'vertical-align': 'middle',
       },
     }),
   ],
+  transformers: [transformerDirectives()],
   safelist: safeList,
   shortcuts: [
     // 自定义快捷方式
@@ -31,11 +32,11 @@ export default defineConfig({
   ],
   theme: {
     breakpoints: {
-      'xs': '300px',
-      'sm': '640px',
-      'md': '768px',
-      'lg': '1024px',
-      'xl': '1280px',
+      xs: '300px',
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
       '2xl': '1536px',
     },
   },

@@ -1,9 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import { registerIcons } from './plugins/icon';
 import { router, setupRouter } from './router';
 import store from './stores';
-import { registerIcons } from './utils';
-import './assets/base.css';
+import '@/assets/styles/base.css';
 import 'uno.css';
 import 'virtual:svg-icons-register';
 

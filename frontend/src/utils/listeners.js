@@ -1,5 +1,8 @@
 import { ref } from 'vue';
 
+/**
+ * 托盘刷新
+ */
 export function trayRefresh() {
   ipc.removeAllListeners('tray:refresh');
   ipc.on('tray:refresh', () => {
@@ -8,7 +11,10 @@ export function trayRefresh() {
     location.reload();
   });
 }
-
+/**
+ * @description 断网监听
+ * @returns 断网状态
+ */
 export function netDisconnect() {
   const networkStart = ref(true);
   ipc.removeAllListeners('net:disconnect');
@@ -24,6 +30,9 @@ export function netDisconnect() {
   return networkStart;
 }
 
+/**
+ * @description 重载页面
+ */
 export function reloadListener() {
   ipc.removeAllListeners('app:reload');
   ipc.on('app:reload', () => {
