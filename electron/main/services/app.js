@@ -1,6 +1,14 @@
+import process from 'node:process';
 import { app, globalShortcut, ipcMain } from 'electron';
 
 export function setAppListener(_traty) {
+  // 关闭所有窗口自动退出
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit();
+    }
+  });
+
   app.on('will-quit', () => {
     console.log('will-quit');
     globalShortcut.unregisterAll();

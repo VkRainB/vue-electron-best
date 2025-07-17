@@ -88,11 +88,4 @@ function createWindow() {
       }
     });
   });
-
-  // 关闭所有窗口自动退出
-  app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
-      app.quit();
-    }
-  });
 })();
