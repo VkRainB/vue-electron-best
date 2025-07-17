@@ -63,7 +63,7 @@ async function handleLogin() {
     router.push('/home');
     await nextTick();
     setTimeout(() => {
-      window.electron.ipcRenderer.send('win:setSize', 'large');
+      ipc.send('win:setSize', 'large');
     }, 500);
   }
   finally {

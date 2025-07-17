@@ -7,7 +7,6 @@ import '@/assets/styles/base.css';
 import 'uno.css';
 import 'virtual:svg-icons-register';
 
-window.ipc = window.electron.ipcRenderer;
 async function setup() {
   const app = createApp(App);
 
