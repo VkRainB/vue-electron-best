@@ -42,7 +42,7 @@ function toPascalCase(str) {
     .toLowerCase()
     .split(/[-_]/)
     .filter(Boolean)
-    .map(s => s.charAt(0).toUpperCase() + s.slice(1))
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join('');
 }
 function renderIcon() {
@@ -60,7 +60,7 @@ function renderIcon() {
       },
       {
         default: () => [h(resolveComponent(pascalName))],
-      },
+      }
     );
   }
   // 处理本地svg
@@ -68,16 +68,16 @@ function renderIcon() {
     return h(
       'svg',
       {
-        'class': svgClass.value,
+        class: svgClass.value,
         'aria-hidden': 'true',
-        'style': { fontSize: props.size },
+        style: { fontSize: props.size },
       },
       [
         h('use', {
           'xlink:href': `#${props.name}`,
-          'fill': props.color,
+          fill: props.color,
         }),
-      ],
+      ]
     );
   }
   // 处理图标预设

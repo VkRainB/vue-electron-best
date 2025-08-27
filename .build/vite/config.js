@@ -49,7 +49,7 @@ export function rendererBuildConfig() {
           groups: [
             {
               name: 'element-plus',
-              test: id => id.includes('node_modules/element-plus'),
+              test: (id) => id.includes('node_modules/element-plus'),
               priority: 10,
             },
             // { name: 'jszip', test: id => id.includes('node_modules/jszip'), priority: 9 }

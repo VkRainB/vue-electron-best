@@ -8,9 +8,7 @@ import Header from '@/layouts/components/Header/index.vue';
     <el-header class="main-layout__header" height="var(--window-controls-height">
       <Header class="header__bg" color="white" :controls="['min', 'close']">
         <template #app-icon>
-          <div class="text-white">
-            标题
-          </div>
+          <div class="text-white">标题</div>
         </template>
       </Header>
     </el-header>
@@ -33,8 +31,8 @@ import Header from '@/layouts/components/Header/index.vue';
   flex-direction: column;
 
   &__header {
-    --el-header-padding:0px;
-    .header__bg{
+    --el-header-padding: 0px;
+    .header__bg {
       background-color: var(--theme-color);
     }
   }
@@ -42,14 +40,11 @@ import Header from '@/layouts/components/Header/index.vue';
   &__body {
     flex: 1;
     min-height: 0;
-
   }
   &__content {
-    --el-main-padding:0px;
+    --el-main-padding: 0px;
   }
 }
 </style>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

@@ -1,4 +1,4 @@
-import { app, ipcMain } from 'electron';
+import { ipcMain } from 'electron';
 import { installExtensionsFun } from './extension.js';
 import { setupFocusBasedShortcuts } from './globalShortcut.js';
 import logger from './logger.js';
@@ -16,6 +16,4 @@ export function setUtilsListener(_win) {
   ipcMain.handle('get-log-config', () => {
     return logger.getConfig();
   });
-
-
 }

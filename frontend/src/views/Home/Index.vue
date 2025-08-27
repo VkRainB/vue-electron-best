@@ -28,13 +28,9 @@ const features = ref([
   <div class="home-container">
     <!-- 欢迎区域 -->
     <div class="welcome-section">
-      <img class="w-20 h-20" :src="images.dome.dog">
-      <h1 class="welcome-title">
-        欢迎使用
-      </h1>
-      <p class="welcome-desc">
-        Vue3 + Electron + Element Plus 模板
-      </p>
+      <img class="w-20 h-20" :src="images.dome.dog" />
+      <h1 class="welcome-title">欢迎使用</h1>
+      <p class="welcome-desc">Vue3 + Electron + Element Plus 模板</p>
     </div>
 
     <!-- 功能卡片区域 -->

@@ -2,22 +2,16 @@
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
     "source.formatDocument": "explicit", // 先格式化
-    "source.fixAll.eslint": "explicit", // 再修复 ESLint
+    // "source.fixAll.eslint": "explicit", // 再修复 ESLint
     "source.organizeImports": "never"
   },
   "prettier.enable": true,
   "eslint.enable": true,
-  "eslint.format.enable": false,
+  "eslint.format.enable": false, // 关闭 eslint 的格式化  stylistic: false
   "eslint.useFlatConfig": true,
-  "prettier.requireConfig": true,
 
   // 设置 prettier 为默认格式化器
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-
-  // 为不同文件类型指定格式化器
-  "[vue]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
 
   // 在IDE中风格规则不提示，但仍然自动修复它们
   "eslint.rules.customizations": [

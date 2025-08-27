@@ -7,10 +7,7 @@ const { isCollapse } = storeToRefs(designStore);
 </script>
 
 <template>
-  <el-aside
-    class="aside-container"
-    :class="{ 'is-collapse': isCollapse }"
-  >
+  <el-aside class="aside-container" :class="{ 'is-collapse': isCollapse }">
     <div>侧边栏内容</div>
   </el-aside>
 </template>

@@ -5,8 +5,8 @@ const path = require('node:path');
 /* 获取项目的修改范围 */
 const scopes = fs
   .readdirSync(path.resolve(__dirname, 'frontend/src'), { withFileTypes: true })
-  .filter(dirent => dirent.isDirectory())
-  .map(dirent => dirent.name.replace(/s$/, ''));
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => dirent.name.replace(/s$/, ''));
 
 module.exports = {
   // 继承的规则

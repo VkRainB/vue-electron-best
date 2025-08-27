@@ -10,9 +10,9 @@ const search = ref('');
 // svg 图标名数组（svg-[dir]-[name]）
 const svgIconNames = ids;
 // el 图标名数组（转为 el-icon-xxx 格式）
-const elIconNames = Object.entries(elIcons).map(item => `el-icon-${item[1].__name}`);
+const elIconNames = Object.entries(elIcons).map((item) => `el-icon-${item[1].__name}`);
 // weui 图标名数组（转为 i-weui-xxx 格式）
-const weuiIconNames = Object.keys(icons.icons).map(name => `i-weui-${name}`);
+const weuiIconNames = Object.keys(icons.icons).map((name) => `i-weui-${name}`);
 
 function copyName(name) {
   navigator.clipboard.writeText(name);
@@ -20,13 +20,11 @@ function copyName(name) {
 }
 
 function filterBySearch(list) {
-  if (!search.value)
-    return list;
+  if (!search.value) return list;
   try {
     const reg = new RegExp(search.value, 'i');
-    return list.filter(name => reg.test(name));
-  }
-  catch {
+    return list.filter((name) => reg.test(name));
+  } catch {
     return list;
   }
 }
@@ -38,14 +36,10 @@ const filteredWeuiIconNames = computed(() => filterBySearch(weuiIconNames));
 
 <template>
   <div class="p-0">
-    <h1 class="text-3xl font-bold mb-6 border-b pb-2">
-      Icons
-    </h1>
+    <h1 class="text-3xl font-bold mb-6 border-b pb-2">Icons</h1>
     <el-input v-model="search" style="width: 500px" placeholder="搜索图标名(支持正则)" clearable class="mb-6 h-8" />
     <div>
-      <h2 class="text-xl font-semibold mb-2 mt-6">
-        SVG 图标
-      </h2>
+      <h2 class="text-xl font-semibold mb-2 mt-6">SVG 图标</h2>
       <div class="flex flex-wrap gap-4">
         <div
           v-for="name in filteredSvgIconNames"
@@ -58,9 +52,7 @@ const filteredWeuiIconNames = computed(() => filterBySearch(weuiIconNames));
         </div>
       </div>
 
-      <h2 class="text-xl font-semibold mb-2 mt-6">
-        Element Plus 图标
-      </h2>
+      <h2 class="text-xl font-semibold mb-2 mt-6">Element Plus 图标</h2>
       <div class="flex flex-wrap gap-4">
         <div
           v-for="name in filteredElIconNames"
@@ -73,9 +65,7 @@ const filteredWeuiIconNames = computed(() => filterBySearch(weuiIconNames));
         </div>
       </div>
 
-      <h2 class="text-xl font-semibold mb-2 mt-6">
-        WeUI 图标
-      </h2>
+      <h2 class="text-xl font-semibold mb-2 mt-6">WeUI 图标</h2>
       <div class="flex flex-wrap gap-4">
         <div
           v-for="name in filteredWeuiIconNames"

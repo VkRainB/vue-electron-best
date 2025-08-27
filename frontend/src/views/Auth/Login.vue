@@ -27,9 +27,13 @@ const autoLogin = ref(false); // 自动登录
 const passwordVisible = ref(false); // 密码可见性
 const pwdInputRef = ref();
 
-watch(() => showUpdate.value, (newValue) => {
-  newValue ? ipc.send('win:setSize', 'normal') : ipc.send('win:setSize', 'small');
-}, { immediate: true });
+watch(
+  () => showUpdate.value,
+  (newValue) => {
+    newValue ? ipc.send('win:setSize', 'normal') : ipc.send('win:setSize', 'small');
+  },
+  { immediate: true }
+);
 
 // 切换密码可见性
 async function handleTogglePwdVisible() {
@@ -56,7 +60,7 @@ async function handleLogin() {
     loading.value = true;
 
     // 模拟登录请求
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
     ElMessage.success('登录成功！');
 
@@ -65,34 +69,25 @@ async function handleLogin() {
     setTimeout(() => {
       ipc.send('win:setSize', 'large');
     }, 500);
-  }
-  finally {
+  } finally {
     loading.value = false;
   }
 }
 </script>
 
 <template>
-  <div
-    v-show="!showUpdate"
-    class="w-full h-full bg-white flex items-center justify-center"
-  >
-    <div class=" flex flex-col items-center">
-      <div class="w-full rounded-4 p-8 pt-5 select-none only-xs:shadow-0  xs:shadow-2xl ">
+  <div v-show="!showUpdate" class="w-full h-full bg-white flex items-center justify-center">
+    <div class="flex flex-col items-center">
+      <div class="w-full rounded-4 p-8 pt-5 select-none only-xs:shadow-0 xs:shadow-2xl">
         <div class="flex justify-center mb-5">
-          <div class=" mb-2">
+          <div class="mb-2">
             <Icon name="svg-sys-electron" size="50" />
           </div>
         </div>
 
         <el-form ref="loginFormRef" class="w-full" :model="loginForm" :rules="rules">
           <el-form-item prop="username" class="mb-6">
-            <el-input
-              v-model="loginForm.username"
-              placeholder="请输入用户名"
-              size="large"
-              :prefix-icon="User"
-            />
+            <el-input v-model="loginForm.username" placeholder="请输入用户名" size="large" :prefix-icon="User" />
           </el-form-item>
 
           <el-form-item prop="password" class="mb-6">
@@ -105,7 +100,7 @@ async function handleLogin() {
               size="large"
             >
               <template #suffix>
-                <el-icon style="cursor: pointer;" @click="handleTogglePwdVisible">
+                <el-icon style="cursor: pointer" @click="handleTogglePwdVisible">
                   <component :is="passwordVisible ? View : Hide" />
                 </el-icon>
               </template>
@@ -142,7 +137,7 @@ async function handleLogin() {
 // 300px取消阴影
 @media (width: 300px) {
   .only-xs\:shadow-0 {
-    box-shadow: none
+    box-shadow: none;
   }
 }
 </style>

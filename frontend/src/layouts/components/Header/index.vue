@@ -11,9 +11,9 @@ const slots = useSlots();
 
 const hasAnyNavSlot = computed(() => {
   return !!(
-    (slots['nav-left'] && slots['nav-left']().length)
-    || (slots['nav-center'] && slots['nav-center']().length)
-    || (slots['nav-right'] && slots['nav-right']().length)
+    (slots['nav-left'] && slots['nav-left']().length) ||
+    (slots['nav-center'] && slots['nav-center']().length) ||
+    (slots['nav-right'] && slots['nav-right']().length)
   );
 });
 </script>
@@ -29,7 +29,11 @@ const hasAnyNavSlot = computed(() => {
     </div>
 
     <!-- 导航内容区域 -->
-    <nav v-if="hasAnyNavSlot" class="nav-content " :style="hasAnyNavSlot ? 'height: var(--navbar-height);' : 'h-0 hidden'">
+    <nav
+      v-if="hasAnyNavSlot"
+      class="nav-content"
+      :style="hasAnyNavSlot ? 'height: var(--navbar-height);' : 'h-0 hidden'"
+    >
       <div class="nav-left">
         <slot name="nav-left" />
       </div>

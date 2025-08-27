@@ -57,9 +57,7 @@ function exitLogin() {
       <Header class="header__bg">
         <template #app-icon>
           <Icon name="el-icon-house" size="16" class="cursor-pointer" />
-          <div class="text-14px select-none">
-            软件平台
-          </div>
+          <div class="text-14px select-none">软件平台</div>
         </template>
         <template #nav-left>
           <!-- <el-icon class="main-layout__toggle-btn" @click="toggleSidebar">
@@ -79,7 +77,13 @@ function exitLogin() {
                 @click="changeRouter(item.componentName)"
               >
                 {{ item.label }}
-                <el-badge :show-zero="false" :value="item.count" :max="99" badge-class="border-none pr-[6px] pl-[5px] m-[2px] rounded-[7px]" class="absolute" />
+                <el-badge
+                  :show-zero="false"
+                  :value="item.count"
+                  :max="99"
+                  badge-class="border-none pr-[6px] pl-[5px] m-[2px] rounded-[7px]"
+                  class="absolute"
+                />
               </li>
               <li class="ml-4">
                 <div class="relative">
@@ -108,8 +112,8 @@ function exitLogin() {
                     </div>
                     <template #reference>
                       <div class="cursor-pointer">
-                        <img :src="images.dome.avatar" class="w-[28px]" alt="">
-                        <p class="text-[12px] text-center text-white ">
+                        <img :src="images.dome.avatar" class="w-[28px]" alt="" />
+                        <p class="text-[12px] text-center text-white">
                           {{ retLoginName }}
                         </p>
                       </div>
@@ -128,9 +132,7 @@ function exitLogin() {
         <Aside />
         <Main>
           <template #default>
-            <div style="height: var(--tabs-height);" class=" bg-#E9ECF2">
-              标签页
-            </div>
+            <div style="height: var(--tabs-height)" class="bg-#E9ECF2">标签页</div>
           </template>
         </Main>
       </el-main>
@@ -148,7 +150,7 @@ function exitLogin() {
   flex-direction: column;
 
   &__header {
-    --el-header-padding:0px;
+    --el-header-padding: 0px;
   }
 
   &__body {
@@ -156,19 +158,15 @@ function exitLogin() {
     min-height: 0;
     margin-left: var(--sidebar-width, 200px);
     transition: margin-left 0.3s ease;
-
   }
   &__content {
-    --el-main-padding:0px;
+    --el-main-padding: 0px;
   }
 
   .collapse {
-      margin-left: 0px;
-    }
-
+    margin-left: 0px;
+  }
 }
 </style>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

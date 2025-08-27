@@ -14,7 +14,7 @@ defineProps({
 });
 
 const route = useRoute();
-const closeAction = route.matched.find(r => r.name === 'Login') || {};
+const closeAction = route.matched.find((r) => r.name === 'Login') || {};
 const isMax = ref(false);
 function minWindow() {
   ipc.send('win:invoke', 'min');
@@ -23,8 +23,7 @@ function minWindow() {
 function closeWindow() {
   if (closeAction?.meta?.close === 'exit') {
     ipc.send('app:exit');
-  }
-  else {
+  } else {
     ipc.send('win:invoke', 'close');
   }
 }
@@ -44,8 +43,20 @@ onMounted(() => {
 <template>
   <div class="window-controls">
     <Icon v-if="controls.includes('min')" name="el-icon-semiSelect" size="16" :color="iconColor" @click="minWindow" />
-    <Icon v-if="controls.includes('max')" :name="isMax ? 'i-weui-photo-wall-outlined' : 'svg-sys-max'" size="16" :color="iconColor" @click="toggleFullScreen" />
-    <Icon v-if="controls.includes('close')" name="el-icon-closeBold" size="16" :color="iconColor" @click="closeWindow" />
+    <Icon
+      v-if="controls.includes('max')"
+      :name="isMax ? 'i-weui-photo-wall-outlined' : 'svg-sys-max'"
+      size="16"
+      :color="iconColor"
+      @click="toggleFullScreen"
+    />
+    <Icon
+      v-if="controls.includes('close')"
+      name="el-icon-closeBold"
+      size="16"
+      :color="iconColor"
+      @click="closeWindow"
+    />
   </div>
 </template>
 

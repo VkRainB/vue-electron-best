@@ -21,8 +21,7 @@ switch (arg) {
 
 try {
   execSync(`npm --no-git-tag-version version ${versionType}`, { stdio: 'inherit' });
-}
-catch (err) {
+} catch (err) {
   console.error('执行 npm version 失败:', err.message);
   process.exit(1);
 }

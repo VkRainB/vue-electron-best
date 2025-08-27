@@ -16,12 +16,11 @@ const colors = [
 ];
 // 检查更新
 function checkUpdate() {
-// 自动更新检测更新
-// ipc.invoke('check-update', 1);
+  // 自动更新检测更新
+  // ipc.invoke('check-update', 1);
   ipc.removeAllListeners('UpdateMsg');
   ipc.on('UpdateMsg', (event, data) => {
-    if (data.type === 2)
-      return;
+    if (data.type === 2) return;
     switch (data.state) {
       case 1: {
         const isoTime = new Date(data.msg.releaseDate);
@@ -65,15 +64,11 @@ function beginUpdate() {
 <template>
   <div class="m-4">
     <template v-if="percentage > 0">
-      <p class="text-lg text-center">
-        正在更新 V{{ visionInfo.version }}
-      </p>
+      <p class="text-lg text-center">正在更新 V{{ visionInfo.version }}</p>
       <p class="text-center mb-7">
         {{ visionInfo.newDate }}
       </p>
-      <p class="primary-color">
-        正在下载产品文件...
-      </p>
+      <p class="primary-color">正在下载产品文件...</p>
       <el-progress
         class="mt-1"
         :stroke-width="18"
@@ -84,12 +79,8 @@ function beginUpdate() {
       />
     </template>
     <div v-else class="flex flex-col justify-center items-center gap-2">
-      <p class="mt-10">
-        请更新软件
-      </p>
-      <el-button type="primary" @click="beginUpdate()">
-        立即更新
-      </el-button>
+      <p class="mt-10">请更新软件</p>
+      <el-button type="primary" @click="beginUpdate()">立即更新</el-button>
     </div>
   </div>
 </template>
