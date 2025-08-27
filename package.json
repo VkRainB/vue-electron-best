@@ -16,6 +16,7 @@
     "lint:show": "npx eslint --inspect-config",
     "format": "prettier --write .",
     "check": "npm run lint && npm run format",
+    "preinstall": "npx only-allow pnpm",
     "postinstall": "electron-builder install-app-deps",
     "build:zip": "ee-bin updater --config=./config/updater.config.json --platform=win",
     "build:electron": "electron-builder --config config/electron-builder.config.js",
