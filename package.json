@@ -77,7 +77,8 @@
       "electron",
       "esbuild",
       "unrs-resolver",
-      "@parcel/watcher"
+      "@parcel/watcher",
+      " vue-demi"
     ]
   },
   "config": {
