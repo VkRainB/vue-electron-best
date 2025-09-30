@@ -5,6 +5,10 @@
   "author": "example.com",
   "homepage": "https://electron-vite.org",
   "main": "./out/main/index.js",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0",
+    "pnpm": ">=10.x"
+  },
   "scripts": {
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
