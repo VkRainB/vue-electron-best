@@ -48,7 +48,7 @@ const basicRoutes = [
     children: [
       {
         path: 'login',
-        component: () => import('@/views/auth/Login.vue'),
+        component: () => import('@/views/auth/login.vue'),
         name: 'login',
         meta: {
           close: 'exit',
