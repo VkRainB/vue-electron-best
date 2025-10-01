@@ -14,7 +14,7 @@ defineProps({
 });
 
 const route = useRoute();
-const closeAction = route.matched.find((r) => r.name === 'Login') || {};
+const closeAction = route.matched.find((r) => r.name === 'login') || {};
 const isMax = ref(false);
 function minWindow() {
   ipc.send('win:invoke', 'min');
@@ -22,6 +22,7 @@ function minWindow() {
 
 function closeWindow() {
   if (closeAction?.meta?.close === 'exit') {
+    console.log('exit');
     ipc.send('app:exit');
   } else {
     ipc.send('win:invoke', 'close');

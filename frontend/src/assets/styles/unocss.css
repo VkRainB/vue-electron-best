@@ -1,9 +1,32 @@
+.table-auto {
+  @apply h-[calc(100vh-350px)] my-3;
+}
+
+.pagination-auto {
+  @apply flex justify-evenly mt-3 gap-1 mb-2;
+}
+
+.indigo-color {
+  @apply text-[#3a6294];
+}
+
+.danger-color {
+  @apply text-[#F56C6C];
+}
+
+.success-color {
+  @apply text-[#67C23A];
+}
+.primary-color {
+  @apply text-[#409EFF];
+}
+
 .ell {
-  @apply overflow-hidden whitespace-nowrap text-ellipsis;
+  @apply overflow-hidden whitespace-nowrap truncate;
 }
 
 .ell2 {
-  @apply overflow-hidden text-ellipsis;
+  @apply overflow-hidden truncate;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -11,7 +34,7 @@
 }
 
 .ell3 {
-  @apply overflow-hidden text-ellipsis;
+  @apply overflow-hidden truncate;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

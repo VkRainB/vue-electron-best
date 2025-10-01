@@ -46,5 +46,3 @@ import Header from '@/layouts/components/Header/index.vue';
   }
 }
 </style>
-
-<style lang="scss"></style>

@@ -5,6 +5,8 @@ export const scalingValue = 0.3;
 export function setupFocusBasedShortcuts(_win) {
   // app获得焦点时注册快捷键
   app.on('browser-window-focus', () => {
+    globalShortcut.unregisterAll();
+
     globalShortcut.register('Ctrl+Q', () => {
       app.quit();
     });

@@ -1,9 +1,9 @@
 {
-  "name": "electron-template",
-  "version": "1.0.1",
-  "description": "An Electron application with Vue",
+  "name": "app-name",
+  "version": "1.0.0",
+  "description": " app description",
   "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "homepage": "https://www.zangyaow.com/",
   "main": "./out/main/index.js",
   "engines": {
     "node": "^20.19.0 || >=22.12.0",
@@ -19,7 +19,7 @@
     "lint:fix": "eslint . --fix",
     "lint:show": "npx eslint --inspect-config",
     "format": "prettier --write .",
-    "check": "npm run lint && npm run format",
+    "check": "npm run format && npm run lint",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "electron-builder install-app-deps",
     "build:zip": "ee-bin updater --config=./config/updater.config.json --platform=win",
@@ -45,8 +45,10 @@
     "@electron-toolkit/eslint-config-prettier": "^3.0.0",
     "@element-plus/icons-vue": "^2.3.1",
     "@iconify-json/weui": "^1.2.2",
+    "@imengyu/vue3-context-menu": "^1.5.2",
     "@unocss/preset-icons": "^66.1.2",
-    "@vitejs/plugin-vue": "^6.0.1",
+    "@unocss/reset": "^66.3.3",
+    "@vitejs/plugin-vue": "^6.0.0",
     "@vitejs/plugin-vue-jsx": "^5.0.0",
     "axios": "^1.9.0",
     "commitizen": "^4.3.1",
@@ -59,6 +61,7 @@
     "eslint": "^9.24.0",
     "eslint-plugin-vue": "^10.0.0",
     "lodash-es": "^4.17.21",
+    "mitt": "^3.0.1",
     "pinia": "^3.0.2",
     "pinia-plugin-persistedstate": "^4.4.1",
     "postcss": "8.4.21",
@@ -82,17 +85,12 @@
       "esbuild",
       "unrs-resolver",
       "@parcel/watcher",
-      " vue-demi"
+      "vue-demi"
     ]
   },
   "config": {
     "commitizen": {
       "path": "node_modules/cz-git"
-    },
-    "lint-staged": {
-      "*.{js,ts,vue}": [
-        "npm run check"
-      ]
     }
   }
 }

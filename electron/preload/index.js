@@ -1,9 +1,11 @@
 import process from 'node:process';
 import { electronAPI } from '@electron-toolkit/preload';
 import { clipboard, contextBridge } from 'electron';
+import { pkgJson as pkg } from './version';
 
 const api = {
   clipboard,
+  pkg,
 };
 if (process.contextIsolated) {
   try {

@@ -28,6 +28,7 @@ function createWindow() {
       sandbox: false,
       spellcheck: false, // 取消拼写检查
       webSecurity: false, // 取消跨域检查
+      nodeIntegration: false,
     },
   });
 

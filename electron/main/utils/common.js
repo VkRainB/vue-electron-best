@@ -43,7 +43,7 @@ export function startInstaller(installerPath) {
  */
 export function clearExePackage() {
   const temp = getUpdataCacheDir();
-  const setupPath = join(temp, 'AppName.exe');
+  const setupPath = join(temp, 'app-name.exe');
   if (existsSync(setupPath)) {
     try {
       unlinkSync(setupPath);

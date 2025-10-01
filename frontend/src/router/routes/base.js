@@ -16,30 +16,25 @@ const basicRoutes = [
       {
         path: 'home',
         component: () => import('@/views/home/index.vue'),
-        name: 'Home',
+        name: 'home',
       },
       {
-        path: 'page1',
-        component: () => import('@/views/page1/index.vue'),
-        name: 'Page1',
-      },
-      {
-        path: 'page2',
-        component: () => import('@/views/page2/index.vue'),
-        name: 'Page2',
-      },
-      {
-        path: 'page3',
-        component: () => import('@/views/page3/index.vue'),
-        name: 'Page3',
+        path: 'settings',
+        component: () => import('@/views/settings/index.vue'),
+        name: 'settings',
       },
       {
         path: 'icons',
         component: () => import('@/views/icons/index.vue'),
-        name: 'Icons',
+        name: 'icons',
         meta: {
           title: '图标展示',
         },
+      },
+      {
+        path: 'tabNav',
+        component: () => import('@/views/tabNav.vue'),
+        name: 'tabNav',
       },
       // 在这里可以添加更多需要主布局的页面
     ],
@@ -49,12 +44,12 @@ const basicRoutes = [
   {
     path: '/auth',
     component: SimpleLayout,
-    name: 'Auth',
+    name: 'auth',
     children: [
       {
         path: 'login',
-        component: () => import('@/views/auth/login.vue'),
-        name: 'Login',
+        component: () => import('@/views/auth/Login.vue'),
+        name: 'login',
         meta: {
           close: 'exit',
         },

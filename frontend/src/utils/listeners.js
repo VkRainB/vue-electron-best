@@ -16,6 +16,11 @@ export function trayRefresh() {
  * @returns 断网状态
  */
 export function netDisconnect() {
+  // todo （net.online + 定时轮询） 或 方案二（navigator.onLine 事件）
+  // let currentStatus = net.online; // 初始状态
+  // window.addEventListener('online', () => {});
+  // window.addEventListener('offline', () => {});
+
   const networkStart = ref(true);
   ipc.removeAllListeners('net:disconnect');
   ipc.on('net:disconnect', () => {

@@ -1,12 +1,12 @@
 const pkg = require('../package.json');
 // const { execSync } = require('child_process');
 
-const productName = 'myApp';
+const productName = 'app-name';
 // 计算哈希值
 // const hash = execSync('git log -1 --format=%h', { encoding: 'utf8' }).trim();
 
 const config = {
-  appId: 'com.myApp.com',
+  appId: 'com.app-name.com',
   productName,
   copyright: `© 2025 ${pkg.author}`,
   asar: true,
@@ -32,7 +32,7 @@ const config = {
   asarUnpack: ['resources/**'],
   win: {
     icon: 'resources/icon.ico',
-    executableName: 'myApp',
+    executableName: 'app-name',
     target: ['nsis'],
   },
   nsis: {
@@ -46,8 +46,8 @@ const config = {
     deleteAppDataOnUninstall: false,
     createDesktopShortcut: true,
     createStartMenuShortcut: true,
-    shortcutName: 'myApp',
-    uninstallDisplayName: 'myApp',
+    shortcutName: 'app-name',
+    uninstallDisplayName: 'app-name',
     allowElevation: true,
     installerIcon: 'resources/icon.ico',
     uninstallerIcon: 'resources/icon.ico',

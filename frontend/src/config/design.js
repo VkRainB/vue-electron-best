@@ -6,7 +6,7 @@ const design = {
   layout: 'vertical',
 
   // 是否折叠菜单
-  isCollapse: false,
+  isCollapse: true,
 };
 
 export default design;

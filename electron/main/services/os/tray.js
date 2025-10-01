@@ -20,7 +20,7 @@ export function creatTray(_win) {
         },
       },
     ]);
-    traty.setToolTip('appName');
+    traty.setToolTip('app-name');
     traty.setContextMenu(contextMenu);
     traty.on('click', () => {
       _win.show();

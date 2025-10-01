@@ -1,4 +1,5 @@
 @import '@/assets/styles/element-reset';
+@import '@unocss/reset/tailwind-compat.css';
 @import '@/assets/styles/unocss';
 
 :root {
@@ -12,24 +13,20 @@
   --top-height: calc(var(--window-controls-height) + var(--navbar-height));
 
   /*标签栏高度 */
-  --tabs-height: 30px;
+  --tabs-height: 40px;
+
+  /* 主容器高度 */
+  --main-height: calc(100vh - var(--top-height) - var(--tabs-height));
 
   /* 侧边栏宽度 */
   --sidebar-width: 200px;
 
+  /* 1d5395 */
   /* 主题颜色 */
-  --theme-color: #409eff;
+  --theme-color: #3a6294;
 
   /* 顶部导航栏背景色 */
-  --navbar-bg-color: #0075f6;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  --navbar-bg-color: #1d5395;
 }
 
 html,
@@ -38,13 +35,24 @@ body {
   padding: 0;
   font-family: 'Microsoft YaHei', Arial, sans-serif;
   font-size: 14px;
-  background: #f6f7fb;
-  color: #222;
-  scrollbar-gutter: stable overlay;
+  background: #fff;
+  color: #5e5f63;
+  /* color: #222; */
 }
 
-* {
-  box-sizing: border-box;
+#app {
+  color: #5e5f63;
+}
+
+pre {
+  white-space: pre-wrap;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: micsoft yahei;
 }
 
 ul,
@@ -53,10 +61,8 @@ li {
   font-size: 14px;
 }
 
-button,
-input,
-textarea {
-  font-family: inherit;
+strong {
+  font-size: 14px;
 }
 
 /* 统一的滚动条样式 */

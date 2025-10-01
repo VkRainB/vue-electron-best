@@ -1,0 +1,26 @@
+// @see https://github.com/imengyu/vue3-context-menu/blob/main/library/ContextMenu.scss
+
+.mx-context-menu.custom {
+  & {
+    //Overwrite the value of the default css variable here
+    --mx-menu-backgroud: #fff;
+    --mx-menu-hover-backgroud: #f2f2f2;
+
+    //Customize menu outer style
+    padding: 8px 0;
+    box-shadow: 0px 5px 7px 1px var(--mx-menu-shadow-color);
+    border: 1px solid var(--mx-menu-border-color);
+  }
+
+  //Customize the style of menu item
+  .mx-context-menu-item {
+    border-radius: 5px;
+    padding: 3px;
+  }
+
+  // .mx-context-menu-item .label {
+  //   font-size: 12px;
+  // }
+
+  //Please view the complete style of each part in ContextMenu.scss
+}

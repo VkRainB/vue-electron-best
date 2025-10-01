@@ -30,7 +30,7 @@ export function setManuaUpdateListener(_win) {
   // 手动安装下载
   ipcMain.handle('download-and-install', async (event, fileUrl) => {
     const temp = getUpdataCacheDir();
-    const savePath = join(temp, 'AppName.exe');
+    const savePath = join(temp, 'app-name.exe');
     cancelDownload = false;
     if (currentDownloadStream) {
       currentDownloadStream.destroy();
@@ -44,7 +44,7 @@ export function setManuaUpdateListener(_win) {
     }
     try {
       const version = app.getVersion();
-      const fileUrl = `http://example/update.com/AppName ${version}.exe`;
+      const fileUrl = `http://example/update.com/app-name ${version}.exe`;
       const response = await axios({ method: 'get', url: fileUrl, responseType: 'stream' });
       // 获取文件总大小
       const exeSize = response.headers['content-length'];

@@ -1,6 +1,6 @@
 !macro customInit
     ; 安装前置检查
-    nsExec::ExecToStack 'cmd /c tasklist /FI "IMAGENAME eq app.exe"|findstr /C:"app.exe"'
+    nsExec::ExecToStack 'cmd /c tasklist /FI "IMAGENAME eq app-name.exe"|findstr /C:"app-name.exe"'
     Pop $0  ; 返回码
     Pop $1  ; 输出内容
     ; MessageBox MB_OK "findstr 返回码: $0\n输出内容: $1"
@@ -13,7 +13,7 @@
         
         DoKill:
             ; 强制结束所有相关进程
-            nsExec::ExecToStack 'taskkill /F /IM "app.exe" /T'
+            nsExec::ExecToStack 'taskkill /F /IM "app-name.exe" /T'
             Pop $0
             Sleep 2000  ; 等待进程结束
             Goto Done

@@ -35,7 +35,7 @@ const filteredWeuiIconNames = computed(() => filterBySearch(weuiIconNames));
 </script>
 
 <template>
-  <div class="p-0">
+  <div class="p-2 h-full overflow-y-auto">
     <h1 class="text-3xl font-bold mb-6 border-b pb-2">Icons</h1>
     <el-input v-model="search" style="width: 500px" placeholder="搜索图标名(支持正则)" clearable class="mb-6 h-8" />
     <div>

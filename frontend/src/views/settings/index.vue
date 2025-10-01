@@ -1,7 +1,8 @@
 <script setup></script>
 
 <template>
-  <div>page3</div>
+  设置
+  <slot></slot>
 </template>
 
 <style scoped lang="scss"></style>

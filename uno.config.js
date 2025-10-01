@@ -7,7 +7,11 @@ function generateSafeList() {
     return `i-weui-${item}`;
   });
 }
-
+const wrapperTargetMap = {
+  input: '.el-input__wrapper',
+  select: '.el-select__wrapper',
+  button: 'button',
+};
 const safeList = generateSafeList();
 
 export default defineConfig({
@@ -25,11 +29,10 @@ export default defineConfig({
   ],
   transformers: [transformerDirectives()],
   safelist: safeList,
-  shortcuts: [
+  shortcuts: {
     // 自定义快捷方式
-    ['card', 'bg-white rounded-lg shadow-md p-6'],
-    ['flex-center', 'flex items-center justify-center'],
-  ],
+    'flex-center': 'flex items-center justify-center',
+  },
   theme: {
     breakpoints: {
       xs: '300px',
@@ -40,7 +43,21 @@ export default defineConfig({
       '2xl': '1536px',
     },
   },
-  rules: [
-    // 自定义规则
+  variants: [
+    // wrapper-* variant
+    (matcher) => {
+      const wrapperMatch = matcher.match(/^wrapper-(\w+):(.*)$/);
+      if (!wrapperMatch) return matcher;
+
+      const [, key, rest] = wrapperMatch;
+      const targetSelector = wrapperTargetMap[key];
+      if (!targetSelector) return matcher;
+
+      return {
+        matcher: rest,
+        selector: (s) => `${s} ${targetSelector}`,
+      };
+    },
   ],
+  rules: [],
 });

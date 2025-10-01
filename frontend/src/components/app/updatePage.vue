@@ -1,6 +1,6 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { useAppStore } from '@/stores/modules/app';
+import { useAppStore } from '@/store/modules/app';
 
 const percentage = ref(0); // 升级进度
 const progressStaus = ref('');

@@ -1,6 +1,6 @@
 <!-- Main -->
 <script setup>
-import { useKeepAliveStore } from '@/stores/modules/keepAlive';
+import { useKeepAliveStore } from '@/store/modules/keepAlive';
 
 const keepAliveStore = useKeepAliveStore();
 
@@ -12,12 +12,12 @@ provide('refresh', refreshMainPage);
 
 <template>
   <div class="main" style="height: calc(100vh - var(--top-height))">
-    <slot />
-    <div class="main-router main-scroll w-full p-2">
+    <slot></slot>
+    <div class="main-router main-container--fixed w-full">
       <router-view v-slot="{ Component, route }">
         <transition mode="out-in" appear>
           <!-- <keep-alive :max="10" :include="keepAliveStore.keepAliveName"> -->
-          <keep-alive>
+          <keep-alive :exclude="keepAliveStore.excludeName">
             <component :is="Component" v-if="isRouterShow" :key="route.fullPath" />
           </keep-alive>
         </transition>
@@ -30,9 +30,15 @@ provide('refresh', refreshMainPage);
 .main {
   overflow: hidden;
 }
-.main-scroll {
+.main-container--fixed {
   height: calc(100% - var(--tabs-height));
   box-sizing: border-box;
-  overflow-y: auto;
+  overflow-y: hidden;
+}
+/* ＜768px 允许滚动 */
+@media screen and (max-width: 1024px) {
+  .main-container--fixed {
+    overflow-y: auto;
+  }
 }
 </style>

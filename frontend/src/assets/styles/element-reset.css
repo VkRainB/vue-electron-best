@@ -1,3 +1,40 @@
-.el {
+/* element-plus 样式重置*/
+:root {
   /*  */
+}
+
+.el-tabs__header {
+  margin: 0;
+}
+
+.el-drawer {
+  /* 解决控件拖动重叠无法点击 */
+  -webkit-app-region: no-drag;
+}
+
+.el-drawer__header {
+  margin-bottom: 10px;
+}
+
+/*  Notification */
+.el-notification {
+  top: 118px !important;
+}
+
+/*----- 表格--- */ 
+
+.el-table--border .el-table__header .el-table__cell {
+  background-color: var(--theme-color) !important;
+  color: #fff;
+}
+
+/* table使用图片容器兼容层级 */
+.el-table__cell {
+  position: static !important;
+}
+
+
+/* 全局图片 */
+.el-image-viewer__canvas img {
+  max-height: 80% !important;
 }

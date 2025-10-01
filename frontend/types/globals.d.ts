@@ -12,4 +12,11 @@ declare global {
     };
     ipc: IpcRenderer;
   }
+
+  type ContextMenuItem = {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+    icon?: string;
+  };
 }

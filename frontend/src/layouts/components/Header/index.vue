@@ -23,7 +23,7 @@ const hasAnyNavSlot = computed(() => {
     <!-- 标题栏：窗口拖拽和控制按钮 -->
     <div class="title-bar">
       <div class="app-icon">
-        <slot name="app-icon" />
+        <slot name="app-icon"></slot>
       </div>
       <WindowControl :icon-color="props.color" :controls="props.controls" />
     </div>
@@ -35,13 +35,13 @@ const hasAnyNavSlot = computed(() => {
       :style="hasAnyNavSlot ? 'height: var(--navbar-height);' : 'h-0 hidden'"
     >
       <div class="nav-left">
-        <slot name="nav-left" />
+        <slot name="nav-left"></slot>
       </div>
       <div class="nav-center">
-        <slot name="nav-center" />
+        <slot name="nav-center"></slot>
       </div>
       <div class="nav-right">
-        <slot name="nav-right" />
+        <slot name="nav-right"></slot>
       </div>
     </nav>
   </header>
@@ -75,7 +75,6 @@ const hasAnyNavSlot = computed(() => {
   gap: 5px;
   align-items: center;
   justify-content: center;
-  -webkit-app-region: no-drag;
 }
 
 .nav-content {
@@ -83,7 +82,6 @@ const hasAnyNavSlot = computed(() => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
   background-color: var(--navbar-bg-color);
   border-bottom: 1px solid var(--el-border-color-light);
 }

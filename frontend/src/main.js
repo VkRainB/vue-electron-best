@@ -1,22 +1,25 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+import { setUpContextMenu } from './plugins/contextMenu';
 import { registerIcons } from './plugins/icon';
-import { router, setupRouter } from './router';
-import store from './stores';
-import '@/assets/styles/base.css';
-import 'uno.css';
+import router from './router';
+import store from './store';
 import 'virtual:svg-icons-register';
+
+import '@/assets/styles/elementTheme.scss';
+import 'virtual:uno.css';
+import '@/assets/styles/base.css';
 
 async function setup() {
   const app = createApp(App);
 
-  // 设置状态管理
   app.use(store);
 
-  // 设置路由
-  setupRouter(app);
+  app.use(router);
 
   registerIcons(app);
+
+  setUpContextMenu(app);
 
   await router.isReady();
 

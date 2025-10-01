@@ -1,0 +1,31 @@
+$--colors: (
+  'primary': (
+    'base': #3a6294,
+  ),
+  'success': (
+    'base': #21ba45,
+  ),
+  'warning': (
+    'base': #f2711c,
+  ),
+  'danger': (
+    'base': #db2828,
+  ),
+  'error': (
+    'base': #db2828,
+  ),
+  'info': (
+    'base': #909399,
+  ),
+);
+
+// 空间命名
+// @forward 'element-plus/theme-chalk/src/mixins/config.scss' with (
+//   $namespace: 'ep'
+// );
+
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  // 名变量会被覆盖
+  $colors: $--colors
+);
+@use 'element-plus/theme-chalk/src/index.scss' as *;

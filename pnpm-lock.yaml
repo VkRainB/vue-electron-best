@@ -45,12 +45,18 @@ importers:
       '@iconify-json/weui':
         specifier: ^1.2.2
         version: 1.2.2
+      '@imengyu/vue3-context-menu':
+        specifier: ^1.5.2
+        version: 1.5.2
       '@unocss/preset-icons':
         specifier: ^66.1.2
         version: 66.3.2
+      '@unocss/reset':
+        specifier: ^66.3.3
+        version: 66.3.3
       '@vitejs/plugin-vue':
-        specifier: ^6.0.1
-        version: 6.0.1(rolldown-vite@7.0.6(@types/node@24.0.4)(esbuild@0.25.5)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
+        specifier: ^6.0.0
+        version: 6.0.0(rolldown-vite@7.0.6(@types/node@24.0.4)(esbuild@0.25.5)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
       '@vitejs/plugin-vue-jsx':
         specifier: ^5.0.0
         version: 5.0.0(rolldown-vite@7.0.6(@types/node@24.0.4)(esbuild@0.25.5)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))
@@ -87,6 +93,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      mitt:
+        specifier: ^3.0.1
+        version: 3.0.1
       pinia:
         specifier: ^3.0.2
         version: 3.0.3(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
@@ -687,6 +696,12 @@ packages:
   '@iconify/utils@2.3.0':
     resolution: {integrity: sha512-GmQ78prtwYW6EtzXRU1rY+KwOKfz32PD7iJh6Iyqw68GiKuoZ2A6pRtzWONz5VQJbp50mEjXh/7NkumtrAgRKA==}
 
+  '@imengyu/vue-scroll-rect@0.1.7':
+    resolution: {integrity: sha512-a1ysL8LV2iFcHzMJ6tlrqr8JKtYIBrb1U3XcbjNmhponENUSbRvxs4b1sJd5sXdCFIIkDydwQM/SjVhfT7uBUw==}
+
+  '@imengyu/vue3-context-menu@1.5.2':
+    resolution: {integrity: sha512-JtM9y4JKsqwpsLQnK38Fm3DqV5ZwIs/HksxQYHU6yUuuWScdr5C+NTF16J0KxmSbMHOTwVTMwJCBkwcC1X6y1w==}
+
   '@isaacs/balanced-match@4.0.1':
     resolution: {integrity: sha512-yzMTt9lEb8Gv7zRioUilSglI0c0smZ9k5D65677DLWLtWJaXIS3CqcGyUFByYKlnUj6TkjLVs54fBl6+TiGQDQ==}
     engines: {node: 20 || >=22}
@@ -930,14 +945,14 @@ packages:
     cpu: [x64]
     os: [win32]
 
+  '@rolldown/pluginutils@1.0.0-beta.19':
+    resolution: {integrity: sha512-3FL3mnMbPu0muGOCaKAhhFEYmqv9eTfPSJRJmANrCwtgK8VuxpsZDGK+m0LYAGoyO8+0j5uRe4PeyPDK1yA/hA==}
+
   '@rolldown/pluginutils@1.0.0-beta.21':
     resolution: {integrity: sha512-OTjWr7XYqRZaSzi6dTe0fP25EEsYEQ2H04xIedXG3D0Hrs+Bpe3V5L48R6y+R5ohTygp1ijC09mbrd7vlslpzA==}
 
   '@rolldown/pluginutils@1.0.0-beta.24':
     resolution: {integrity: sha512-NMiim/enJlffMP16IanVj1ajFNEg8SaMEYyxyYfJoEyt5EiFT3HUH/T2GRdeStNWp+/kg5U8DiJqnQBgLQ8uCw==}
-
-  '@rolldown/pluginutils@1.0.0-beta.29':
-    resolution: {integrity: sha512-NIJgOsMjbxAXvoGq/X0gD7VPMQ8j9g0BiDaNjVNVjvl+iKXxL3Jre0v31RmBYeLEmkbj2s02v8vFTbUXi5XS2Q==}
 
   '@sindresorhus/is@4.6.0':
     resolution: {integrity: sha512-t09vSN3MdfsyCHoFcTRCH/iUtG7OJ0CsjzB8cjAmKc/va/kIgeDI/TxsigdncE/4be734m0cvIYwNaV4i2XqAw==}
@@ -1154,6 +1169,9 @@ packages:
   '@unocss/reset@66.3.2':
     resolution: {integrity: sha512-3Q6ND9ifUGXgY0+bkFNjYXhftIKCQYIsaeHKjfTjhuZukB8SSmnl7Vo9hn0rDeFGF+3mAo6PVv3/uJbJGQ2+IA==}
 
+  '@unocss/reset@66.3.3':
+    resolution: {integrity: sha512-VIeR/mIcCL89/1uA1KM1QCYca4aeIGqEHMTJL1nCD4v+7wk6XhNXhsp5gMIHo+V804SUSmATWaeHTiKpiFu7AQ==}
+
   '@unocss/rule-utils@66.3.2':
     resolution: {integrity: sha512-zdKhZdRsU0iB+6ba1xX5YOJVI2UqwrvffAalONRSal2VUYpZxCFCvJhyt5bbneIOBQ6pQMVgi7UVEqQ6Y7A5kQ==}
     engines: {node: '>=14'}
@@ -1182,8 +1200,8 @@ packages:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
       vue: ^3.0.0
 
-  '@vitejs/plugin-vue@6.0.1':
-    resolution: {integrity: sha512-+MaE752hU0wfPFJEUAIxqw18+20euHHdxVtMvbFcOEpjEyfqXH/5DCoTHiVJ0J29EhTJdoTkjEv5YBKU9dnoTw==}
+  '@vitejs/plugin-vue@6.0.0':
+    resolution: {integrity: sha512-iAliE72WsdhjzTOp2DtvKThq1VBC4REhwRcaA+zPAAph6I+OQhUXv+Xu2KS7ElxYtb7Zc/3R30Hwv1DxEo7NXQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     peerDependencies:
       vite: ^5.0.0 || ^6.0.0 || ^7.0.0
@@ -5540,6 +5558,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@imengyu/vue-scroll-rect@0.1.7': {}
+
+  '@imengyu/vue3-context-menu@1.5.2':
+    dependencies:
+      '@imengyu/vue-scroll-rect': 0.1.7
+
   '@isaacs/balanced-match@4.0.1': {}
 
   '@isaacs/brace-expansion@5.0.0':
@@ -5735,11 +5759,11 @@ snapshots:
   '@rolldown/binding-win32-x64-msvc@1.0.0-beta.24':
     optional: true
 
+  '@rolldown/pluginutils@1.0.0-beta.19': {}
+
   '@rolldown/pluginutils@1.0.0-beta.21': {}
 
   '@rolldown/pluginutils@1.0.0-beta.24': {}
-
-  '@rolldown/pluginutils@1.0.0-beta.29': {}
 
   '@sindresorhus/is@4.6.0': {}
 
@@ -6049,6 +6073,8 @@ snapshots:
 
   '@unocss/reset@66.3.2': {}
 
+  '@unocss/reset@66.3.3': {}
+
   '@unocss/rule-utils@66.3.2':
     dependencies:
       '@unocss/core': 66.3.2
@@ -6098,9 +6124,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@6.0.1(rolldown-vite@7.0.6(@types/node@24.0.4)(esbuild@0.25.5)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
+  '@vitejs/plugin-vue@6.0.0(rolldown-vite@7.0.6(@types/node@24.0.4)(esbuild@0.25.5)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
-      '@rolldown/pluginutils': 1.0.0-beta.29
+      '@rolldown/pluginutils': 1.0.0-beta.19
       vite: rolldown-vite@7.0.6(@types/node@24.0.4)(esbuild@0.25.5)(jiti@2.4.2)(sass@1.89.2)(terser@5.43.1)(yaml@2.8.0)
       vue: 3.5.17(typescript@5.8.3)
 

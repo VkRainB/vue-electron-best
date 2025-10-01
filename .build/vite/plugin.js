@@ -11,23 +11,23 @@ export function createVitePlugins({ command }) {
   return [
     vue(),
     vueJsx(),
-    UnoCSS(),
     AutoImport({
       imports: ['vue'],
       resolvers: [ElementPlusResolver()],
       dts: 'types/auto-imports.d.ts',
     }),
+    ElementPlus({
+      useSource: true, // 获得更好的 tree shaking
+    }),
     Components({
       resolvers: [
         ElementPlusResolver({
-          // importStyle: 'sass', // 覆盖源：使用空间命名，全局配置namespace="ep"才开启，开启后不走默认的 CSS 文件，.el- 前缀
+          importStyle: 'sass', // false, 手动控制样式顺便覆盖变量值
         }),
       ],
       dts: 'types/components.d.ts',
     }),
-    ElementPlus({
-      useSource: true,
-    }),
+    UnoCSS(),
     createSvgIcon(command === 'build'),
   ];
 }

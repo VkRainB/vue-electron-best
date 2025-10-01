@@ -4,37 +4,57 @@ import { storeToRefs } from 'pinia';
 import { useRoute, useRouter } from 'vue-router';
 import images from '@/assets/images/index.js';
 import Icon from '@/components/icon/index.vue';
+import { useSecretTrigger } from '@/hooks/useSecretTrigger';
 import Aside from '@/layouts/components/Aside/index.vue';
 import Header from '@/layouts/components/Header/index.vue';
 import Main from '@/layouts/components/Main/index.vue';
-import { useDesignStore } from '@/stores';
-import { useUserStore } from '@/stores/modules/user';
+import { useDesignStore, useKeepAliveStore } from '@/store';
+import { useRecordBreadStore } from '@/store/modules/recordBread';
 
 const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
-const retLoginName = userStore.retLoginName;
 
 const designStore = useDesignStore();
 const { isCollapse } = storeToRefs(designStore);
 const currentRouteName = computed(() => route.name);
 
-const menuList = [
-  { label: '页面1', componentName: 'Page1' },
-  { label: '页面2', componentName: 'Page2' },
-  { label: '页面3', componentName: 'Page3', count: 0 },
-  { label: '图标', componentName: 'Icons' },
-];
+const { activeTab, recordBread: tabList } = storeToRefs(useRecordBreadStore());
+
+const menuList = [{ label: '设置', componentName: 'settings' }];
+
+function handleTabClick({ paneName }) {
+  activeTab.value = paneName;
+  const query = tabList.value.find((item) => item.id == paneName).query;
+  router.replace({ path: query.path, query });
+  // console.log('query', query);
+}
+function handleTabRemove(tabId) {
+  useRecordBreadStore().remove(tabId);
+
+  // 如果删除的是当前激活的标签页
+  if (activeTab.value === tabId) {
+    const remainingTabs = tabList.value.filter((t) => t.id !== tabId);
+    if (remainingTabs.length > 0) {
+      // 激活最后一个标签页
+      const lastTab = remainingTabs[remainingTabs.length - 1];
+      activeTab.value = lastTab.id;
+      handleTabClick({ paneName: lastTab.id });
+    } else {
+      // 清理标签页缓存
+      useKeepAliveStore().clearTabCache();
+      // 没有标签页了，跳转到首页
+      router.push('/home');
+    }
+  }
+}
 
 function toggleSidebar() {
   designStore.setCollapse(!isCollapse.value);
 }
 
 function changeRouter(val) {
-  // 获取当前路由的名称
-  const currentRouteName = router.currentRoute.value.name;
-  if (currentRouteName !== val) {
-    router.push({ name: val });
+  if (currentRouteName.value !== val) {
+    router.push(`/${val}`);
   }
 }
 
@@ -43,12 +63,23 @@ function changeZoom(direction) {
 }
 
 function outLogin() {
-  router.push({ name: 'Login' });
+  localStorage.removeItem('autoLogin');
+  router.push({ name: 'login' });
 }
 
 function exitLogin() {
   ipc.send('app:exit');
 }
+onBeforeMount(async () => {});
+
+const { handleClick: goIcon } = useSecretTrigger({
+  clickCount: 3,
+  timeWindow: 3000,
+  triggerKey: 'Control',
+  callback: () => {
+    router.push('/icons');
+  },
+});
 </script>
 
 <template>
@@ -56,14 +87,14 @@ function exitLogin() {
     <el-header class="main-layout__header" height="var(--top-height)">
       <Header class="header__bg">
         <template #app-icon>
-          <Icon name="el-icon-house" size="16" class="cursor-pointer" />
-          <div class="text-14px select-none">软件平台</div>
+          <img src="" class="w-20px h-20px" />
+          <div class="text-12px">app-name</div>
         </template>
         <template #nav-left>
-          <!-- <el-icon class="main-layout__toggle-btn" @click="toggleSidebar">
-            <Icon v-if="isCollapse" name="el-icon-menu" />
-            <Icon v-else name="el-icon-grid" />
-          </el-icon> -->
+          <div class="flex items-center">
+            <img @click="goIcon()" src="" class="w-44px h-44px mx-3 select-none" />
+            <div class="min-w-160px text-white text-5 md:text-6 lg:text-7 font-bold">app-name</div>
+          </div>
         </template>
 
         <template #nav-right>
@@ -72,7 +103,7 @@ function exitLogin() {
               <li
                 v-for="item in menuList"
                 :key="item.index"
-                class="relative 2xl:text-[16px] text-[15px] cursor-pointer hover:text-yellow-300 px-[15px]"
+                class="relative lt-md:text-[16px] text-[20px] cursor-pointer hover:text-yellow-300 px-[15px]"
                 :class="currentRouteName === item.componentName ? 'text-yellow-300' : 'text-white'"
                 @click="changeRouter(item.componentName)"
               >
@@ -85,7 +116,7 @@ function exitLogin() {
                   class="absolute"
                 />
               </li>
-              <li class="ml-4">
+              <li class="">
                 <div class="relative">
                   <el-popover popper-class="main-content-popover" placement="left-start" :width="120" trigger="click">
                     <div class="text-[12px] flex flex-col items-start gap-2">
@@ -111,9 +142,9 @@ function exitLogin() {
                       </div>
                     </div>
                     <template #reference>
-                      <div class="cursor-pointer">
-                        <img :src="images.dome.avatar" class="w-[28px]" alt="" />
-                        <p class="text-[12px] text-center text-white">
+                      <div class="mr-4 flex flex-col items-center cursor-pointer">
+                        <img :src="images.dome.avatar" class="w-[30px] zangqing_filter" alt="" />
+                        <p class="text-[16px] text-center text-white">
                           {{ retLoginName }}
                         </p>
                       </div>
@@ -132,7 +163,21 @@ function exitLogin() {
         <Aside />
         <Main>
           <template #default>
-            <div style="height: var(--tabs-height)" class="bg-#E9ECF2">标签页</div>
+            <!-- 标签页 -->
+            <div style="height: var(--tabs-height)" class="bg-#E9ECF2">
+              <div class="tab-nav-container">
+                <el-tabs
+                  v-model="activeTab"
+                  type="card"
+                  class="demo-tabs"
+                  closable
+                  @tab-click="handleTabClick"
+                  @tab-remove="handleTabRemove"
+                >
+                  <el-tab-pane v-for="item in tabList" :key="item.id" :label="item.tagName" :name="item.id" />
+                </el-tabs>
+              </div>
+            </div>
           </template>
         </Main>
       </el-main>
@@ -167,6 +212,8 @@ function exitLogin() {
     margin-left: 0px;
   }
 }
-</style>
 
-<style lang="scss"></style>
+.zangqing_filter {
+  filter: hue-rotate(367.6deg) saturate(0.8) brightness(0.85) contrast(1.1);
+}
+</style>

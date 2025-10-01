@@ -8,3 +8,6 @@ store.use(piniaPluginPersistedstate);
 export default store;
 
 export * from './modules/design';
+export * from './modules/keepAlive';
+export * from './modules/local';
+export * from './modules/recordBread';
