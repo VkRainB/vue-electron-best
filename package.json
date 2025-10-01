@@ -55,7 +55,7 @@
     "cz-git": "^1.11.1",
     "daisyui": "^5.0.37",
     "electron": "^35.1.5",
-    "electron-builder": "^25.1.8",
+    "electron-builder": "^26.0.12",
     "electron-vite": "^4.0.0",
     "element-plus": "^2.8.8",
     "eslint": "^9.24.0",
