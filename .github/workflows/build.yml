@@ -26,20 +26,22 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: Install Dependencies (npm)
-        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
 
-      - name: Postinstall electron builder deps
-        run: npx electron-builder install-app-deps
+      - name: Install Dependencies (pnpm)
+        run: pnpm install --frozen-lockfile
 
       # MacOS Build
       - name: Build MacOS
         if: matrix.os == 'macos-latest'
         run: |
           export ELECTRON_BUILDER_EXTRA_ARGS="--universal --publish=never"
-          npm run build:mac
+          pnpm run build:mac
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CSC_IDENTITY_AUTO_DISCOVERY: false
@@ -48,7 +50,7 @@ jobs:
       # Windows Build
       - name: Build Windows
         if: matrix.os == 'windows-latest'
-        run: npm run build:win
+        run: pnpm run build:win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ELECTRON_BUILDER_EXTRA_ARGS: --publish=never
@@ -59,7 +61,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
-          npm run build:linux
+          pnpm run build:linux
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           ELECTRON_BUILDER_EXTRA_ARGS: --publish=never
