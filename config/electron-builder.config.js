@@ -68,7 +68,7 @@ const config = {
     artifactName: `${pkg.name}-${pkg.version}.dmg`,
   },
   linux: {
-    target: ['AppImage', 'snap', 'deb'],
+    target: ['AppImage', 'deb'],
     maintainer: 'electronjs.org',
     category: 'Utility',
   },
