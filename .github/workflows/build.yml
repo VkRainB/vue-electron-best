@@ -33,6 +33,21 @@ jobs:
         with:
           version: 10
 
+      - name: Enable corepack and activate pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@10 --activate
+          pnpm -v
+        shell: bash
+
+      - name: Fallback install pnpm if missing
+        run: |
+          if ! command -v pnpm > /dev/null 2>&1; then
+            npm i -g pnpm@10
+          fi
+          pnpm -v
+        shell: bash
+
       - name: Install Dependencies (pnpm)
         run: pnpm install --frozen-lockfile
 
