@@ -58,6 +58,8 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf libfuse2 xz-utils rpm libarchive-tools
+          sudo snap install snapcraft --classic
+          pnpm store prune || true
           # 某些 runner 上二进制可执行位丢失，手动修复
           find node_modules -type f -name app-builder -exec chmod +x {} + || true
           pnpm run build:linux
