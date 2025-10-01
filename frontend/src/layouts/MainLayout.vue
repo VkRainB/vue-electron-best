@@ -87,12 +87,12 @@ const { handleClick: goIcon } = useSecretTrigger({
     <el-header class="main-layout__header" height="var(--top-height)">
       <Header class="header__bg">
         <template #app-icon>
-          <img src="" class="w-20px h-20px" />
+          <img :src="images.dome.icon" class="w-20px h-20px" />
           <div class="text-12px">app-name</div>
         </template>
         <template #nav-left>
           <div class="flex items-center">
-            <img @click="goIcon()" src="" class="w-44px h-44px mx-3 select-none" />
+            <img @click="goIcon()" :src="images.dome.icon" class="w-44px h-44px mx-3 select-none" />
             <div class="min-w-160px text-white text-5 md:text-6 lg:text-7 font-bold">app-name</div>
           </div>
         </template>
